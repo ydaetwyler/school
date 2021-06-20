@@ -2,22 +2,29 @@
     <head>
         <meta charset="utf-8">
         <title>Pro MERN Stack</title>
-        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+        <!-- Explanation 4: production.min works also. After inserting the typo; we do not see any errors and warnings. -->
+        <!-- Therefore, I guess, we develop with development versions instead of production -->
+        <script src=" https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
         <style>
-            .header-style {
-                color: greenyellow;
+            h1 {
+                color: purple;
             }
         </style>
     </head>
     <body>
         <div id="content"></div>
-        <script>
-            const element = React.createElement('div', {title: 'Outer div'},
-            React.createElement('h1', {className: 'header-style'}, 'Hello World!')
+        <script type="text/babel">
+        // Explanation 3: If text/babel is removed, the browser gives a syntax error.
+        // This is because there is no compiler and the browser does not understand the JSX syntax.
+            const element = (
+                <div title="Outer div">
+                    <h1>Hello World!</h1>
+                </div>
             );
-            // Explanation 1: Classes in React are called className
-            // Explanation 2: I would call this an object
+            // Explanation 1: Classes in React are called className.
+            // Explanation 2: I would call this an object.
             const toRender = document.getElementById('content');
             ReactDOM.render(element, toRender);
         </script>
