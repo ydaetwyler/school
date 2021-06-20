@@ -1,11 +1,25 @@
 <html>
     <head>
+        <meta charset="utf-8">
+        <title>Pro MERN Stack</title>
         <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <style>
+            h1 {
+                color: purple;
+            }
+        </style>
     </head>
     <body>
-        <div id="content">
-
-        </div>
+        <div id="content"></div>
+        <script>
+            const element = React.createElement('div', {title: 'Outer div'},
+            React.createElement('h1', {className: 'header-style'}, 'Hello World!')
+            );
+            // Explanation 1: Classes in React are called className
+            // Explanation 2: I would call this an object
+            const toRender = document.getElementById('content');
+            ReactDOM.render(element, toRender);
+        </script>
     </body>
 </html>
