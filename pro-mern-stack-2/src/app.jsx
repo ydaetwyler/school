@@ -1,4 +1,4 @@
-const continents = ['Mittelerde', 'Pangea', 'Westeros', 'Hoth'];
+const continents = ['Mittelerde', 'Pangea', 'Westeros', 'Hoth', 'Wasteland'];
 const helloContinents = Array.from(continents, c => `Hello ${c}!`);
 
 const element = (

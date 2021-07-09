@@ -1,6 +1,6 @@
 "use strict";
 
-var continents = ['Mittelerde', 'Pangea', 'Westeros', 'Hoth'];
+var continents = ['Mittelerde', 'Pangea', 'Westeros', 'Hoth', 'Wasteland'];
 var helloContinents = Array.from(continents, function (c) {
   return "Hello ".concat(c, "!");
 });
