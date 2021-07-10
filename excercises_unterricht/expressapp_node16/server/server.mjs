@@ -6,7 +6,7 @@ const PORT = 3000
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.get("/users", (req, res) => {
-    res.sendFile(path.join(__dirname, ".(users.html"))
+    res.sendFile(path.join(__dirname, ".users.html"))
 })
 
 app.use()
