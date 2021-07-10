@@ -1,0 +1,13 @@
+{
+  "name": "npm-yvesdgreeting-test",
+  "version": "1.1.1",
+  "description": "",
+  "main": "src/greeting.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yves Dätwyler",
+  "license": "ISC",
+  "repository": "github:/ydaetwyler/school"
+}
