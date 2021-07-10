@@ -1,12 +1,20 @@
 import './App.css'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
+
+import PartOne from './components/PartOne'
+import PartTwo from './components/PartTwo'
+
+const Title = () => (
+  <div>
+    <h1>AdventOfCode 1</h1>
+  </div>
+)
 
 const App = () => {
   const [numbers, setNumbers] = useState([])
-  const [result, setResult] = useState([])
-  const [match, setMatch] = useState([])
 
+  const inputRef = useRef();
 
   useEffect(() => {
     axios
@@ -14,50 +22,16 @@ const App = () => {
       .then(response => {
         setNumbers(response.data)
       })
-  }, [])
-
-  useEffect(() => {
-    const checkSum = (numbers) => {
-      for (let i = 0; i < numbers.length; i++) {
-        for (let x = 0; x < numbers.length; x++) {
-          if (i !== x) {
-            const sum = numbers[i].number + numbers[x].number
-            if (sum === 2020) {
-              setMatch([numbers[i].number, numbers[x].number])
-              setResult([numbers[i].number * numbers[x].number])
-            }
-          }
-        }
-      }
-    }
-    checkSum(numbers)
-  }, [numbers])   
-
-  console.log(result)
+  }, [inputRef])  
 
   return (
     <div>
-      <h1>AdventOfCode 1</h1>
-      <h2>These two numbers sum up to 2020</h2>
-      <ul>
-        {match.map(numb =>
-        <li key={numb}>
-          {numb}
-        </li>
-        )}
-      </ul>
-      <h2>These numbers multiplied are</h2>
-      <ul>
-        {result.map(res =>
-        <li key={res}>
-          {res}
-        </li>
-        )}
-      </ul>
+      <Title />
+      <PartOne allnumbers={numbers} />
+      <PartTwo allnumbers={numbers} />
     </div>
   )
 
 }
 
-
-export default App;
+export default App
