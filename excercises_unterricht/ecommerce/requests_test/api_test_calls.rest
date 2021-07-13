@@ -1,0 +1,22 @@
+### Get all shop products
+GET http://localhost:3000/cart
+
+### Get single shop product
+GET http://localhost:3000/shop/3
+
+### Get all cart items
+GET http://localhost:3000/cart
+
+### Get single cart item
+GET http://localhost:3000/cart/1
+
+### Post shop product to cart
+POST http://localhost:3000/shop/add/
+content-type: application/json
+
+{
+    "id": "3"
+}
+
+### Remove item from cart
+DELETE http://localhost:3000/cart/3

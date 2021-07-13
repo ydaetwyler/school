@@ -79,20 +79,20 @@ app.post('/shop/add', (req, res) => {
     const body = req.body
 
     /* Check if empty */
-    if (!body.content) {
+    if (!body) {
         return response.status(400).json({
-            error: 'content missing'
+            error: 'empty request'
         })
     }
     /* Check if request is with valid product id */
-    const requestId = body.content.id
+    const requestId = Number(body.id)
     if (typeof(requestId) !== 'number' && requestId > products.length) {
-        return response.statzs(400).json({
+        return response.status(400).json({
             error: 'product not valid'
         })
     }
 
-    const productObj = products[body.content]
+    const productObj = products.find(prod => prod.id === requestId)
     
     const product = productObj.product
     const price = productObj.price
