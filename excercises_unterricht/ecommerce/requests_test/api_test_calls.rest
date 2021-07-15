@@ -1,22 +1,31 @@
 ### Get all shop products
-GET http://localhost:3000/cart
+GET http://localhost:4001/shop
 
 ### Get single shop product
-GET http://localhost:3000/shop/3
+GET http://localhost:4001/shop/3
 
 ### Get all cart items
-GET http://localhost:3000/cart
+GET http://localhost:4001/cart
 
 ### Get single cart item
-GET http://localhost:3000/cart/1
+GET http://localhost:4001/cart/1
 
 ### Post shop product to cart
-POST http://localhost:3000/shop/add/
+POST http://localhost:4001/shop/add/
 content-type: application/json
 
 {
-    "id": "3"
+    "id": "3",
+    "comment": "I like that very much :-)"
+}
+
+### Update comment on cart item
+PUT http://localhost:4001/cart/1
+content-type: application/json
+
+{
+    "comment": "Or maybe not so much :("
 }
 
 ### Remove item from cart
-DELETE http://localhost:3000/cart/3
+DELETE http://localhost:4001/cart/1

@@ -1,7 +1,7 @@
-import express, { response } from 'express'
+import express from 'express'
 
 const app = express()
-const PORT = 3000
+const PORT = 4001
 
 app.use(express.json())
 
@@ -32,7 +32,11 @@ let cart = []
 
 /* Get available products */
 app.get('/shop', (req, res) => {
-    res.json(products)
+    if (products.length > 0) {
+        res.status(200).json(products) 
+    } else {
+        res.status(204).end('Shop is empty')
+    }
 })
 
 app.get('/shop/:id', (req, res) => {
@@ -40,7 +44,7 @@ app.get('/shop/:id', (req, res) => {
     const prod = products.find(prod => prod.id === id)
 
     if (prod) {
-        res.json(prod)
+        res.status(200).json(prod)
     } else {
         res.status(404).end()
     }
@@ -49,9 +53,9 @@ app.get('/shop/:id', (req, res) => {
 /* Get products in cart */
 app.get('/cart', (req, res) => {
     if (cart.length > 0) {
-        res.json(cart)
+        res.status(200).json(cart)
     } else {
-        res.end('Empty cart')
+        res.status(204).end('Empty cart')
     }
 })
 
@@ -60,7 +64,7 @@ app.get('/cart/:id', (req, res) => {
     const item = cart.find(item => item.id === id)
 
     if (item) {
-        res.json(item)
+        res.status(200).json(item)
     } else {
         res.status(404).end()
     }
@@ -92,6 +96,8 @@ app.post('/shop/add', (req, res) => {
         })
     }
 
+    const comment = body.comment
+
     const productObj = products.find(prod => prod.id === requestId)
     
     const product = productObj.product
@@ -101,6 +107,7 @@ app.post('/shop/add', (req, res) => {
         product: product,
         price: price,
         date: new Date(),
+        comment: comment,
         id: generateId()
     }
 
@@ -109,12 +116,36 @@ app.post('/shop/add', (req, res) => {
     res.json(item)
 })
 
+/* Update cart item - only comment */
+app.put('/cart/:id', (req, res) => {
+    const id = Number(req.params.id)
+    const obj = cart.find(item => item.id === id)
+    const comment = req.body.comment
+    
+    if (obj) {
+        obj.comment = comment;
+    
+        cart = cart.filter(item => item.id !== id)
+        cart.push(obj)
+
+        res.status(200).end()
+    } else {
+        res.status(404).end()
+    }
+})
+
 /* Remove from cart */
 app.delete('/cart/:id', (req, res) => {
     const id = Number(req.params.id)
-    cart = cart.filter(item => item.id !== id)
+    const exists = cart.find(item => item.id === id)
 
-    res.status(204).end()
+    if (exists) {
+        cart = cart.filter(item => item.id !== id)
+
+        res.status(200).end()
+    } else {
+        res.status(404).end()
+    }
 })
 
 app.listen(PORT, () => {
