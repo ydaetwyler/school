@@ -1,27 +1,25 @@
 {
-  "product-items":  [
-        {
-            "id": 1,
-            "product": "Lightsaber",
-            "price": "25000"
-        },
-        {
-            "id": 2,
-            "product": "Sword",
-            "price": "5000"
-        },
-        {
-            "id": 3,
-            "product": "Knife",
-            "price": "1000"
-        },
-        {
-            "id": 4,
-            "product": "Wood",
-            "price": "20"
-        }
-    ],
-    "cart-items": [
-        
-    ]
+  "productItems": [
+    {
+      "id": 1,
+      "product": "Lightsaber",
+      "price": "25000"
+    },
+    {
+      "id": 2,
+      "product": "Sword",
+      "price": "5000"
+    },
+    {
+      "id": 3,
+      "product": "Knife",
+      "price": "1000"
+    },
+    {
+      "id": 4,
+      "product": "Wood",
+      "price": "20"
+    }
+  ],
+  "cartItems": []
 }

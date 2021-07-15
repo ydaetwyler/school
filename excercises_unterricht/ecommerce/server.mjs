@@ -1,34 +1,24 @@
 import express from 'express'
+import fs, { fstat } from 'fs'
 
 const app = express()
 const PORT = 4001
 
+let db = JSON.parse(fs.readFileSync('./db/db.json'))
+
+const products = db.productItems
+let cart = db.cartItems
+
 app.use(express.json())
 
-let products = [
-    {
-        id: 1,
-        product: "Lightsaber",
-        price: "25000"
-    },
-    {
-        id: 2,
-        product: "Sword",
-        price: "5000"
-    },
-    {
-        id: 3,
-        product: "Knife",
-        price: "1000"
-    },
-    {
-        id: 4,
-        product: "Wood",
-        price: "20"
-    }
-]
-
-let cart = []
+/* Save to db operation */
+const save = () => {
+    db.productItems = products
+    db.cartItems = cart
+    fs.writeFile('./db/db.json', JSON.stringify(db, null, 2), error => {
+        if (error) throw error
+    })
+}
 
 /* Get available products */
 app.get('/shop', (req, res) => {
@@ -113,7 +103,8 @@ app.post('/shop/add', (req, res) => {
 
     cart = cart.concat(item)
 
-    res.json(item)
+    res.status(200).end()
+    save();
 })
 
 /* Update cart item - only comment */
@@ -129,6 +120,7 @@ app.put('/cart/:id', (req, res) => {
         cart.push(obj)
 
         res.status(200).end()
+        save()
     } else {
         res.status(404).end()
     }
@@ -143,6 +135,7 @@ app.delete('/cart/:id', (req, res) => {
         cart = cart.filter(item => item.id !== id)
 
         res.status(200).end()
+        save()
     } else {
         res.status(404).end()
     }
