@@ -11,7 +11,7 @@ GET http://localhost:4001/cart
 GET http://localhost:4001/cart/1
 
 ### Post shop product to cart
-POST http://localhost:4001/shop/add/
+POST http://localhost:4001/cart/add/
 content-type: application/json
 
 {
