@@ -1,18 +1,24 @@
-import dbconnect from '../helper/dbconnect.mjs'
+import { fetchAlike } from '../helper/dbconnect.mjs'
 
-const products = dbconnect.db.productItems
-
-export const getAllProd = (req, res) => {
-    (products.length > 0)
-        ?   res.status(200).json(products) 
-        :    res.status(204).end('Shop is empty')
+export const getAllProd = (req, res, next) => {
+    fetchAlike()
+        .then(data => {
+            (data.productItems.length > 0)
+            ?   res.status(200).json(data.productItems)
+            :   res.status(204).redirect('/invalid')
+        })
+        .catch(err => next(err))
 }
 
-export const getOneProd = (req, res) => {
-    const id = Number(req.params.id)
-    const prod = products.find(prod => prod.id === id)
+export const getOneProd = (req, res, next) => {
+    fetchAlike()
+        .then(data => {
+            const id = Number(req.params.id)
+            const prod = data.productItems.find(prod => prod.id === id)
 
-    prod
-    ?   res.status(200).json(prod)
-    :   res.status(404).end()
+            prod
+            ?   res.status(200).json(prod)
+            :   res.status(404).redirect('/invalid')
+        })
+        .catch(err => next(err))
 }

@@ -1,92 +1,105 @@
-import dbconnect from '../helper/dbconnect.mjs'
+import { fetchAlike, save } from '../helper/dbconnect.mjs'
 import generateId from '../helper/idgen.mjs'
 
-const products = dbconnect.db.productItems
-let cart = dbconnect.db.cartItems
-const db = dbconnect
-
-export const getAllItems = (req, res) => {
-    (cart.length > 0)
-        ?   res.status(200).json(cart)
-        :   res.status(204).end('Empty cart')
-}
-
-export const getOneItem = (req, res) => {
-    const id = Number(req.params.id)
-    const item = cart.find(item => item.id === id)
-
-    item
-        ?   res.status(200).json(item)
-        :   res.status(404).end()
-}
-
-export const addItem = (req, res) => {
-    const body = req.body
-
-    /* Check if empty */
-    if (!body) {
-        return res.status(400).json({
-            error: 'empty request'
+export const getAllItems = (req, res, next) => {
+    fetchAlike()
+        .then(data => {
+            (data.cartItems.length > 0)
+            ?   res.status(200).json(data.cartItems)
+            :   res.status(204).redirect('/invalid')
         })
-    }
-    /* Check if request is with valid product id */
-    const requestId = Number(body.id)
-    if (typeof(requestId) !== 'number' && requestId > products.length) {
-        return res.status(400).json({
-            error: 'product not valid'
-        })
-    }
-
-    const comment = body.comment
-
-    const productObj = products.find(prod => prod.id === requestId)
-    
-    const product = productObj.product
-    const price = productObj.price
-
-    const item = {
-        product: product,
-        price: price,
-        date: new Date(),
-        comment: comment,
-        id: generateId(cart)
-    }
-
-    cart = cart.concat(item)
-
-    res.status(200).end()
-    db.save(products, cart);
+        .catch(err => next(err))
 }
+
+export const getOneItem = (req, res, next) => {
+    fetchAlike()
+        .then(data => {
+            const id = Number(req.params.id)
+            const item = data.cartItems.find(item => item.id === id)
+        
+            item
+                ?   res.status(200).json(item)
+                :   res.status(404).redirect('/invalid')
+        })
+        .catch(err => next(err))
+}
+
+export const addItem = (req, res, next) => {
+    fetchAlike()
+        .then(data => {
+            const body = req.body
+
+            /* Check if empty */
+            if (!body) {
+                return res.status(400).json({
+                    error: 'empty request'
+                })
+            }
+            /* Check if request is with valid product id */
+            const requestId = Number(body.id)
+            if (typeof(requestId) !== 'number' && requestId > data.productItems.length) {
+                return res.status(400).json({
+                    error: 'product not valid'
+                })
+            }
+        
+            const comment = body.comment
+            const productObj = data.productItems.find(prod => prod.id === requestId)
+            const { product, price } = productObj
+        
+            const item = {
+                product,
+                price,
+                date: new Date(),
+                comment,
+                id: generateId(data.cartItems)
+            }
+        
+            data.cartItems = data.cartItems.concat(item)
+        
+            res.status(200).end()
+            save(data.productItems, data.cartItems);
+        })
+        .catch(err => next(err))
+}    
 
 /* Update cart item - only comment */
-export const updateItem = (req, res) => {
-    const id = Number(req.params.id)
-    const obj = cart.find(item => item.id === id)
-    const comment = req.body.comment
-    
-    if (obj) {
-        obj.comment = comment;
-    
-        cart = cart.filter(item => item.id !== id)
-        cart.push(obj)
-
-        res.status(200).end()
-        db.save(products, cart)
-    } else {
-        res.status(404).end()
-    }
+export const updateItem = (req, res, next) => {
+    fetchAlike()
+        .then(data => {
+            const id = Number(req.params.id)
+            const obj = data.cartItems.find(item => item.id === id)
+            const comment = req.body.comment
+            
+            if (obj) {
+                obj.comment = comment;
+            
+                data.cartItems = data.cartItems.filter(item => item.id !== id)
+                data.cartItems.push(obj)
+        
+                res.status(200).end()
+                save(data.productItems, data.cartItems)
+            } else {
+                res.status(404).redirect('/invalid')
+            }
+        })
+        .catch(err => next(err))
 }
 
-export const removeItem = (req, res) => {
-    const id = Number(req.params.id)
-    const exists = cart.find(item => item.id === id)
-
-    if (exists) {
-        cart = cart.filter(item => item.id !== id)
-
-        res.status(200).end()
-        db.save(products, cart)
-    } else {
-        res.status(404).end()
-    }
+export const removeItem = (req, res, next) => {
+    fetchAlike()
+        .then(data => {
+            const id = Number(req.params.id)
+            const exists = data.cartItems.find(item => item.id === id)
+        
+            if (exists) {
+                data.cartItems = data.cartItems.filter(item => item.id !== id)
+        
+                res.status(200).end()
+                save(data.productItems, data.cartItems)
+            } else {
+                res.status(404).redirect('/invalid')
+            }
+        })
+        .catch(err => next(err))
 }

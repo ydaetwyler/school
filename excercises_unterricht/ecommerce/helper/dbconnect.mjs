@@ -1,14 +1,15 @@
-import fs from 'fs'
+import fs from 'fs-extra'
 
-let db = JSON.parse(fs.readFileSync('./db/db.json'))
+// export let db = JSON.parse(fs.readFileSync('./db/db.json'))
+
+export const fetchAlike = () => fs.readJson('./db/db.json')
 
 /* Save to db operation */
-const save = (products, cart) => {
+export const save = (products, cart) => {
+    const db = {}
     db.productItems = products
     db.cartItems = cart
-    fs.writeFile('./db/db.json', JSON.stringify(db, null, 2), error => {
+    fs.writeJson('./db/db.json', db, error => {
         if (error) throw error
     })
 }
-
-export default { db, save }
