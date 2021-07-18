@@ -20,3 +20,7 @@ table.bordered-table th, td {
 table.bordered-table {
   border-collapse: collapse;
 }
+
+form {
+  margin-top: 30px;
+}

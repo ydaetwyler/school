@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-export const initialIssues = [
+const initialIssues = [
   {
       id: 1,
       status: 'New',
@@ -24,9 +24,11 @@ export const initialIssues = [
   }
 ]
 
+const user = 'james'
+
 ReactDOM.render(
   <React.StrictMode>
-    <App initialIssues={initialIssues}/>
+    <App initialIssues={initialIssues} user={user} />
   </React.StrictMode>,
   document.getElementById('root')
 );
