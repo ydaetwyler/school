@@ -4,12 +4,12 @@ import IssueFilter from './components/IssueFilter'
 import IssueTable from './components/IssueTable'
 import IssueAdd from './components/IssueAdd'
 
-const App = ({ issues }) => (
+const App = ({ initialIssues }) => (
   <div>
     <h1>Issue Tracker</h1>
     <IssueFilter />
     <hr />
-    <IssueTable issues={issues} />
+    <IssueTable initialIssues={initialIssues} />
     <hr />
     <IssueAdd />
   </div>

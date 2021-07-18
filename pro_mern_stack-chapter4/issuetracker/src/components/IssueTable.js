@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import IssueRow from './IssueRow'
 
-const IssueTable = ({ issues }) => (
+const IssueTable = ({ initialIssues }) => {
+    const [issues, setIssues] = useState([])
+
+    useEffect(() => {
+        loadData()
+    }, [])
+    
+    const loadData = () => {
+        setTimeout(() => {
+            setIssues(initialIssues)
+        }, 500)
+    }
+
+    return (
     <table>
         <thead>
             <tr>
@@ -21,6 +34,7 @@ const IssueTable = ({ issues }) => (
             )}
         </tbody>
     </table>
-)
+    )
+}
 
 export default IssueTable

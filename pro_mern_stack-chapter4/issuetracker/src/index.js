@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-export const issues = [
+export const initialIssues = [
   {
       id: 1,
       status: 'New',
@@ -26,7 +26,7 @@ export const issues = [
 
 ReactDOM.render(
   <React.StrictMode>
-    <App issues={issues}/>
+    <App initialIssues={initialIssues}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
