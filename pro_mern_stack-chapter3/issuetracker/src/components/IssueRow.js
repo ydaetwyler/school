@@ -1,9 +1,14 @@
 import React from 'react'
 
-const IssueRow = ({ rowStyle, issueId, issueTitle }) => (
+const IssueRow = ({ issue }) => (
     <tr>
-        <td style={rowStyle}>{issueId}</td>
-        <td style={rowStyle}>{issueTitle}</td>
+        <td>{issue.id}</td>
+        <td>{issue.status}</td>
+        <td>{issue.ownder}</td>
+        <td>{issue.created.toDateString()}</td>
+        <td>{issue.effort}</td>
+        <td>{issue.due ? issue.due.toDateString() : ''}</td>
+        <td>{issue.title}</td>
     </tr>
 )
 
