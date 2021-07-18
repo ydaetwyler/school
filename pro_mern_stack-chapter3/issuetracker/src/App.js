@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css'
 
 import IssueFilter from './components/IssueFilter'
 import IssueTable from './components/IssueTable'
