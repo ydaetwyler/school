@@ -1,8 +1,14 @@
 import React from 'react'
 
-const IssueAdd = () => (
+const IssueAdd = ({ submitHandler, newIssueTitle, newIssueTitleChangeHandler }) => (
     <div>
-        <p>Placeholder issue add.</p>
+        <form onSubmit={submitHandler}>
+            <input 
+                value={newIssueTitle}
+                onChange={newIssueTitleChangeHandler}
+            />
+            <button type="submit">save</button>
+        </form>
     </div>
 )
 

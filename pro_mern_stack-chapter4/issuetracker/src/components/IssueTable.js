@@ -1,38 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import IssueRow from './IssueRow'
-import Form from './Form'
 
-import createIssue from './functions/createIssue'
-
-const IssueTable = ({ initialIssues, user }) => {
-    const [issues, setIssues] = useState([])
-    const [newIssueTitle, setNewIssueTitle] = useState('')
-    const [currentUser, setCurrentUser] = useState('')
-
-    useEffect(() => {
-        loadData()
-    }, [])
-    
-    const loadData = () => {
-        setTimeout(() => {
-            setIssues(initialIssues)
-            setCurrentUser(user)
-        }, 500)
-    }
-
-    const handleIssueTitleChange = (event) => {
-        setNewIssueTitle(event.target.value)
-    }
-    
-    const addIssue = (event) => {
-        event.preventDefault()
-        const issueToAdd = createIssue(issues, newIssueTitle, currentUser)
-        setIssues(issues.concat(issueToAdd))
-        setNewIssueTitle('')
-    }
-
-    return (
+const IssueTable = ({ issues }) => (
     <div>
         <table>
             <thead>
@@ -47,18 +17,12 @@ const IssueTable = ({ initialIssues, user }) => {
                 </tr>
             </thead>
             <tbody>
-                {issues.map(issue => 
-                    <IssueRow key={issue.id} issue={issue} />
-                )}
+            {issues.map(issue => 
+                <IssueRow key={issue.id} issue={issue} />
+            )}
             </tbody>
         </table>
-        <Form 
-            submitHandler={addIssue}
-            newIssueTitle={newIssueTitle}
-            newIssueTitleChangeHandler={handleIssueTitleChange}
-        />
     </div>
-    )
-}
+)
 
 export default IssueTable
