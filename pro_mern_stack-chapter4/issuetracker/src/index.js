@@ -24,11 +24,11 @@ const initialIssues = [
   }
 ]
 
-const user = 'james'
+const operators = ['James', 'Jane', 'Jack', 'Jacky']
 
 ReactDOM.render(
   <React.StrictMode>
-    <App initialIssues={initialIssues} user={user} />
+    <App initialIssues={initialIssues} operators={operators} />
   </React.StrictMode>,
   document.getElementById('root')
 );
