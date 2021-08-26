@@ -1,16 +1,8 @@
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
+import fs from 'fs'
 
 let aboutMessage = "Issue Tracker API v1.0"
-
-const typeDefs = `
-    type Query {
-        about: String
-    }
-    type Mutation {
-        setAboutMessage(message: String!): String
-    }
-`;
 
 const resolvers = {
     Query: {
@@ -26,7 +18,7 @@ function setAboutMessage(_, { message }) {
 }
 
 const server = new ApolloServer({
-    typeDefs,
+    typeDefs: fs.readFileSync('./schema.graphql', 'utf-8'),
     resolvers,
 });
 
