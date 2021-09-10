@@ -59,7 +59,8 @@ server.applyMiddleware({ app, path: '/graphql' })
 
 app.use(express.static('public'))
 
-(async function () {
+// :D:D:D:D https://github.com/expressjs/express/issues/3515#issuecomment-353738007 -> ;
+;(async function () {
     try {
         await connectToDb()
         app.listen(3000, () => {
