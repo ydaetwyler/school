@@ -1,22 +1,15 @@
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
 import { GraphQLScalarType } from 'graphql'
+import { MongoClient } from 'mongodb'
 import fs from 'fs'
 
-let aboutMessage = "Issue Tracker API v1.0"
+// %40 = @
+const url = 'mongodb+srv://filewalker:dxu7mbp1pqw_DZR%40enj@cluster0.fpmyd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
-const issuesDB = [
-    {
-        id: 1, status: 'New', owner: 'Ravan', effort: 5,
-        created: new Date('2021-08-26'), due: undefined,
-        title: 'Error in Error while Error, the whole WorlErrorErrorErrord',
-    },
-    {
-        id: 2, status: 'Assigned', owner: 'EddieMurphy', effort: 14,
-        created: new Date('2021-08-24'), due: new Date ('2021-09-25'),
-        title: 'Missing bottom border on earth',
-    },
-];
+let db
+
+let aboutMessage = "Issue Tracker API v1.0"
 
 const GraphQLDate = new GraphQLScalarType({
     name: 'GraphQLDate',
@@ -24,7 +17,7 @@ const GraphQLDate = new GraphQLScalarType({
     serialize(value) {
         return value.toISOString();
     },
-});
+})
 
 const resolvers = {
     Query: {
@@ -35,29 +28,44 @@ const resolvers = {
         setAboutMessage,
     },
     GraphQLDate,
-};
-
-function setAboutMessage(_, { message }) {
-    return aboutMessage = message;
 }
 
-function issueList() {
-    return issuesDB;
+function setAboutMessage(_, { message }) {
+    return aboutMessage = message
+}
+
+const issueList = async () => {
+    const issues = await db.collection('issues').find({}).toArray()
+    return issues
+}
+
+const connectToDb = async () => {
+    const client = new MongoClient(url, { useNewUrlParser: true })
+    await client.connect()
+    console.log(`🚀 Connected to MongoDB 🚀 at ${url}`)
+    db = client.db()
 }
 
 const server = new ApolloServer({
     typeDefs: fs.readFileSync('./schema.graphql', 'utf-8'),
     resolvers,
-});
+})
 
-await server.start(); // Added this line to make it work with @3 - Newest version
+await server.start() // Added this line to make it work with @3 - Newest version
 
-const app = express();
+const app = express()
 
-app.use(express.static('public'));
+app.use(express.static('public'))
 
-server.applyMiddleware({ app, path: '/graphql' });
+server.applyMiddleware({ app, path: '/graphql' })
 
-app.listen(3000, () => {
-    console.log('App started on port 3000');
-});
+async () => {
+    try {
+        await connectToDb()
+        app.listen(3000, () => {
+            console.log('App started on port 3000')
+        })
+    } catch(err) {
+        console.log(`:( Error -> ${err})`)
+    }
+}
