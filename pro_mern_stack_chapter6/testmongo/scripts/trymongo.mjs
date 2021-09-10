@@ -38,7 +38,8 @@ const testWithCallbacks = (callback) => {
                         return
                     }
 
-                    console.log(`Result of find ->\n${docs} `)
+                    const showJson = JSON.stringify(docs, null, " ")
+                    console.log(`Result of find ->\n${showJson} `)
 
                     console.log(`Job done - Time to die :(`)
                     client.close()
