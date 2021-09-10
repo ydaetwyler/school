@@ -19,6 +19,11 @@ const GraphQLDate = new GraphQLScalarType({
     },
 })
 
+const issueList = async () => {
+    const issues = await db.collection('issues').find({}).toArray()
+    return issues
+}
+
 const resolvers = {
     Query: {
         about: () => aboutMessage,
@@ -32,11 +37,6 @@ const resolvers = {
 
 function setAboutMessage(_, { message }) {
     return aboutMessage = message
-}
-
-const issueList = async () => {
-    const issues = await db.collection('issues').find({}).toArray()
-    return issues
 }
 
 const connectToDb = async () => {
@@ -55,11 +55,11 @@ await server.start() // Added this line to make it work with @3 - Newest version
 
 const app = express()
 
-app.use(express.static('public'))
-
 server.applyMiddleware({ app, path: '/graphql' })
 
-async () => {
+app.use(express.static('public'))
+
+(async function () {
     try {
         await connectToDb()
         app.listen(3000, () => {
@@ -68,4 +68,4 @@ async () => {
     } catch(err) {
         console.log(`:( Error -> ${err})`)
     }
-}
+})()
