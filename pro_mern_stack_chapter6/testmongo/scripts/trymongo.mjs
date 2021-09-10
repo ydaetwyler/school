@@ -38,18 +38,49 @@ const testWithCallbacks = (callback) => {
                         return
                     }
 
+                    // Stringify for Console
                     const showJson = JSON.stringify(docs, null, " ")
                     console.log(`Result of find ->\n${showJson} `)
 
                     console.log(`Job done - Time to die :(`)
                     client.close()
+                    callback(err)
                 })
         })
     })
 }
 
+const testWithAsync = async () => {
+    console.log(`\n_-*>> testWithAsync <<*-_`)
+    const client = new MongoClient(url, { useNewUrlParser: true})
+
+    try {
+        await client.connect()
+        console.log(`🚀 Connected to MongoDB 🚀`)
+
+        const db = client.db()
+        const collection = db.collection('issuetracker.employees')
+    
+        const employee = { id: 7, name: 'Kublai Khan', age: 50 }
+
+        const result = await collection.insertOne(employee)
+        console.log(`Result ID of insert ->\n${result.insertedId}`)
+
+        const docs = await collection.find({ _id: result.insertedId })
+            .toArray()
+        // Stringify for Console
+        const showJson = JSON.stringify(docs, null, " ")
+        console.log(`Result of find ->\n${showJson} `)
+    } catch(err) {
+        console.log(err)
+    } finally {
+        console.log(`Job done - Time to die :(`)
+        client.close()
+    }
+}
+
 testWithCallbacks((err) => {
     err
     ? console.log(err)
-    : console.log(`Tested and liked it :)`)
+    : testWithAsync()
 })
