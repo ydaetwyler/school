@@ -27,7 +27,7 @@ export const list = async (req, res, next) => {
     }
 }
 // -> /article
-export const create = async (req, res) => {
+export const create = async (req, res, next) => {
     try {
         console.log('create 🚀')
         const article = await Article.create(req.body)
@@ -38,7 +38,7 @@ export const create = async (req, res) => {
     }
 }
 // -> /article/:id
-export const update = async (req, res) => {
+export const update = async (req, res, next) => {
     try {
         console.log('update 🚀')
         const result = await Article.findOneAndUpdate(req.params.id, req.body, { 
@@ -52,7 +52,7 @@ export const update = async (req, res) => {
     }
 }
 // -> /article/:id
-export const remove = async (req, res) => {
+export const remove = async (req, res, next) => {
     try {
         console.log('remove 🚀')
         const result = await Article.deleteOne({ _id: caster(req.params.id) })
