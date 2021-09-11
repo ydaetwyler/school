@@ -41,7 +41,9 @@ export const create = async (req, res) => {
 export const update = async (req, res) => {
     try {
         console.log('update 🚀')
-        const result = updateArticle(req.params.id, req.body)
+        const result = await Article.findOneAndUpdate(req.params.id, req.body, { 
+            new: true 
+        })
         res.send(result)
     } catch (e) {
         res.send(e)
@@ -53,7 +55,10 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
     try {
         console.log('remove 🚀')
+        const result = await Article.deleteOne({ _id: caster(req.params.id) })
+        res.send(result)
     } catch (e) {
+        res.send(e)
         console.error(`Error -> ${e}`)
         next()
     }
