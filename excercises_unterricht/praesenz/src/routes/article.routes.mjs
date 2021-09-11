@@ -1,20 +1,22 @@
 import express from 'express'
 
+import { get, list, create, update, remove } from '../controllers/article.controller.mjs'
+
 const router = express.Router()
 
-// Get one
-router.get('/article/:id')
+// Get 🚀
+router.get('/article/:id', get)
 
-// Get all
-router.get('article')
+// List 🚀🚀🚀
+router.get('/article', list)
 
-// Upload one
-router.post('/article')
+// Create 🚀
+router.post('/article', create)
 
-// Update one
-router.put('/article/:id')
+// Update 🚀
+router.put('/article/:id', update)
 
-// Remove one
-router.delete('/article/:id')
+// Remove 🚀
+router.delete('/article/:id', remove)
 
 export default router
