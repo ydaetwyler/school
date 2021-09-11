@@ -29,3 +29,5 @@ const articleSchema = new Schema({
         }
     ]
 })
+
+export default mongoose.model('article', articleSchema, 'article')
