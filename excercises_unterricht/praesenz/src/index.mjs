@@ -2,6 +2,8 @@ import express from 'express'
 
 import connect from './utils/db.mjs'
 
+connect()
+
 const app = express()
 const port = 3000
 
