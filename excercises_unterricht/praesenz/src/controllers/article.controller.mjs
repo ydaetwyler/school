@@ -1,17 +1,20 @@
-import mongoose from 'mongoose' 
+import { 
+    getArticle,
+    getArticles,
+    createArticle,
+    updateArticle,
+    removeArticle,
+ } from '../services/article.service.mjs'
 
-import Article from '../models/article.mjs'
-
-const caster = id => mongoose.Types.ObjectId(id)
+ const displayError = (e) => console.error(`Error -> ${e}`)
 
 // -> /article/:id
 export const get = async (req, res, next) => {
     try {
         console.log('get 🚀')
-        const article = await Article.findOne({_id: caster(req.params.id) })
-        res.send(article)
+        res.send(await getArticle(req.params.id))
     } catch (e) {
-        console.error(`Error -> ${e}`)
+        displayError(e)
         next()
     }
 }
@@ -19,10 +22,9 @@ export const get = async (req, res, next) => {
 export const list = async (req, res, next) => {
     try {
         console.log('list 🚀🚀🚀')
-        const articles = await Article.find()
-        res.send(articles)
+        res.send(await getArticles())
     } catch (e) {
-        console.error(`Error -> ${e}`)
+        displayError(e)
         next()
     }
 }
@@ -30,10 +32,9 @@ export const list = async (req, res, next) => {
 export const create = async (req, res, next) => {
     try {
         console.log('create 🚀')
-        const article = await Article.create(req.body)
-        res.send(article)
+        res.send(await createArticle(req.body))
     } catch (e) {
-        console.error(`Error -> ${e}`)
+        displayError(e)
         next()
     }
 }
@@ -41,13 +42,10 @@ export const create = async (req, res, next) => {
 export const update = async (req, res, next) => {
     try {
         console.log('update 🚀')
-        const result = await Article.findOneAndUpdate(req.params.id, req.body, { 
-            new: true 
-        })
-        res.send(result)
+        res.send(await updateArticle(req.params.id, req.body))
     } catch (e) {
         res.send(e)
-        console.error(`Error -> ${e}`)
+        displayError(e)
         next()
     }
 }
@@ -55,11 +53,10 @@ export const update = async (req, res, next) => {
 export const remove = async (req, res, next) => {
     try {
         console.log('remove 🚀')
-        const result = await Article.deleteOne({ _id: caster(req.params.id) })
-        res.send(result)
+        res.send(await removeArticle(req.params.id))
     } catch (e) {
         res.send(e)
-        console.error(`Error -> ${e}`)
+        displayError(e)
         next()
     }
 }
