@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "nodemon src/index.mjs"
   },
-  "dependencies": {},
+  "dependencies": {
+    "apollo-server": "^3.3.0",
+    "graphql": "^15.5.3"
+  },
   "devDependencies": {
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.4"
