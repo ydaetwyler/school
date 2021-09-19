@@ -2,6 +2,8 @@ import { gql } from 'apollo-server'
 
 const typeDefs = gql`
 
+    scalar Date
+
     type Query {
         "Get family Object with all needed subfields"
         currentFamily: [Family!]!
@@ -19,7 +21,7 @@ const typeDefs = gql`
 
     "A list of family members"
     type FamilyMemberList {
-        users: [user]!
+        users: [User]!
     }
 
     "One user"
@@ -50,7 +52,7 @@ const typeDefs = gql`
         activityUrl: String
         activityImageList: [ActivityImageList]!
         familyMemberList: [FamilyMemberList]!
-        comments: [comment]
+        comments: [Comment]
     }
 
     "Event images list"
@@ -62,7 +64,7 @@ const typeDefs = gql`
     type CollectionList {
         collectionName: String!
         collectioIconUrl: String
-        tasks: [tasItem]!
+        tasks: [TaskItem]!
     }
 
     "Task item"
@@ -78,8 +80,8 @@ const typeDefs = gql`
         taskImageUrl: String
         taskUrl: String
         taskImageList: [TaskImageList]!
-        familyMemberList: [familyMemberList]!
-        comments: [comment]
+        familyMemberList: [FamilyMemberList]!
+        comments: [Comment]
     }
 
     "Task image list"
