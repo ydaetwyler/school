@@ -8,7 +8,8 @@ const familySchema = new Schema(
             type: String,
             required: true,
         },
-    }
+    },
+    { timestamps: true }
 )
 
 export default mongoose.model('family', familySchema, 'family')

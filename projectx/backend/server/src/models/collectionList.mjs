@@ -11,7 +11,8 @@ const collectionListSchema = new Schema(
         collectionIconUrl: {
             type: String
         }
-    }
+    },
+    { timestamps: true }
 )
 
 export default mongoose.model('collectionList', collectionListSchema, 'collectionList')

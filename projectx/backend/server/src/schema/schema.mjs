@@ -13,7 +13,6 @@ const typeDefs = gql`
     type Family {
         _id: ID!
         familyName: String!
-        currentUser: String!
         familyMemberList: [FamilyMemberList]!
         eventList: [EventItem]!
         collectionList: [CollectionList]!
@@ -63,7 +62,7 @@ const typeDefs = gql`
     "List containing all collections"
     type CollectionList {
         collectionName: String!
-        collectioIconUrl: String
+        collectionIconUrl: String
         tasks: [TaskItem]!
     }
 

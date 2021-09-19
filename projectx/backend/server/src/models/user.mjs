@@ -15,7 +15,8 @@ const userSchema = new Schema(
         avatarUrl: {
             type: String
         },
-    }
+    },
+    { timestamps: true }
 )
 
 export default mongoose.model('user', userSchema, 'user')
