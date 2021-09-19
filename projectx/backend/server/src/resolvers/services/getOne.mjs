@@ -1,8 +1,8 @@
-import { Mongoose } from "mongoose"
+import mongoose from 'mongoose'
 
 const caster = id => Mongoose.Types.ObjectId(id)
 
-const getOne = (id, item) => {
+const getOne = async (id, item) => {
     try {
         const itemFetched = await item.findOne({ _id: caster(id) })
         return {

@@ -4,6 +4,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 
 import typeDefs from './schema/schema.mjs'
+import resolvers from './resolvers/resolvers.mjs'
+
 import connect from './utils/db.mjs'
 
 // Connect to MongoDB
@@ -15,6 +17,7 @@ const app = express()
 
 const server = new ApolloServer({ 
     typeDefs,
+    resolvers,
     cors: true,
     playground: process.env.NODE_ENV === 'development' ? true : false,
     introspection: true,

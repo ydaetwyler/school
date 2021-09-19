@@ -1,4 +1,4 @@
-const getAll = item => {
+const getAll = async item => {
     try {
         const itemsFetched = await item.find()
         return itemsFetched.map(item => {

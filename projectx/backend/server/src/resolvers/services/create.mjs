@@ -1,4 +1,4 @@
-export const createFamily = (args, Family) => {
+export const createFamily = async (args, Family) => {
     try {
         const { familyName } = args.family
         const family = new Family({
@@ -12,7 +12,7 @@ export const createFamily = (args, Family) => {
     }
 }
 
-export const createUser = (args, User) => {
+export const createUser = async (args, User) => {
     try {
         const { userEmail, userName, avatarUrl } = args.user
         const user = new User({
@@ -28,7 +28,7 @@ export const createUser = (args, User) => {
     }
 }
 
-export const createEventItem = (args, EventItem) => {
+export const createEventItem = async (args, EventItem) => {
     try {
         const { 
             activityName,
@@ -56,7 +56,7 @@ export const createEventItem = (args, EventItem) => {
     }
 }
 
-export const createCollection = (args, Collection) => {
+export const createCollection = async (args, Collection) => {
     try {
         const { 
             collectionName, 
@@ -74,7 +74,7 @@ export const createCollection = (args, Collection) => {
     }
 }
 
-export const createTaskItem = (args, TaskItem) => {
+export const createTaskItem = async (args, TaskItem) => {
     try {
         const {
             taskName,
@@ -104,7 +104,7 @@ export const createTaskItem = (args, TaskItem) => {
     }
 }
 
-export const createComment = (args, Comment) => {
+export const createComment = async (args, Comment) => {
     try {
         const {
             commentText,
