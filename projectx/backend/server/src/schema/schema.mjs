@@ -6,7 +6,7 @@ const typeDefs = gql`
 
     type Query {
         "Get family Object with all needed subfields"
-        currentFamily: [Family!]!
+        family: [Family!]!
     }
 
     "Family is the main object"
@@ -29,11 +29,11 @@ const typeDefs = gql`
         userEmail: String!
         userName: String!
         avatarUrl: String
-        avatarList: [avatarList]!
+        avatarList: [AvatarList]!
     }
 
     "Avatar image list"
-    type avatarList {
+    type AvatarList {
         avatarUrl: [String]
     }
 

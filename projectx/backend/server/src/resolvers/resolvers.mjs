@@ -19,7 +19,10 @@ import {
 
 const resolvers = {
     Query: {
-        currentFamily: (_, __) => family()
+        family: (_, __) => family(),
+    },
+    FamilyMemberList: {
+        users: (_, __) => allUsers()
     }
 }
 
