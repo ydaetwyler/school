@@ -71,12 +71,15 @@ const typeDefs = gql`
     type TaskItem {
         _id: ID!
         taskName: String!
-        taskPriority: [String]!
+        taskPriorities: [String]!
+        taspPriority: String!
         taskDescription: String
         taskDue: Date
+        taskCreated: Date
         taskOwner: String!
         taskResponsibles: [String]
-        taskKanban: [String]
+        taskKanbanList: [String]
+        taskKanban: String
         taskImageUrl: String
         taskUrl: String
         taskImageList: [TaskImageList]!
