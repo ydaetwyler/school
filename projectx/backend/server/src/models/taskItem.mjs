@@ -14,12 +14,23 @@ const taskItemSchema = new Schema(
         },
         taskDescription: {
             type: String,
+            required: false,
         },
         taskDue: {
             type: Date,
+            required: false,
+        },
+        taskOwner: {
+            type: String,
+            required: true,
         },
         taskResponsibles: {
-            type: [String]
+            type: [String],
+            required: false,
+        },
+        taskKanbanList: {
+            type: [String],
+            required: true,
         },
         taskKanban: {
             type: String,
@@ -27,9 +38,21 @@ const taskItemSchema = new Schema(
         },
         taskImageUrl: {
             type: String,
+            required: false,
         },
         taskUrl: {
-            type: String
+            type: String,
+            required: false,
+        },
+        taskImageList: {
+            type: Schema.Types.ObjectId,
+            ref: 'taskImageList',
+            required: true,
+        },
+        comments: {
+            type: [Schema.Types.ObjectId],
+            red: 'comment',
+            required: false,
         }
     },
     { timestamps: true }

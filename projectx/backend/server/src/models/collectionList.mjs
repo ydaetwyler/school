@@ -9,7 +9,13 @@ const collectionListSchema = new Schema(
             required: true
         },
         collectionIconUrl: {
-            type: String
+            type: String,
+            required: false,
+        },
+        tasks: {
+            type: [Schema.Types.ObjectId],
+            ref: 'taskItem',
+            required: false,
         }
     },
     { timestamps: true }

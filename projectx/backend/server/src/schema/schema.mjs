@@ -6,16 +6,26 @@ const typeDefs = gql`
 
     type Query {
         "Get family Object with all needed subfields"
-        family: [Family!]!
+        load: [Family!]!
+        family: Family,
+        familyMemberList: FamilyMemberList,
+        user: User,
+        avatarList: AvatarList,
+        eventItem: EventItem,
+        activityImageList: ActivityImageList,
+        collectionList: CollectionList,
+        taskItem: TaskItem,
+        taskImageList: TaskImageList,
+        comment: Comment,
     }
 
     "Family is the main object"
     type Family {
         _id: ID!
         familyName: String!
-        familyMemberList: [FamilyMemberList]!
+        familyMemberList: FamilyMemberList!
         eventList: [EventItem]!
-        collectionList: [CollectionList]!
+        collectionList: CollectionList!
     }
 
     "A list of family members"
@@ -29,7 +39,7 @@ const typeDefs = gql`
         userEmail: String!
         userName: String!
         avatarUrl: String
-        avatarList: [AvatarList]!
+        avatarList: AvatarList
     }
 
     "Avatar image list"
@@ -49,8 +59,8 @@ const typeDefs = gql`
         activityDescription: String
         activityLocation: String
         activityUrl: String
-        activityImageList: [ActivityImageList]!
-        familyMemberList: [FamilyMemberList]!
+        activityImageList: ActivityImageList
+        familyMemberList: FamilyMemberList!
         comments: [Comment]
     }
 
@@ -63,7 +73,7 @@ const typeDefs = gql`
     type CollectionList {
         collectionName: String!
         collectionIconUrl: String
-        tasks: [TaskItem]!
+        tasks: [TaskItem]
     }
 
     "Task item"
@@ -77,12 +87,12 @@ const typeDefs = gql`
         taskCreated: Date
         taskOwner: String!
         taskResponsibles: [String]
-        taskKanbanList: [String]
+        taskKanbanList: [String]!
         taskKanban: String
         taskImageUrl: String
         taskUrl: String
-        taskImageList: [TaskImageList]!
-        familyMemberList: [FamilyMemberList]!
+        taskImageList: TaskImageList!
+        familyMemberList: FamilyMemberList!
         comments: [Comment]
     }
 

@@ -9,11 +9,16 @@ const eventItemSchema = new Schema(
             required: true,
         },
         activityImageUrl: {
-            type: String
+            type: String,
+            required: false,
         },
         activityDate: {
             type: Date,
             required: true,
+        },
+        participantsList: {
+            type: [String],
+            required: false
         },
         activityOwner: {
             type: String,
@@ -21,13 +26,32 @@ const eventItemSchema = new Schema(
         },
         activityDescription: {
             type: String,
+            required: false,
         },
         activityLocation: {
             type: String,
+            required: false,
         },
         activityUrl: {
             type: String,
+            required: false,
         },
+        activityImageList: {
+            type: Schema.Types.ObjectId,
+            ref: 'activityImageList',
+            required: false,
+        },
+        familyMemberList: {
+            type: Schema.Types.ObjectId,
+            ref: 'FamilyMemberList',
+            required: true,
+        },
+        comments: {
+            type: [Schema.Types.ObjectId],
+            ref: 'comment',
+            required: false,
+        }
+
     },
     { timestamps: true }
 )

@@ -13,8 +13,14 @@ const userSchema = new Schema(
             required: true,
         },
         avatarUrl: {
-            type: String
+            type: String,
+            required: false,
         },
+        avatarList: {
+            type: Schema.Types.ObjectId,
+            ref: 'avatarList',
+            required: true,
+        }
     },
     { timestamps: true }
 )
