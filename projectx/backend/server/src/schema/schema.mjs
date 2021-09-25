@@ -7,16 +7,23 @@ const typeDefs = gql`
     type Query {
         "Get family Object with all needed subfields"
         load: [Family!]!
-        family: Family,
-        familyMemberList: FamilyMemberList,
-        user: User,
-        avatarList: AvatarList,
-        eventItem: EventItem,
-        activityImageList: ActivityImageList,
-        collectionList: CollectionList,
-        taskItem: TaskItem,
-        taskImageList: TaskImageList,
-        comment: Comment,
+        family(id: ID!): Family
+        familyMemberList(id: ID!): FamilyMemberList
+        user(id: ID!): User
+        avatarList(id: ID!): AvatarList
+        eventItem(id: ID!): EventItem
+        activityImageList(id: ID!): ActivityImageList
+        collectionList(id: ID!): CollectionList
+        taskItem(id: ID!): TaskItem
+        taskImageList(id: ID!): TaskImageList
+        comment(id: ID!): Comment
+    }
+
+    type Mutation {
+        signUp(username: String!, email: String!, password: String!): String!
+        signIn(username: String, email: String, password: String!): String!
+        addFamily(familyName: String!): Family!
+        updateFamily(familyName: String!): Family!
     }
 
     "Family is the main object"
@@ -38,6 +45,8 @@ const typeDefs = gql`
         _id: ID!
         userEmail: String!
         userName: String!
+        password: String!
+        token: String!
         avatarUrl: String
         avatarList: AvatarList
     }

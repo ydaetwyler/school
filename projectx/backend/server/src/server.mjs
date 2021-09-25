@@ -27,9 +27,11 @@ const server = new ApolloServer({
 
 await server.start()
 
+app.use('*', )
+
 server.applyMiddleware({
     app,
-    path: '/',
+    path: '/dashboard',
     cors: true,
     onHealthCheck: () => {
         new Promise((resolve, reject) => {

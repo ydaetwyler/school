@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const caster = id => Mongoose.Types.ObjectId(id)
+const caster = id => mongoose.Types.ObjectId(id)
 
 const getOne = async (id, item) => {
     try {
