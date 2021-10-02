@@ -30,6 +30,7 @@ $.get('/article', function (data) {
                     <img class="card-img-top" src="${e.image}" alt="placeholder" />
                     <div class="card-body">
                         <div class="card-title">${e.title}</div>
+                        <div class="card-text">${e.description}</div>
                         <div class="card-text">$ ${e.price}</div>
                         <button type="submit">
                             <i class="fas fa-shopping-cart"></i>
