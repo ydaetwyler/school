@@ -2,6 +2,7 @@ import express from 'express'
 
 import connect from './utils/db.mjs'
 import articleRoutes from './routes/article.routes.mjs'
+import cartRoutes from './routes/cart.routes.mjs'
 
 // Connects to mongo db
 connect()
@@ -16,5 +17,6 @@ app.listen(port, () =>
 )
 
 app.use('/', articleRoutes)
+app.use('/', cartRoutes)
 
 app.use(express.static('public'))
