@@ -1,6 +1,8 @@
 import CartItem from '../models/cartItem.mjs'
 import { getArticle } from '../services/article.service.mjs'
 
+import { getCartData } from '../services/cart.service.mjs'
+
 export const getCart = async(req,res,next) => {
 
 }
@@ -24,11 +26,11 @@ export const addItem = async(req,res,next) => {
         })
     }
     
-    const cart = await CartItem.find()
-
-    res.send(cart)
+    res.send(await getCartData())
 }
 
 export const removeItem = async(req,res,next) => {
+    CartItem.deleteOne({ articleData: req.params.id })
 
+    res.send(await getCartData())
 }
