@@ -28,7 +28,7 @@ export const addItem = async (req,res,next) => {
 }
 
 export const removeItem = async (req,res,next) => {
-    CartItem.deleteOne({ articleData: req.params.id })
+    await CartItem.deleteOne({ articleData: req.params.id })
 
     res.send(await getCartData())
 }
