@@ -16,3 +16,5 @@ app.listen(port, () =>
 )
 
 app.use('/', articleRoutes)
+
+app.use(express.static('public'))
