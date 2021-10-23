@@ -4,6 +4,7 @@ import {
     allUsers,
     user,
     newUser,
+    loginUser,
     allEventItems,
     eventItem,
     newEventItem,
@@ -14,13 +15,18 @@ import {
     taskItem,
     newTaskItem,
     comment,
-    newComment 
+    newComment
 } from '../resolvers/index.mjs'
 import { taskImageList } from './index.mjs'
 import { activityImageList } from './index.mjs'
 import { avatarList } from './index.mjs'
 
 const resolvers = {
+    Mutation: {
+        SignUp: (_, args) => newUser(args),
+        SignIn: (_, args) => loginUser(args),
+      // AddFamily: (_, args) => newFamily(args),
+    },
     Query: {
         load: (_, __) => allFamilies(),
         family: {

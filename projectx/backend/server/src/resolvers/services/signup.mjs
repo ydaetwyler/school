@@ -1,26 +1,28 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import gravatar from '../../gravatar'
+import gravatar from '../../gravatar.mjs'
+import dotenv from 'dotenv'
 
+dotenv.config()
 const SECRET_KEY = process.env.SECRET_KEY
 
 const caster = id => mongoose.Types.ObjectId(id)
 
 const signUp = async (args, User) => {
     
-    const { userEmail, userPassword, userName } = args.user
+    const { email, password, username } = args
     
-    email = userEmail.trim().toLowerCase()
-    const hashed = await bcrypt.hash(userPassword, 10)
+    const userEmail = email.trim().toLowerCase()
+    const hashed = await bcrypt.hash(password, 10)
     const avatar = gravatar(email)
 
     try {
         const user = new User({
-            email,
-            pawword: hashed,
-            userName,
-            avatar,
+            userEmail,
+            password: hashed,
+            userName: username,
+            avatarUrl: avatar,
         })
         const newUser = await user.save()
         const token = jwt.sign({

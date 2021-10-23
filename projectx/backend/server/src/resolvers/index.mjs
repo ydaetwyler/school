@@ -23,6 +23,9 @@ import {
 // import update from './services/update.mjs'
 // import remove from './services/remove.mjs'
 
+import signUp from './services/signup.mjs'
+import signIn from './services/signin.mjs'
+
 // Family
 export const allFamilies = () => getAll(Family)
 
@@ -38,7 +41,9 @@ export const allUsers = () => getAll(User)
 
 export const user = id => getOne(id, User)
 
-export const newUser = args => createUser(args, User)
+export const newUser = args => signUp(args, User)
+
+export const loginUser = args => signIn(args, User)
 
 // AvatarList
 export const avatarList = id => getOne(id, AvatarList)

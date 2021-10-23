@@ -19,7 +19,7 @@ const userSchema = new Schema(
         },
         token: {
             type: String,
-            required: true,
+            required: false,
         },
         avatarUrl: {
             type: String,
@@ -28,7 +28,7 @@ const userSchema = new Schema(
         avatarList: {
             type: Schema.Types.ObjectId,
             ref: 'avatarList',
-            required: true,
+            required: false,
         }
     },
     { timestamps: true }
