@@ -21,6 +21,14 @@ const userSchema = new Schema(
             type: String,
             required: false,
         },
+        familyHash: {
+            type: String,
+            required: true,
+        },
+        hash: {
+            type: String,
+            required: true,
+        },
         avatarUrl: {
             type: String,
             required: false,

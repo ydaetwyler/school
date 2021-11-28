@@ -1,17 +1,3 @@
-export const createFamily = async (args, Family) => {
-    try {
-        const { familyName } = args.family
-        const family = new Family({
-            familyName,
-        })
-        const newFamily = await family.save()
-        return { ...newFamily._doc, _id: newFamily.id }
-    } catch (e) {
-        console.log(`Error creating Family -> ${e}`)
-        throw e
-    }
-}
-
 export const createUser = async (args, User) => {
     try {
         const { userEmail, userName, avatarUrl } = args.user
@@ -24,34 +10,6 @@ export const createUser = async (args, User) => {
         return { ...newUser._doc, _id: newUser.id }
     } catch (e) {
         console.log(`Error creating User -> ${e}`)
-        throw e
-    }
-}
-
-export const createEventItem = async (args, EventItem) => {
-    try {
-        const { 
-            activityName,
-            activityImageUrl,
-            activityDate,
-            activityOwner,
-            activityDescription,
-            activityLocation,
-            activityUrl,
-        } = args.eventItem
-        const eventItem = new EventItem({
-            activityName,
-            activityImageUrl,
-            activityDate,
-            activityOwner,
-            activityDescription,
-            activityLocation,
-            activityUrl,
-        })
-        const newEventItem = await eventItem.save()
-        return { ...newEventItem._doc, _id: newEventItem.id }
-    } catch (e) {
-        console.log(`Error creating Event -> ${e}`)
         throw e
     }
 }

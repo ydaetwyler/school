@@ -1,28 +1,30 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import gravatar from '../../gravatar.mjs'
 import dotenv from 'dotenv'
+import { nanoid } from 'nanoid'
 
 dotenv.config()
 const SECRET_KEY = process.env.SECRET_KEY
 
 const caster = id => mongoose.Types.ObjectId(id)
 
-const signUp = async (args, User) => {
+const signUp = async (args, User, Family) => {
     
-    const { email, password, username } = args
+    const { email, password, username, familyHash, avatarUrl } = args
     
     const userEmail = email.trim().toLowerCase()
     const hashed = await bcrypt.hash(password, 10)
-    const avatar = gravatar(email)
+    const userHash = nanoid()
 
     try {
         const user = new User({
             userEmail,
             password: hashed,
             userName: username,
-            avatarUrl: avatar,
+            familyHash,
+            hash: userHash,
+            avatarUrl,
         })
         const newUser = await user.save()
         const token = jwt.sign({
@@ -30,6 +32,14 @@ const signUp = async (args, User) => {
         },
         SECRET_KEY,
         )
+
+        let updateFamily = await Family.findOne({ hash: familyHash })
+
+        updateFamily.familyMemberNames.push(username)
+        updateFamily.familyMemberHash.push(userHash)
+
+        await updateFamily.save()
+        
         return token
     } catch (e) {
         console.log(`Error creating User -> ${e}`)

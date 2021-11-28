@@ -8,7 +8,6 @@ const typeDefs = gql`
         "Get family Object with all needed subfields"
         load: [Family!]!
         family(id: ID!): Family
-        familyMemberList(id: ID!): FamilyMemberList
         user(id: ID!): User
         avatarList(id: ID!): AvatarList
         eventItem(id: ID!): EventItem
@@ -20,24 +19,34 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        SignUp(username: String!, email: String!, password: String!): String
-        SignIn(email: String!, password: String!): String
-        AddFamily(familyName: String!): Family!
-        updateFamily(familyName: String!): Family!
+        signUp(username: String!,
+        email: String!, 
+        password: String!, 
+        familyHash: String!,
+        avatarUrl: String): String
+        signIn(email: String!, password: String!): String
+        createFamily(familyName: String!): String
+        createEventItem(
+            activityName: String!,
+            activityImageUrl: String,
+            activityDate: Date,
+            activityOwner: String,
+            activityDescription: String,
+            activityLocation: String,
+            activityUrl: String,
+            familyHash: String!
+        ): EventItem
     }
 
     "Family is the main object"
     type Family {
         _id: ID!
         familyName: String!
-        familyMemberList: FamilyMemberList!
-        eventList: [EventItem]!
-        collectionList: CollectionList!
-    }
-
-    "A list of family members"
-    type FamilyMemberList {
-        users: [User]!
+        familyMemberNames: [String]
+        familyMemberHash: [String]
+        eventList: [EventItem]
+        collectionList: [CollectionList]
+        hash: String!
     }
 
     "One user"
@@ -47,6 +56,8 @@ const typeDefs = gql`
         userName: String!
         password: String!
         token: String!
+        familyHash: String!
+        hash: String!
         avatarUrl: String
         avatarList: AvatarList
     }
@@ -64,12 +75,10 @@ const typeDefs = gql`
         activityDate: Date!
         participantsList: [String]
         activityOwner: String!
-        activityCreated: Date!
         activityDescription: String
         activityLocation: String
         activityUrl: String
         activityImageList: ActivityImageList
-        familyMemberList: FamilyMemberList!
         comments: [Comment]
     }
 
@@ -101,7 +110,6 @@ const typeDefs = gql`
         taskImageUrl: String
         taskUrl: String
         taskImageList: TaskImageList!
-        familyMemberList: FamilyMemberList!
         comments: [Comment]
     }
 

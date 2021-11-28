@@ -41,11 +41,6 @@ const eventItemSchema = new Schema(
             ref: 'activityImageList',
             required: false,
         },
-        familyMemberList: {
-            type: Schema.Types.ObjectId,
-            ref: 'FamilyMemberList',
-            required: true,
-        },
         comments: {
             type: [Schema.Types.ObjectId],
             ref: 'comment',

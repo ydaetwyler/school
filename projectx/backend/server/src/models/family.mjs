@@ -8,21 +8,28 @@ const familySchema = new Schema(
             type: String,
             required: true,
         },
-        familyMemberList: {
-            type: Schema.Types.ObjectId,
-            ref: 'familyMemberList',
-            required: true,
+        familyMemberNames: {
+            type: [String],
+            required: false,
+        },
+        familyMemberHash: {
+            type: [String],
+            required: false,
         },
         eventList: {
             type: [Schema.Types.ObjectId],
             ref: 'eventItem',
-            required: true,
+            required: false,
         },
         collectionList: {
-            type: Schema.Types.ObjectId,
+            type: [Schema.Types.ObjectId],
             ref: 'CollectionList',
-            required: true,
-        }
+            required: false,
+        },
+        hash: {
+            type: String,
+            required: true, 
+        } 
     },
     { timestamps: true }
 )

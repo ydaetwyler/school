@@ -1,4 +1,4 @@
-import { 
+/* import { 
     family, 
     newFamily,
     allUsers,
@@ -20,44 +20,70 @@ import {
 import { taskImageList } from './index.mjs'
 import { activityImageList } from './index.mjs'
 import { avatarList } from './index.mjs'
+*/
+
+import family from '../models/family.mjs'
+import user from '../models/user.mjs'
+import eventItem from '../models/eventItem.mjs'
+import avatarList from '../models/avatarList.mjs'
+import activityImageList from '../models/activityImageList.mjs'
+import collectionList from '../models/collectionList.mjs'
+import taskItem from '../models/taskItem.mjs'
+import taskImageList from '../models/taskImageList.mjs'
+import comment from '../models/comment.mjs'
+
+
+import {
+    createCollection,
+    createTaskItem,
+    createComment,
+} from './services/create.mjs'
+// import update from './services/update.mjs'
+// import remove from './services/remove.mjs'
+
+import signUp from './services/signup.mjs'
+import signIn from './services/signin.mjs'
+import createFamily from './services/createFamily.mjs'
+import createEventItem from './services/createEventItem.mjs'
+
+import getOne from './services/getOne.mjs'
+import getAll from './services/getAll.mjs'
 
 const resolvers = {
     Mutation: {
-        SignUp: (_, args) => newUser(args),
-        SignIn: (_, args) => loginUser(args),
-      // AddFamily: (_, args) => newFamily(args),
+        createFamily: (_, args) => createFamily(args, family),
+        signUp: (_, args) => signUp(args, user, family),
+        signIn: (_, args) => signIn(args, user),
+        createEventItem: (_, args) => createEventItem(args, eventItem, family)
     },
     Query: {
         load: (_, __) => allFamilies(),
         family: {
-            Family: (parent, args, context, info) => family(args),
-        },
-        familyMemberList: {
-            FamilyMemberList: (parent, args, context, info) => familyMemberList(args),
+            Family: (_, { id }) => getOne(id, family),
         },
         user: {
-            User: (parent, args, context, info) => user(args),
+            User: (_, { id }) => getOne(id, user),
         },
         avatarList: {
-            AvatarList: (parent, args, context, info) => avatarList(args),
+            AvatarList: (_, { id }) => getOne(id, avatarList),
         },
         eventItem: {
-            EventItem: (parent, args, context, info) => eventItem(args),
+            EventItem: (_, { id }) => getOne(id, eventItem),
         },
         activityImageList: {
-            ActivityImageList: (parent, args, context, info) => activityImageList(args),
+            ActivityImageList: (_, { id }) => getOne(id, activityImageList),
         },
         collectionList: {
-            CollectionList: (parent, args, context, info) => collectionList(args),
+            CollectionList: (_, { id }) => getOne(id, collectionList),
         },
         taskItem: {
-            TaskItem: (parent, args, context, info) => taskItem(args),
+            TaskItem: (_, { id }) => getOne(id, taskItem),
         },
         taskImageList: {
-            TaskImageList: (parent, args, context, info) => taskImageList(args),
+            TaskImageList: (_, { id }) => getOne(id, taskImageList),
         },
         comment: {
-            Comment: (parent, args, context, info) => comment(args)
+            Comment: (_, { id }) => getOne(id, comment)
         }
     },
 }
