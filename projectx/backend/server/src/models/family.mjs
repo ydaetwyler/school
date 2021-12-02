@@ -6,7 +6,7 @@ const familySchema = new Schema(
     {
         familyName: {
             type: String,
-            required: true,
+            required: false,
         },
         familyMemberNames: {
             type: [String],

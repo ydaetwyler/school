@@ -43,8 +43,17 @@ import {
 
 import signUp from './services/signup.mjs'
 import signIn from './services/signin.mjs'
+import updateUserName from './services/updateUserName.mjs'
 import createFamily from './services/createFamily.mjs'
+import updateAvatarImage from './services/updateAvatarImage.mjs'
+import updateFamilyName from './services/updateFamilyName.mjs'
 import createEventItem from './services/createEventItem.mjs'
+import updateEventItem from './services/updateEventItem.mjs'
+import removeEventItem from './services/removeEventItem.mjs'
+import createEventComment from './services/createEventComment.mjs'
+import removeEventComment from './services/removeEventComment.mjs'
+
+import getFamily from './services/getFamily.mjs'
 
 import getOne from './services/getOne.mjs'
 import getAll from './services/getAll.mjs'
@@ -54,24 +63,27 @@ const resolvers = {
         createFamily: (_, args) => createFamily(args, family),
         signUp: (_, args) => signUp(args, user, family),
         signIn: (_, args) => signIn(args, user),
-        createEventItem: (_, args) => createEventItem(args, eventItem, family)
+        updateAvatarImage: (_, args) => updateAvatarImage(args, user),
+        updateFamilyName: (_, args) => updateFamilyName(args, family),
+        updateUserName: (_, args) => updateUserName(args, user),
+        createEventItem: (_, args) => createEventItem(args, eventItem, family),
+        updateEventItem: (_, args) => updateEventItem(args, eventItem),
+        removeEventItem: (_, args) => removeEventItem(args, eventItem, family),
+        createEventComment: (_, args) => createEventComment(args, comment, eventItem),
+        removeEventComment: (_, args) => removeEventComment(args, comment, eventItem),
     },
     Query: {
         load: (_, __) => allFamilies(),
-        family: {
-            Family: (_, { id }) => getOne(id, family),
-        },
-        user: {
-            User: (_, { id }) => getOne(id, user),
-        },
+        getFamily: (_, { hash }) => getFamily(hash, family),
+        getUser: (_, { hash }) => getOne(hash, user),
         avatarList: {
-            AvatarList: (_, { id }) => getOne(id, avatarList),
+            AvatarList: (_, { id }) => getOne(id, avatarList)
         },
         eventItem: {
-            EventItem: (_, { id }) => getOne(id, eventItem),
+            EventItem: (_, { hash }) => getOne(hash, eventItem)
         },
         activityImageList: {
-            ActivityImageList: (_, { id }) => getOne(id, activityImageList),
+            ActivityImageList: (_, { id }) => getOne(id, activityImageList)
         },
         collectionList: {
             CollectionList: (_, { id }) => getOne(id, collectionList),

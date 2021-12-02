@@ -1,17 +1,11 @@
-import mongoose from 'mongoose'
-
-const caster = id => mongoose.Types.ObjectId(id)
-
-const getOne = async (id, item) => {
+const getOne = async (itemHash, Item) => {
     try {
-        const itemFetched = await item.findOne({ _id: caster(id) })
-        return {
-            payload: itemFetched._doc,
-            _id: itemFetched.id,
-            createdAt: new Date(itemFetched._doc.createdAt).toISOString(),
-        }
+        const itemFetched = await Item.findOne({ hash: itemHash })
+        
+        return itemFetched.toJSON()
+
     } catch (e) {
-        console.log(`Error fetching ${item}, -> ${e}`)
+        console.log(`Error fetching ${Item}, -> ${e}`)
     }
 }
 

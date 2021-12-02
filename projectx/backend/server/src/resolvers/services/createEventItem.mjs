@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid'
+
 const createEventItem = async (args, EventItem, Family) => {
     try {
         const { 
@@ -11,6 +13,7 @@ const createEventItem = async (args, EventItem, Family) => {
             familyHash,
         } = args
         const eventItem = new EventItem({
+            hash: nanoid(),
             activityName,
             activityImageUrl,
             activityDate,
@@ -28,6 +31,7 @@ const createEventItem = async (args, EventItem, Family) => {
         await updateFamily.save()
 
         return newEventItem.toJSON()
+        
     } catch (e) {
         console.log(`Error creating Event -> ${e}`)
         throw e

@@ -4,6 +4,10 @@ const Schema = mongoose.Schema
 
 const eventItemSchema = new Schema(
     {
+        hash: {
+            type: String,
+            required: true,
+        },
         activityName: {
             type: String,
             required: true,
@@ -14,7 +18,7 @@ const eventItemSchema = new Schema(
         },
         activityDate: {
             type: Date,
-            required: true,
+            required: false,
         },
         participantsList: {
             type: [String],
@@ -22,7 +26,7 @@ const eventItemSchema = new Schema(
         },
         activityOwner: {
             type: String,
-            required: true,
+            required: false,
         },
         activityDescription: {
             type: String,

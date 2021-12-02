@@ -7,15 +7,15 @@ const typeDefs = gql`
     type Query {
         "Get family Object with all needed subfields"
         load: [Family!]!
-        family(id: ID!): Family
-        user(id: ID!): User
+        getFamily(hash: String!): Family
+        getUser(hash: String!): User
         avatarList(id: ID!): AvatarList
-        eventItem(id: ID!): EventItem
+        eventItem(hash: String!): EventItem
         activityImageList(id: ID!): ActivityImageList
         collectionList(id: ID!): CollectionList
         taskItem(id: ID!): TaskItem
         taskImageList(id: ID!): TaskImageList
-        comment(id: ID!): Comment
+        comment(hash: String!): Comment
     }
 
     type Mutation {
@@ -26,6 +26,9 @@ const typeDefs = gql`
         avatarUrl: String): String
         signIn(email: String!, password: String!): String
         createFamily(familyName: String!): String
+        updateAvatarImage(userHash: String!, avatarImageUrl: String!): User
+        updateFamilyName(familyHash: String!, familyName: String!): Family
+        updateUserName(userHash: String!, userName: String): User
         createEventItem(
             activityName: String!,
             activityImageUrl: String,
@@ -36,28 +39,45 @@ const typeDefs = gql`
             activityUrl: String,
             familyHash: String!
         ): EventItem
+        updateEventItem(
+            activityName: String,
+            activityImageUrl: String,
+            activityDate: Date,
+            activityOwner: String,
+            activityDescription: String,
+            activityLocation: String,
+            activityUrl: String,
+            eventItemHash: String!
+        ): EventItem
+        removeEventItem(eventItemHash: String!, familyHash: String!): Family
+        createEventComment(
+            eventItemHash: String!,
+            commentText: String!,
+            commentOwner: String!
+        ): EventItem
+        removeEventComment(commentHash: String!): EventItem
     }
 
     "Family is the main object"
     type Family {
-        _id: ID!
-        familyName: String!
+        _id: ID
+        familyName: String
         familyMemberNames: [String]
         familyMemberHash: [String]
         eventList: [EventItem]
         collectionList: [CollectionList]
-        hash: String!
+        hash: String
     }
 
     "One user"
     type User {
-        _id: ID!
-        userEmail: String!
-        userName: String!
-        password: String!
-        token: String!
-        familyHash: String!
-        hash: String!
+        _id: ID
+        userEmail: String
+        userName: String
+        password: String
+        token: String
+        familyHash: String
+        hash: String
         avatarUrl: String
         avatarList: AvatarList
     }
@@ -69,12 +89,13 @@ const typeDefs = gql`
 
     "An event item"
     type EventItem {
-        _id: ID!
-        activityName: String!
+        _id: ID
+        hash: String
+        activityName: String
         activityImageUrl: String
-        activityDate: Date!
+        activityDate: Date
         participantsList: [String]
-        activityOwner: String!
+        activityOwner: String
         activityDescription: String
         activityLocation: String
         activityUrl: String
@@ -89,27 +110,27 @@ const typeDefs = gql`
 
     "List containing all collections"
     type CollectionList {
-        collectionName: String!
+        collectionName: String
         collectionIconUrl: String
         tasks: [TaskItem]
     }
 
     "Task item"
     type TaskItem {
-        _id: ID!
-        taskName: String!
-        taskPriorities: [String]!
-        taspPriority: String!
+        _id: ID
+        taskName: String
+        taskPriorities: [String]
+        taspPriority: String
         taskDescription: String
         taskDue: Date
         taskCreated: Date
         taskOwner: String!
         taskResponsibles: [String]
-        taskKanbanList: [String]!
+        taskKanbanList: [String]
         taskKanban: String
         taskImageUrl: String
         taskUrl: String
-        taskImageList: TaskImageList!
+        taskImageList: TaskImageList
         comments: [Comment]
     }
 
@@ -120,10 +141,11 @@ const typeDefs = gql`
 
     "Comment can be used in Events and Tasks"
     type Comment {
-        _id: ID!
-        commentText: String!
-        commentOwner: String!
-        commentDate: Date!
+        _id: ID
+        hash: String
+        commentText: String
+        commentOwner: String
+        commentDate: Date
     }
 `
 

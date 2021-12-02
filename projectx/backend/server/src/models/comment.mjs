@@ -3,7 +3,11 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const commentSchema = new Schema(
-    {
+    {   
+        hash: {
+            type: String,
+            required: true,
+        },
         commentText: {
             type: String,
             required: true,
