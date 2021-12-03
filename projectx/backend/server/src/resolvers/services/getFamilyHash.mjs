@@ -1,3 +1,5 @@
+import { AuthenticationError } from 'apollo-server-express'
+
 const getFamilyHash = async (userId, context, User) => {
     if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')
@@ -5,8 +7,6 @@ const getFamilyHash = async (userId, context, User) => {
 
     try {
         const user = await User.findOne({_id: userId})
-
-        console.log(user.familyHash)
 
         const hash = user.familyHash
 
