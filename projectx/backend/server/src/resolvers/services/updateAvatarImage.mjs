@@ -1,4 +1,8 @@
-const updateAvatarImage = async (args, User) => {
+const updateAvatarImage = async (args, context, User) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+    
     try {
         const { 
             avatarImageUrl,

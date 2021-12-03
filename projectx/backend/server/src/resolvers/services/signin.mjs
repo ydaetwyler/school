@@ -1,10 +1,8 @@
-import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import { AuthenticationError } from 'apollo-server-express'
 
 const SECRET_KEY = process.env.SECRET_KEY
-
-const caster = id => mongoose.Types.ObjectId(id)
 
 const signIn = async (args, User) => {
     
@@ -18,19 +16,25 @@ const signIn = async (args, User) => {
 
     const userFetched = await User.findOne({ userEmail })
     if (!userFetched) {
-        throw new Error('Error signing in')
+        throw new AuthenticationError('Error signing in')
     }
     
     const match = await bcrypt.compare(userPassword, userFetched.password)
     if (!match) {
-        throw new Error('Error signing in, wrong password')
+        throw new AuthenticationError('Error signing in')
     } else {
         const token = jwt.sign({
             id: userFetched._id,
         },
         SECRET_KEY,
         )
-        return token
+
+        const login = {
+            token,
+            id: userFetched._id,
+        }
+
+        return JSON.stringify(login)
     }
 }
 

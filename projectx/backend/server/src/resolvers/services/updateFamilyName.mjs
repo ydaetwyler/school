@@ -1,4 +1,8 @@
-const updateFamilyName = async (args, Family) => {
+const updateFamilyName = async (args, context, Family) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+    
     try {
         const { 
             familyName,

@@ -1,4 +1,8 @@
-const updateUserName = async (args, User) => {
+const updateUserName = async (args, context, User) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+
     try {
         const { 
             userName,

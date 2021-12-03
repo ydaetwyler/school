@@ -1,6 +1,10 @@
 import { nanoid } from 'nanoid'
 
-const createEventItem = async (args, EventItem, Family) => {
+const createEventItem = async (args, context, EventItem, Family) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+    
     try {
         const { 
             activityName,

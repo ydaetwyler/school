@@ -1,4 +1,8 @@
-const removeEventComment = async (args, Comment, EventItem) => {
+const removeEventComment = async (args, context, Comment, EventItem) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+
     try {
         const {
             commentHash,

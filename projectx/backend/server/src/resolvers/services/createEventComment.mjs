@@ -1,6 +1,10 @@
 import { nanoid } from 'nanoid'
 
-const createEventComment = async (args, Comment, EventItem) => {
+const createEventComment = async (args, context, Comment, EventItem) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+
     try {
         const { 
             commentText,

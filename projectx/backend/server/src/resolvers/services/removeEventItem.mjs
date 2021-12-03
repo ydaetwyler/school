@@ -1,4 +1,8 @@
-const removeEventItem = async (args, EventItem, Family) => {
+const removeEventItem = async (args, context, EventItem, Family) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+
     try {
         const {
             eventItemHash,

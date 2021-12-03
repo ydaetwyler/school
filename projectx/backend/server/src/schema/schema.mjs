@@ -8,6 +8,7 @@ const typeDefs = gql`
         "Get family Object with all needed subfields"
         load: [Family!]!
         getFamily(hash: String!): Family
+        getFamilyHash(id: ID!): String
         getUser(hash: String!): User
         avatarList(id: ID!): AvatarList
         eventItem(hash: String!): EventItem

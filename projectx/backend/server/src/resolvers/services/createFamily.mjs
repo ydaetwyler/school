@@ -1,6 +1,10 @@
 import { nanoid } from 'nanoid'
 
-const createFamily = async (args, Family) => {
+const createFamily = async (args, context, Family) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+    
     try {
         const { familyName } = args
         const family = new Family({

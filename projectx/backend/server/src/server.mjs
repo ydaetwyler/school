@@ -1,5 +1,4 @@
 import { ApolloServer } from 'apollo-server-express'
-import dotenv from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
 
@@ -7,17 +6,17 @@ import typeDefs from './schema/schema.mjs'
 import resolvers from './resolvers/resolvers.mjs'
 
 import connect from './utils/db.mjs'
+import Auth from './utils/Auth.mjs'
 
 // Connect to MongoDB
 connect()
-
-dotenv.config()
 
 const app = express()
 
 const server = new ApolloServer({ 
     typeDefs,
     resolvers,
+    context: Auth,
     cors: true,
     playground: process.env.NODE_ENV === 'development' ? true : false,
     introspection: true,

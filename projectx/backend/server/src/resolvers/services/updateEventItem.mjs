@@ -1,4 +1,8 @@
-const updateEventItem = async (args, EventItem) => {
+const updateEventItem = async (args, context, EventItem) => {
+    if (!context.isAuth) {
+        throw new AuthenticationError('Login necessary')
+    }
+
     try {
         const { 
             activityName,

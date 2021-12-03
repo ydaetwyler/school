@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
@@ -6,8 +5,6 @@ import { nanoid } from 'nanoid'
 
 dotenv.config()
 const SECRET_KEY = process.env.SECRET_KEY
-
-const caster = id => mongoose.Types.ObjectId(id)
 
 const signUp = async (args, User, Family) => {
     
