@@ -8,7 +8,7 @@ const createFamily = async (args, Family) => {
             hash: nanoid()
         })
         const newFamily = await family.save()
-        return newFamily.toJSON()
+        return newFamily.hash
     } catch (e) {
         console.log(`Error creating Family -> ${e}`)
         throw e
