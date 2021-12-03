@@ -9,14 +9,6 @@ const typeDefs = gql`
         load: [Family!]!
         getFamily(hash: String!): Family
         getFamilyHash(id: ID!): String
-        getUser(hash: String!): User
-        avatarList(id: ID!): AvatarList
-        eventItem(hash: String!): EventItem
-        activityImageList(id: ID!): ActivityImageList
-        collectionList(id: ID!): CollectionList
-        taskItem(id: ID!): TaskItem
-        taskImageList(id: ID!): TaskImageList
-        comment(hash: String!): Comment
     }
 
     type Mutation {

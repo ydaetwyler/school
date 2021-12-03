@@ -25,9 +25,9 @@ import getFamilyHash from './services/getFamilyHash.mjs'
 
 const resolvers = {
     Mutation: {
+        createFamily: (_, args) => createFamily(args, family),
         signUp: (_, args) => signUp(args, user, family),
         signIn: (_, args) => signIn(args, user),
-        createFamily: (_, args, context) => createFamily(args, context, family),
         updateAvatarImage: (_, args, context) => updateAvatarImage(args, context, user),
         updateFamilyName: (_, args, context) => updateFamilyName(args, context, family),
         updateUserName: (_, args, context) => updateUserName(args, context, user),
@@ -41,28 +41,6 @@ const resolvers = {
         load: (_, __) => allFamilies(),
         getFamily: (_, { hash }, context) => getFamily(hash, context, family),
         getFamilyHash: (_, { id }, context) => getFamilyHash(id, context, user),
-        getUser: (_, { hash }) => getOne(hash, user),
-        avatarList: {
-            AvatarList: (_, { id }) => getOne(id, avatarList)
-        },
-        eventItem: {
-            EventItem: (_, { hash }) => getOne(hash, eventItem)
-        },
-        activityImageList: {
-            ActivityImageList: (_, { id }) => getOne(id, activityImageList)
-        },
-        collectionList: {
-            CollectionList: (_, { id }) => getOne(id, collectionList),
-        },
-        taskItem: {
-            TaskItem: (_, { id }) => getOne(id, taskItem),
-        },
-        taskImageList: {
-            TaskImageList: (_, { id }) => getOne(id, taskImageList),
-        },
-        comment: {
-            Comment: (_, { id }) => getOne(id, comment)
-        }
     },
 }
 

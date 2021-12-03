@@ -1,3 +1,5 @@
+import { AuthenticationError } from 'apollo-server-express'
+
 const removeEventComment = async (args, context, Comment, EventItem) => {
     if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')

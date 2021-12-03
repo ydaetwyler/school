@@ -1,3 +1,5 @@
+import { AuthenticationError } from 'apollo-server-express'
+
 const updateEventItem = async (args, context, EventItem) => {
     if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')

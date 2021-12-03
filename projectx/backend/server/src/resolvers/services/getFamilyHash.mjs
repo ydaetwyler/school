@@ -6,13 +6,14 @@ const getFamilyHash = async (userId, context, User) => {
     }
 
     try {
-        const user = await User.findOne({_id: userId})
+        const user = await User.findOne({ _id: userId })
 
         const hash = user.familyHash
 
         return hash
     } catch(e) {
         console.log(`Error fetching Family Hash, -> ${e}`)
+        throw e
     }
 
 }

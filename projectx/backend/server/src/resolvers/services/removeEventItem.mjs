@@ -1,14 +1,16 @@
+import { AuthenticationError } from 'apollo-server-express'
+
 const removeEventItem = async (args, context, EventItem, Family) => {
-    if (!context.isAuth) {
+    const {
+        eventItemHash,
+        familyHash,
+    } = args
+    
+    if (!context.isAuth && !(context.checkFamilyHash === familyHash)) {
         throw new AuthenticationError('Login necessary')
     }
 
     try {
-        const {
-            eventItemHash,
-            familyHash,
-        } = args
-
         const eventItemToRemove = await EventItem.findOne({ hash: eventItemHash})
 
         await EventItem.deleteOne({ hash: eventItemHash })

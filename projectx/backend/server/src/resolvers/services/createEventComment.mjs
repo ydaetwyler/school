@@ -1,3 +1,4 @@
+import { AuthenticationError } from 'apollo-server-express'
 import { nanoid } from 'nanoid'
 
 const createEventComment = async (args, context, Comment, EventItem) => {
