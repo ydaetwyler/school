@@ -75,7 +75,6 @@ const typeDefs = gql`
         userEmail: String
         userName: String
         password: String
-        token: String
         familyHash: String
         hash: String
         avatarUrl: String
