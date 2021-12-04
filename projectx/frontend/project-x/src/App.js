@@ -1,25 +1,22 @@
 import React from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import useToken from './components/Login/useToken'
+import { useCookies } from 'react-cookie'
 
 import Dashboard from './components/Dashboard/Dashboard'
 import Login from './components/Login/Login'
 
 const App = () => {
+  const [cookies] = useCookies(['userToken'])
 
-  const { token, setToken } = useToken()
-
-  if (!token) return <Login setToken={setToken} />
+  if (!cookies.userToken) return <Login />
 
   return (
     <div className="wrapper">
       <h1>Project X</h1>
       <BrowserRouter>
         <Routes>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </div>

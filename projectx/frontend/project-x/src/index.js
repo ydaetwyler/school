@@ -1,9 +1,8 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-
 import dotenv from 'dotenv'
-
+import { CookiesProvider } from 'react-cookie'
 import { 
   ApolloClient,
   InMemoryCache,
@@ -21,8 +20,10 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <CookiesProvider>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+  </CookiesProvider>,
   document.getElementById('root')
 )

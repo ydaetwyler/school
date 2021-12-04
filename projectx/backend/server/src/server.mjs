@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser'
 
 import typeDefs from './schema/schema.mjs'
 import resolvers from './resolvers/resolvers.mjs'
@@ -16,7 +17,9 @@ connect()
 
 const app = express()
 
-// app.use(cookieParser()) TODO: Import cookie
+const secret = process.env.COOKIE_KEY
+
+app.use(cookieParser(secret))
 
 const server = new ApolloServer({ 
     typeDefs,

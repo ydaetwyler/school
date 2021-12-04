@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-
 import { gql, useMutation } from '@apollo/client'
 import { Navigate, useParams } from 'react-router-dom'
-
-import useToken from './useToken'
+import { useCookies } from 'react-cookie'
 
 const SIGN_UP = gql`
     mutation SignUp($username: String!, $email: String!, $password: String!, $familyHash: String!) {
@@ -12,13 +10,13 @@ const SIGN_UP = gql`
 `
 
 const NewUserAccess = () => {
-    const { setToken } = useToken()
     const [familyHash] = useState(useParams().hash)
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [cookies, setCookie] = useCookies(['userToken'])
     const [signUp, { loading, error }] = useMutation(SIGN_UP, {
-        onCompleted: (data) => setToken(data.signUp)
+        onCompleted: (data) => setCookie('userToken', data.signUp)
     })
 
     const submitHandler = async event => {

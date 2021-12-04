@@ -19,7 +19,7 @@ const validateUser = token => {
 }
 
 const Auth = async ({ req }) => {
-    const token = req.headers.authorization
+    const token = req.signedCookies.token
 
     if (!token) return { isAuth: false }
 
