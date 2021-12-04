@@ -5,7 +5,7 @@ import UserAccess from './UserAccess'
 import NewUserAccess from './NewUserAccess'
 import NewFamily from './NewFamily'
 
-const Login = () => {
+const Login = ({ setToken }) => {
 
     return (
         <BrowserRouter>
@@ -13,9 +13,9 @@ const Login = () => {
             <Link to="/new">Create new Family</Link>
         </div>
             <Routes>
-                <Route exact path='/login/:hash' element={<NewUserAccess />} />
+                <Route exact path='/login/:hash' element={<NewUserAccess setToken={setToken} />} />
                 <Route path='/new' element={<NewFamily />} />
-                <Route path='/' element={<UserAccess />} />
+                <Route path='/' element={<UserAccess setToken={setToken} />} />
             </Routes>
         </BrowserRouter>
     )
