@@ -38,7 +38,6 @@ const resolvers = {
         removeEventComment: (_, args, context) => removeEventComment(args, context, comment, eventItem),
     },
     Query: {
-        load: (_, __) => allFamilies(),
         getFamily: (_, { hash }, context) => getFamily(hash, context, family),
         getFamilyHash: (_, { id }, context) => getFamilyHash(id, context, user),
     },

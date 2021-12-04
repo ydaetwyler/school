@@ -1,7 +1,8 @@
-FROM node:latest
-WORKDIR /app
+FROM node:16-alpine
+WORKDIR /usr/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 4000
-CMD [ "npm", "run", "dev"]
+ARG DOCKER_ENV=prod
+ENV DOCKER_ENV $DOCKER_ENV
+CMD ["sh", "-c", "npm run start:$DOCKER_ENV"]

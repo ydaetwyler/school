@@ -3,14 +3,17 @@ import React, { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { Navigate, useParams } from 'react-router-dom'
 
+import useToken from './useToken'
+
 const SIGN_UP = gql`
     mutation SignUp($username: String!, $email: String!, $password: String!, $familyHash: String!) {
         signUp(username: $username, email: $email, password: $password, familyHash: $familyHash)
     }
 `
 
-const NewUserAccess = ({ setToken }) => {
-    const [familyHash, setFamilyHash] = useState(useParams().hash)
+const NewUserAccess = () => {
+    const { setToken } = useToken()
+    const [familyHash] = useState(useParams().hash)
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
