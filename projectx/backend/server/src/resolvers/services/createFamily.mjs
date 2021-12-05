@@ -1,14 +1,32 @@
 import { nanoid } from 'nanoid'
 
-const createFamily = async (args, Family) => {    
+const createFamily = async (args, Family, User) => {    
     try {
+        const user = new User({
+            hash: nanoid(),
+            userEmail: nanoid(),
+        })
+
+        const newUser = await user.save()
+
         const { familyName } = args
         const family = new Family({
-            familyName,
-            hash: nanoid()
+            familyName
         })
+        
         const newFamily = await family.save()
-        return newFamily.hash
+
+        newFamily.familyMembers.push(newUser.id)
+
+        await newFamily.save()
+
+        newUser.family = newFamily.id
+
+        await User.findByIdAndUpdate(newUser._id, {
+            family: newFamily.id
+        })
+
+        return user.hash
     } catch (e) {
         console.log(`Error creating Family -> ${e}`)
         throw e

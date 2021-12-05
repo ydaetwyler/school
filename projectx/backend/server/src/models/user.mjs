@@ -6,32 +6,28 @@ const userSchema = new Schema(
     {
         userEmail: {
             type: String,
-            required: true,
+            required: false,
             unique: true,
         },
         userName: {
             type: String,
-            required: true,
+            required: false,
         },
         password: {
             type: String,
-            required: true,
-        },
-        familyHash: {
-            type: String,
-            required: true,
+            required: false,
         },
         hash: {
             type: String,
-            required: true,
+            required: false,
         },
         avatarUrl: {
             type: String,
             required: false,
         },
-        avatarList: {
+        family: {
             type: Schema.Types.ObjectId,
-            ref: 'avatarList',
+            ref: 'family',
             required: false,
         }
     },

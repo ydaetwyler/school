@@ -4,25 +4,28 @@ import { Navigate, useParams } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 const SIGN_UP = gql`
-    mutation SignUp($username: String!, $email: String!, $password: String!, $familyHash: String!) {
-        signUp(username: $username, email: $email, password: $password, familyHash: $familyHash)
+    mutation SignUp($username: String!, $email: String!, $password: String!) {
+        signUp(username: $username, email: $email, password: $password)
     }
 `
 
 const NewUserAccess = () => {
-    const [familyHash] = useState(useParams().hash)
+    const [userHash] = useState(useParams().hash)
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [cookies, setCookie] = useCookies(['userToken'])
     const [signUp, { loading, error }] = useMutation(SIGN_UP, {
-        onCompleted: (data) => setCookie('userToken', data.signUp)
+        onCompleted: (data) => setCookie('userToken', data.signUp, { 
+            maxAge: (60*60*24),
+            sameSite: true
+        })
     })
 
     const submitHandler = async event => {
         event.preventDefault()
         try {
-            await signUp({ variables: { username, email, password, familyHash } })
+            await signUp({ variables: { username, email, password, userHash } })
         } catch(error) {
             console.log(JSON.stringify(error, null, 2))
         }

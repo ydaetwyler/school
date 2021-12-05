@@ -18,7 +18,6 @@ connect()
 const app = express()
 
 const secret = process.env.COOKIE_KEY
-
 app.use(cookieParser(secret))
 
 const server = new ApolloServer({ 

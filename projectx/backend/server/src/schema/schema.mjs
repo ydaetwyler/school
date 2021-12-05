@@ -7,15 +7,13 @@ const typeDefs = gql`
     type Query {
         "Get family Object with all needed subfields"
         load: [Family!]!
-        getFamily(hash: String!): Family
-        getFamilyHash(id: ID!): String
+        getFamily(userId: ID!): Family
     }
 
     type Mutation {
         signUp(username: String!,
         email: String!, 
-        password: String!, 
-        familyHash: String!,
+        password: String!,
         avatarUrl: String): String
         signIn(email: String!, password: String!): String
         createFamily(familyName: String!): String
@@ -55,8 +53,7 @@ const typeDefs = gql`
     type Family {
         _id: ID
         familyName: String
-        familyMemberNames: [String]
-        familyMemberHash: [String]
+        familyMembers: [User]
         eventList: [EventItem]
         collectionList: [CollectionList]
         hash: String
@@ -68,15 +65,8 @@ const typeDefs = gql`
         userEmail: String
         userName: String
         password: String
-        familyHash: String
         hash: String
         avatarUrl: String
-        avatarList: AvatarList
-    }
-
-    "Avatar image list"
-    type AvatarList {
-        avatarUrl: [String]
     }
 
     "An event item"

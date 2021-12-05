@@ -6,36 +6,30 @@ import { nanoid } from 'nanoid'
 dotenv.config()
 const SECRET_KEY = process.env.SECRET_KEY
 
-const signUp = async (args, User, Family) => {
+const signUp = async (args, User) => {
     
-    const { email, password, username, familyHash, avatarUrl } = args
+    const { email, password, username, userHash, avatarUrl } = args
     
     const userEmail = email.trim().toLowerCase()
     const hashed = await bcrypt.hash(password, 10)
-    const userHash = nanoid()
 
     try {
-        const user = new User({
-            userEmail,
+        const overwriteHash = nanoid()
+
+        await User.findOneAndUpdate({ hash: userHash }, {
+            userEmail: userEmail,
             password: hashed,
             userName: username,
-            familyHash,
-            hash: userHash,
-            avatarUrl,
+            hash: overwriteHash
         })
-        const newUser = await user.save()
+
+        const user = User.findOne({ hash: overwriteHash })
+        
         const token = jwt.sign({
-            id: newUser._id,
+            id: user._id,
         },
         SECRET_KEY,
         )
-
-        let updateFamily = await Family.findOne({ hash: familyHash })
-
-        updateFamily.familyMemberNames.push(username)
-        updateFamily.familyMemberHash.push(userHash)
-
-        await updateFamily.save()
         
         return token
     } catch (e) {

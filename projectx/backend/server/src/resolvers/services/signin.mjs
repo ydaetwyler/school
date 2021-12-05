@@ -15,11 +15,13 @@ const signIn = async (args, User) => {
     }
 
     const userFetched = await User.findOne({ userEmail })
+    
     if (!userFetched) {
         throw new AuthenticationError('Error signing in')
     }
     
     const match = await bcrypt.compare(userPassword, userFetched.password)
+    
     if (!match) {
         throw new AuthenticationError('Error signing in')
     } else {

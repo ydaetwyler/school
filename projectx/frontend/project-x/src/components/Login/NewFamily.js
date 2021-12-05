@@ -20,7 +20,7 @@ const NewFamily = () => {
         try {
             await createFamily({ variables: { familyName } })
         } catch(error) {
-            console.log(error)
+            console.log(JSON.stringify(error, null, 2))
         }
     }
 

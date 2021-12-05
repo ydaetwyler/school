@@ -19,25 +19,15 @@ const validateUser = token => {
 }
 
 const Auth = async ({ req }) => {
-    const token = req.signedCookies.token
-
-    if (!token) return { isAuth: false }
-
-    const userId = validateUser(token)
-
     try {
-        const user = await User.findOne({ id: userId })
+        const token = req.cookies.userToken
 
-        const checkUserHash = user.hash
+        if (!token) return { isAuth: false }
 
-        const familyHash = user.familyHash
-
-        const family = await Family.findOne({ hash: familyHash })
-
-        const checkFamilyHash = family.hash
+        const userId = validateUser(token)
 
         if (userId) {
-            return { isAuth: true, userId, checkUserHash, checkFamilyHash }
+            return { isAuth: true, userId }
         }
     } catch(e) {
         console.log(`error auth -> ${e}`)
