@@ -14,9 +14,12 @@ const typeDefs = gql`
         signUp(username: String!,
         email: String!, 
         password: String!,
+        userHash: String!,
         avatarUrl: String): String
         signIn(email: String!, password: String!): String
         createFamily(familyName: String!): String
+        lostPassword(email: String!): String
+        resetPassword(password: String!, userHash: String!): String
         updateAvatarImage(userHash: String!, avatarImageUrl: String!): User
         updateFamilyName(familyHash: String!, familyName: String!): Family
         updateUserName(userHash: String!, userName: String): User

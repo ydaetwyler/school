@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 import Dashboard from './components/Dashboard/Dashboard'
@@ -12,11 +12,11 @@ const App = () => {
   if (!cookies.userToken) return <Login />
 
   return (
-    <div className="wrapper">
-      <h1>Project X</h1>
+    <div>
       <BrowserRouter>
+      <Navigate to='/dashboard' />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
+            <Route path='/dashboard' element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </div>

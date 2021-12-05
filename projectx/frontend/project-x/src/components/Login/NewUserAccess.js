@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { Navigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 const SIGN_UP = gql`
-    mutation SignUp($username: String!, $email: String!, $password: String!) {
-        signUp(username: $username, email: $email, password: $password)
+    mutation SignUp($username: String!, $email: String!, $password: String!, $userHash: String!) {
+        signUp(username: $username, email: $email, password: $password, userHash: $userHash)
     }
 `
 
@@ -21,6 +21,8 @@ const NewUserAccess = () => {
             sameSite: true
         })
     })
+
+    console.log(userHash)
 
     const submitHandler = async event => {
         event.preventDefault()

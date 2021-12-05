@@ -5,8 +5,10 @@ import comment from '../models/comment.mjs'
 
 import signUp from './services/signup.mjs'
 import signIn from './services/signin.mjs'
-import updateUserName from './services/updateUserName.mjs'
 import createFamily from './services/createFamily.mjs'
+import lostPassword from './services/lostPassword.mjs'
+import resetPassword from './services/resetPassword.mjs'
+import updateUserName from './services/updateUserName.mjs'
 import updateAvatarImage from './services/updateAvatarImage.mjs'
 import updateFamilyName from './services/updateFamilyName.mjs'
 import createEventItem from './services/createEventItem.mjs'
@@ -22,6 +24,8 @@ const resolvers = {
         createFamily: (_, args) => createFamily(args, family, user),
         signUp: (_, args) => signUp(args, user),
         signIn: (_, args) => signIn(args, user),
+        lostPassword: (_, args) => lostPassword(args, user),
+        resetPassword: (_, args) => resetPassword(args, user),
         updateAvatarImage: (_, args, context) => updateAvatarImage(args, context, user),
         updateFamilyName: (_, args, context) => updateFamilyName(args, context, family),
         updateUserName: (_, args, context) => updateUserName(args, context, user),
