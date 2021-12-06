@@ -3,23 +3,10 @@ import { useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
 
 import TextInput from './Utils/TextInput'
 import { RESET_PASSWORD } from '../../utils/mutations'
-
-const validateForm = Yup.object({
-    password: Yup.string()
-        .max(50, 'Must be 50 characters or less')
-        .min(8, 'Password has to be 8 characters or more')
-        .required('Required')
-        .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-            "Must contain 8 characters or more, one uppercase, one lowercase, one number and one special case character"
-        ),
-    passwordConfirm: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Password confirmation does not match')
-})
+import { validateResetPassword } from './Utils/validations'
 
 const ResetPassword = () => {
     const [userHash] = useState(useParams().hash)
@@ -34,7 +21,7 @@ const ResetPassword = () => {
     return (
         <Formik
             initialValues={{ password: '', passwordConfirm: '' }}
-            validationSchema={validateForm}
+            validationSchema={validateResetPassword}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     resetPassword({ variables: { 

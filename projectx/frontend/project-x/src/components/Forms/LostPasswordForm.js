@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
 
 import TextInput from './Utils/TextInput'
 import { LOST_PASSWORD } from '../../utils/mutations'
-
-const validateForm = Yup.object({
-    email: Yup.string()
-        .max(40, 'Must be 40 characters or less')
-        .required('Required')
-        .email('Invalid email')
-})
+import { validateLostPassword } from './validations'
 
 const LostPasswordForm = () => {
     const [sent, setSent] = useState(false)
@@ -28,7 +21,7 @@ const LostPasswordForm = () => {
     return (
         <Formik
             initialValues={{ email: '' }}
-            validationSchema={validateForm}
+            validationSchema={validateLostPassword}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     lostPassword({ variables: { email: values.email } })

@@ -2,18 +2,10 @@ import React from 'react'
 import { useMutation } from '@apollo/client'
 import { useCookies } from 'react-cookie'
 import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
 
 import TextInput from './Utils/TextInput'
 import { SIGN_IN } from '../../utils/mutations'
-
-const validateForm = Yup.object({
-    email: Yup.string()
-        .required('Required')
-        .email('Invalid email'),
-    password: Yup.string()
-        .required('Required')
-})
+import { validateUserAccess } from './Utils/validations'
 
 const UserAccessForm = () => {
     const [cookies, setCookie] = useCookies(['userToken'])
@@ -27,7 +19,7 @@ const UserAccessForm = () => {
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
-            validationSchema={validateForm}
+            validationSchema={validateUserAccess}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     signIn({ variables: {

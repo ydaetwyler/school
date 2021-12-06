@@ -1,18 +1,11 @@
 import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
 import { useMutation } from '@apollo/client'
 import { Navigate } from 'react-router-dom'
 
 import TextInput from './Utils/TextInput'
 import { CREATE_FAMILY } from '../../utils/mutations'
-
-const validateForm = Yup.object({
-    familyName: Yup.string()
-        .max(15, 'Must be 15 characters or less')
-        .required('Required')
-        .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed')
-})
+import { validateNewFamily } from './Utils/validations'
 
 const NewFamilyForm = () => {
     const [redirect, setRedirect] = useState("")
@@ -25,7 +18,7 @@ const NewFamilyForm = () => {
     return (
         <Formik
             initialValues={{ familyName: '' }}
-            validationSchema={validateForm}
+            validationSchema={validateNewFamily}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     createFamily({ variables: { familyName: values.familyName } })

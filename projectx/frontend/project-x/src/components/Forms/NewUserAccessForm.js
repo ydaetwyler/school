@@ -3,31 +3,10 @@ import { useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
 
 import TextInput from './Utils/TextInput'
 import { SIGN_UP } from '../../utils/mutations'
-
-const validateForm = Yup.object({
-    email: Yup.string()
-        .max(40, 'Must be 40 characters or less')
-        .required('Required')
-        .email('Invalid email'),
-    username: Yup.string()
-        .max(18, 'Must be 18 characters or less')
-        .required('Required')
-        .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed'),
-    password: Yup.string()
-        .max(50, 'Must be 50 characters or less')
-        .min(8, 'Password has to be 8 characters or more')
-        .required('Required')
-        .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-            "Must contain 8 characters or more, one uppercase, one lowercase, one number and one special case character"
-        ),
-    passwordConfirm: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Password confirmation does not match')
-})
+import { validateNewUserAccess } from './Utils/validations'
 
 const NewUserAccess = () => {
     const [userHash] = useState(useParams().hash)
@@ -42,7 +21,7 @@ const NewUserAccess = () => {
     return (
         <Formik
             initialValues={{ email: '', username: '', password: '', passwordConfirm: '' }}
-            validationSchema={validateForm}
+            validationSchema={validateNewUserAccess}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     signUp({ variables: { 
