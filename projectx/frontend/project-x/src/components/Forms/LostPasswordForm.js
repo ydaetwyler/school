@@ -1,15 +1,10 @@
 import React, { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
 import TextInput from './Utils/TextInput'
-
-const LOST_PASSWORD = gql`
-    mutation LostPassword($email: String!) {
-        lostPassword(email: $email)
-    }
-`
+import { LOST_PASSWORD } from '../../utils/mutations'
 
 const validateForm = Yup.object({
     email: Yup.string()

@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Navigate } from 'react-router-dom'
 
 import TextInput from './Utils/TextInput'
-
-const CREATE_FAMILY = gql`
-    mutation CreateFamily($familyName: String!) {
-        createFamily(familyName: $familyName)
-    }
-`
+import { CREATE_FAMILY } from '../../utils/mutations'
 
 const validateForm = Yup.object({
     familyName: Yup.string()

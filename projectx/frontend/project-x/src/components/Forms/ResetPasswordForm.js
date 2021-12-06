@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
 import TextInput from './Utils/TextInput'
+import { RESET_PASSWORD } from '../../utils/mutations'
 
-const RESET_PASSWORD = gql`
-    mutation ResetPassword($password: String!, $userHash: String!) {
-        resetPassword(password: $password, userHash: $userHash)
-    }
-`
 const validateForm = Yup.object({
     password: Yup.string()
         .max(50, 'Must be 50 characters or less')

@@ -1,16 +1,12 @@
-import React, { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import React from 'react'
+import { useMutation } from '@apollo/client'
 import { useCookies } from 'react-cookie'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
 import TextInput from './Utils/TextInput'
+import { SIGN_IN } from '../../utils/mutations'
 
-const SIGN_IN = gql`
-    mutation SignIn($email: String!, $password: String!) {
-    signIn(email: $email, password: $password)
-    }
-`
 const validateForm = Yup.object({
     email: Yup.string()
         .required('Required')
