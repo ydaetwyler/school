@@ -1,20 +1,20 @@
 import * as Yup from 'yup'
 
-const validateLostPassword = Yup.object({
+export const validateLostPassword = Yup.object({
     email: Yup.string()
         .max(40, 'Must be 40 characters or less')
         .required('Required')
         .email('Invalid email')
 })
 
-const validateNewFamily = Yup.object({
+export const validateNewFamily = Yup.object({
     familyName: Yup.string()
         .max(15, 'Must be 15 characters or less')
         .required('Required')
         .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed')
 })
 
-const validateNewUserAccess = Yup.object({
+export const validateNewUserAccess = Yup.object({
     email: Yup.string()
         .max(40, 'Must be 40 characters or less')
         .required('Required')
@@ -35,7 +35,7 @@ const validateNewUserAccess = Yup.object({
         .oneOf([Yup.ref('password'), null], 'Password confirmation does not match')
 })
 
-const validateResetPassword= Yup.object({
+export const validateResetPassword= Yup.object({
     password: Yup.string()
         .max(50, 'Must be 50 characters or less')
         .min(8, 'Password has to be 8 characters or more')
@@ -48,18 +48,10 @@ const validateResetPassword= Yup.object({
         .oneOf([Yup.ref('password'), null], 'Password confirmation does not match')
 })
 
-const validateUserAccess = Yup.object({
+export const validateUserAccess = Yup.object({
     email: Yup.string()
         .required('Required')
         .email('Invalid email'),
     password: Yup.string()
         .required('Required')
 })
-
-export default { 
-    validateLostPassword, 
-    validateNewFamily, 
-    validateNewUserAccess,
-    validateResetPassword,
-    validateUserAccess
-}

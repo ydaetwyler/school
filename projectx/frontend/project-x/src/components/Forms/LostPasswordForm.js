@@ -4,7 +4,7 @@ import { Formik, Form } from 'formik'
 
 import TextInput from './Utils/TextInput'
 import { LOST_PASSWORD } from '../../utils/mutations'
-import { validateLostPassword } from './validations'
+import { validateLostPassword } from './Utils/validations'
 
 const LostPasswordForm = () => {
     const [sent, setSent] = useState(false)
