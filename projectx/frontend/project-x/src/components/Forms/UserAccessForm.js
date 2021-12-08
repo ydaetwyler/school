@@ -17,36 +17,39 @@ const UserAccessForm = () => {
     })
 
     return (
-        <Formik
-            initialValues={{ email: '', password: '' }}
-            validationSchema={validateUserAccess}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    signIn({ variables: {
-                        email: values.email,
-                        password: values.password
-                        } })
-                    setSubmitting(false)
-                }, 400)
-            }}
-        >
-            <Form>
-                <TextInput
-                    label="E-Mail"
-                    name="email"
-                    type="text"
-                    placeholder=""
-                />
-                <TextInput
-                    label="Password"
-                    name="password"
-                    type="password"
-                    placeholder=""
-                />
-                <button disabled={loading} type="submit">Reset password</button>
-                {error && <p>{error.message}</p>}
-            </Form>
-        </Formik>
+        <div>
+        <h1>Login</h1>
+            <Formik
+                initialValues={{ email: '', password: '' }}
+                validationSchema={validateUserAccess}
+                onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                        signIn({ variables: {
+                            email: values.email,
+                            password: values.password
+                            } })
+                        setSubmitting(false)
+                    }, 400)
+                }}
+            >
+                <Form>
+                    <TextInput
+                        label="E-Mail"
+                        name="email"
+                        type="text"
+                        placeholder=""
+                    />
+                    <TextInput
+                        label="Password"
+                        name="password"
+                        type="password"
+                        placeholder=""
+                    />
+                    <button disabled={loading} type="submit">Reset password</button>
+                    {error && <p>{error.message}</p>}
+                </Form>
+            </Formik>
+        </div>
     )
 }
 

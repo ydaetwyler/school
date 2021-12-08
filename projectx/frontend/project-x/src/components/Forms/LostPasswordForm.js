@@ -19,27 +19,30 @@ const LostPasswordForm = () => {
     )
 
     return (
-        <Formik
-            initialValues={{ email: '' }}
-            validationSchema={validateLostPassword}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    lostPassword({ variables: { email: values.email } })
-                    setSubmitting(false)
-                }, 400)
-            }}
-        >
-            <Form>
-                <TextInput
-                    label="E-Mail"
-                    name="email"
-                    type="text"
-                    placeholder=""
-                />
-                <button disabled={loading} type="submit">Send reset link</button>
-                {error && <p>{error.message}</p>}
-            </Form>
-        </Formik>
+        <div>
+        <h1>Reset password</h1>
+            <Formik
+                initialValues={{ email: '' }}
+                validationSchema={validateLostPassword}
+                onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                        lostPassword({ variables: { email: values.email } })
+                        setSubmitting(false)
+                    }, 400)
+                }}
+            >
+                <Form>
+                    <TextInput
+                        label="E-Mail"
+                        name="email"
+                        type="text"
+                        placeholder=""
+                    />
+                    <button disabled={loading} type="submit">Send reset link</button>
+                    {error && <p>{error.message}</p>}
+                </Form>
+            </Formik>
+        </div>
     )
 }
 

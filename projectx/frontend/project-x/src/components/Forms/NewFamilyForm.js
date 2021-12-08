@@ -16,27 +16,30 @@ const NewFamilyForm = () => {
     if (redirect) return <Navigate to={redirect} />
 
     return (
-        <Formik
-            initialValues={{ familyName: '' }}
-            validationSchema={validateNewFamily}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    createFamily({ variables: { familyName: values.familyName } })
-                    setSubmitting(false)
-                }, 400)
-            }}
-        >
-            <Form>
-                <TextInput
-                    label="Family Name"
-                    name="familyName"
-                    type="text"
-                    placeholder=""
-                />
-                <button disabled={loading} type="submit">Create Family</button>
-                {error && <p>{error.message}</p>}
-            </Form>
-        </Formik>
+        <div>
+        <h1>Start family</h1>
+            <Formik
+                initialValues={{ familyName: '' }}
+                validationSchema={validateNewFamily}
+                onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                        createFamily({ variables: { familyName: values.familyName } })
+                        setSubmitting(false)
+                    }, 400)
+                }}
+            >
+                <Form>
+                    <TextInput
+                        label="Family Name"
+                        name="familyName"
+                        type="text"
+                        placeholder=""
+                    />
+                    <button disabled={loading} type="submit">Create Family</button>
+                    {error && <p>{error.message}</p>}
+                </Form>
+            </Formik>
+        </div>
     )
 }
 

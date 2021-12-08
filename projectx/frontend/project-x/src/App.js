@@ -1,6 +1,5 @@
 import React from 'react'
 import './App.css'
-import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 import Dashboard from './components/Dashboard/Dashboard'
@@ -13,12 +12,7 @@ const App = () => {
 
   return (
     <div>
-      <BrowserRouter>
-      <Navigate to='/dashboard' />
-        <Routes>
-            <Route path='/dashboard' element={<Dashboard />} />
-        </Routes>
-      </BrowserRouter>
+      <Dashboard />
     </div>
   )
 }

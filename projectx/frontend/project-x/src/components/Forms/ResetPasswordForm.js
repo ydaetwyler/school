@@ -19,36 +19,40 @@ const ResetPassword = () => {
     })
 
     return (
-        <Formik
-            initialValues={{ password: '', passwordConfirm: '' }}
-            validationSchema={validateResetPassword}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    resetPassword({ variables: { 
-                        password: values.password,
-                        userHash
-                        } })
-                    setSubmitting(false)
-                }, 400)
-            }}
-        >
-            <Form>
-                <TextInput
-                    label="Password"
-                    name="password"
-                    type="password"
-                    placeholder=""
-                />
-                <TextInput
-                    label="Password confirmation"
-                    name="passwordConfirm"
-                    type="password"
-                    placeholder=""
-                />
-                <button disabled={loading} type="submit">Reset password</button>
-                {error && <p>{error.message}</p>}
-            </Form>
-        </Formik>
+        <div>
+            <h1>Reset Password</h1>
+            <Formik
+                initialValues={{ password: '', passwordConfirm: '' }}
+                validationSchema={validateResetPassword}
+                onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                        resetPassword({ variables: { 
+                            password: values.password,
+                            userHash
+                            } })
+                        setSubmitting(false)
+                    }, 400)
+                }}
+            >
+                <Form>
+                    <TextInput
+                        label="Password"
+                        name="password"
+                        type="password"
+                        placeholder=""
+                    />
+                    <TextInput
+                        label="Password confirmation"
+                        name="passwordConfirm"
+                        type="password"
+                        placeholder=""
+                    />
+                    <button disabled={loading} type="submit">Reset password</button>
+                    {error && <p>{error.message}</p>}
+                </Form>
+            </Formik>
+        </div>
+
     )
 }
 

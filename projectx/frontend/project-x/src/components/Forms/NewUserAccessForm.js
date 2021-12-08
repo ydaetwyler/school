@@ -19,50 +19,53 @@ const NewUserAccess = () => {
     })
 
     return (
-        <Formik
-            initialValues={{ email: '', username: '', password: '', passwordConfirm: '' }}
-            validationSchema={validateNewUserAccess}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    signUp({ variables: { 
-                        email: values.email,
-                        username: values.username,
-                        password: values.password,
-                        userHash
-                        } })
-                    setSubmitting(false)
-                }, 400)
-            }}
-        >
-            <Form>
-                <TextInput
-                    label="E-Mail"
-                    name="email"
-                    type="text"
-                    placeholder=""
-                />
-                <TextInput
-                    label="Name"
-                    name="username"
-                    type="text"
-                    placeholder=""
-                />
-                <TextInput
-                    label="Password"
-                    name="password"
-                    type="password"
-                    placeholder=""
-                />
-                <TextInput
-                    label="Password confirmation"
-                    name="passwordConfirm"
-                    type="password"
-                    placeholder=""
-                />
-                <button disabled={loading} type="submit">Create new user</button>
-                {error && <p>{error.message}</p>}
-            </Form>
-        </Formik>
+        <div>
+        <h1>Join family</h1>
+            <Formik
+                initialValues={{ email: '', username: '', password: '', passwordConfirm: '' }}
+                validationSchema={validateNewUserAccess}
+                onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                        signUp({ variables: { 
+                            email: values.email,
+                            username: values.username,
+                            password: values.password,
+                            userHash
+                            } })
+                        setSubmitting(false)
+                    }, 400)
+                }}
+            >
+                <Form>
+                    <TextInput
+                        label="E-Mail"
+                        name="email"
+                        type="text"
+                        placeholder=""
+                    />
+                    <TextInput
+                        label="Name"
+                        name="username"
+                        type="text"
+                        placeholder=""
+                    />
+                    <TextInput
+                        label="Password"
+                        name="password"
+                        type="password"
+                        placeholder=""
+                    />
+                    <TextInput
+                        label="Password confirmation"
+                        name="passwordConfirm"
+                        type="password"
+                        placeholder=""
+                    />
+                    <button disabled={loading} type="submit">Create new user</button>
+                    {error && <p>{error.message}</p>}
+                </Form>
+            </Formik>
+        </div>
     )
 }
 

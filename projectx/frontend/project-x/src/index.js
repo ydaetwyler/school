@@ -20,10 +20,10 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <CookiesProvider>
       <ApolloProvider client={client}>
-        <App />
-      </ApolloProvider>
-  </CookiesProvider>,
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
+      </ApolloProvider>,
   document.getElementById('root')
 )

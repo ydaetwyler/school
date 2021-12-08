@@ -11,18 +11,16 @@ const Login = () => {
 
     return (
         <BrowserRouter>
-            <div>
-                <Link to="/new">Create new Family</Link>
-            </div>
             <Routes>
-                <Route exact path='/login/:hash' element={<NewUserAccessForm />} />
-                <Route exact path='/reset/:hash' element={<ResetPasswordForm />} />
+                <Route path='/login/:hash' element={<NewUserAccessForm />} />
+                <Route path='/reset/:hash' element={<ResetPasswordForm />} />
                 <Route path='/new' element={<NewFamilyForm />} />
                 <Route path='/lost' element={<LostPasswordForm />} />
-                <Route path='/' element={<UserAccessForm />} />
+                <Route exact path='/' element={<UserAccessForm />} />
             </Routes>
             <div>
-                <Link to="/lost">Lost Password</Link>
+                <Link to="/lost">Lost password</Link>
+                <Link to="/new">Create new family</Link>
             </div>
         </BrowserRouter>
     )
