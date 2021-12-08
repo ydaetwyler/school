@@ -7,8 +7,6 @@ import '@testing-library/jest-dom'
 
 import Login from './Login'
 
-import { expect } from '@jest/globals'
-
 const leftClick = { button: 0 }
 
 test('Login rendering/navigating links', () => {

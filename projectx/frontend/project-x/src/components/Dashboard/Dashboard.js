@@ -9,7 +9,7 @@ const Dashboard = () => {
 
     return (
         <div>
-            <h2>Dashboard</h2>
+            <h2>Family Board</h2>
         </div>
     )
 }
