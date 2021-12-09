@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
+import User from '../models/user.mjs'
+
 dotenv.config()
 
 const SECRET_KEY = process.env.SECRET_KEY
@@ -21,10 +23,12 @@ const Auth = async ({ req }) => {
 
         if (!token) return { isAuth: false }
 
-        const userId = validateUser(token)
+        const user = validateUser(token)
 
-        if (userId) {
-            return { isAuth: true, userId: userId.iat }
+        const userExists = await User.findById({_id: user.id})
+
+        if (userExists) {
+            return { isAuth: true, userId: user.id }
         }
     } catch(e) {
         console.log(`error auth -> ${e}`)

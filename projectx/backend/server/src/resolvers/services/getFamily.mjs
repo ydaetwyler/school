@@ -7,16 +7,14 @@ const getFamily = async (context, User, Family) => {
     
     try {
         console.log(context.userId)
-        const user = User.findById({ _id: context.userId })
-
-        console.log(user.family)
+        const user = await User.findById({ _id: context.userId })
 
         const familyId = user.family
 
-        const familyFetched = await Family.findOne({ id: familyId })
+        const familyFetched = await Family.findById({ _id: familyId })
             .populate('eventList')
         
-        return familyFetched.toJSON()
+        return familyFetched
 
     } catch (e) {
         console.log(`Error fetching family, -> ${e}`)

@@ -23,7 +23,7 @@ const signUp = async (args, User) => {
             hash: overwriteHash
         })
 
-        const user = User.findOne({ hash: overwriteHash })
+        const user = await User.findOne({ hash: overwriteHash })
 
         console.log(user.id)
         
