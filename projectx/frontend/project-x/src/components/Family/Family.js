@@ -16,7 +16,7 @@ const GET_FAMILY = gql`
 const Family = () => {
     const { loading, error, data } = useQuery(GET_FAMILY)
 
-    console.log(data)
+    window.history.replaceState(null, "Family Board", "/")
 
     if (loading) return 'Loading...'
     if (error) return `Error -> ${error}`
