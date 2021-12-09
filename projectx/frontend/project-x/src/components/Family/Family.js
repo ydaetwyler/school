@@ -5,10 +5,6 @@ const GET_FAMILY = gql`
     query GetFamily {
         getFamily {
             familyName
-            familyMembers {
-                userEmail
-                userName
-            }
         }
     }
 `
@@ -20,6 +16,8 @@ const Family = () => {
 
     if (loading) return 'Loading...'
     if (error) return `Error -> ${error}`
+
+    console.log(data)
 
     return (
         <div>

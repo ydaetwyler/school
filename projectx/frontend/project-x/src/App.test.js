@@ -1,6 +1,5 @@
 import React from 'react'
 import { act, render, screen } from "@testing-library/react"
-import userEvent from '@testing-library/user-event'
 import { MockedProvider } from '@apollo/client/testing'
 import { CookiesProvider, Cookies } from 'react-cookie'
 
@@ -19,6 +18,7 @@ test('App rendering/check cookie', () => {
         </MockedProvider>
     )
 
+
     // verify login page is displayed if no cookie
     act(() => {
         cookies.set(null)
@@ -34,5 +34,5 @@ test('App rendering/check cookie', () => {
         })
     })
 
-    expect(screen.getByText(/Family Board/i)).toBeInTheDocument()
+    expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
 })
