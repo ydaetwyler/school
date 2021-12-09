@@ -14,7 +14,7 @@ const NewUserAccess = () => {
     const [signUp, { loading, error }] = useMutation(SIGN_UP, {
         onCompleted: (data) => setCookie('userToken', data.signUp, { 
             maxAge: (60*60*24),
-            sameSite: true
+            sameSite: false
         })
     })
 

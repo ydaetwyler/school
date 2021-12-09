@@ -24,6 +24,8 @@ const signUp = async (args, User) => {
         })
 
         const user = User.findOne({ hash: overwriteHash })
+
+        console.log(user.id)
         
         const token = jwt.sign({
             id: user._id,

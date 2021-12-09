@@ -3,6 +3,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 import typeDefs from './schema/schema.mjs'
 import resolvers from './resolvers/resolvers.mjs'
@@ -17,14 +18,20 @@ connect()
 
 const app = express()
 
-const secret = process.env.COOKIE_KEY
-app.use(cookieParser(secret))
+const frontBaseUrl = process.env.FRONT_BASE_URL
+
+const corsOptions = {
+    credentials: true,
+    origin: frontBaseUrl
+}
+
+app.use(cookieParser())
 
 const server = new ApolloServer({ 
     typeDefs,
     resolvers,
+    cors: corsOptions,
     context: Auth,
-    cors: true,
     playground: process.env.NODE_ENV === 'development' ? true : false,
     introspection: true,
     tracing: true,
@@ -35,8 +42,8 @@ await server.start()
 
 server.applyMiddleware({
     app,
+    cors: corsOptions,
     path: '/dashboard',
-    cors: true,
     onHealthCheck: () => {
         new Promise((resolve, reject) => {
             (mongoose.connection.readyState > 0)

@@ -12,7 +12,7 @@ const UserAccessForm = () => {
     const [signIn, { loading, error }] = useMutation(SIGN_IN, {
         onCompleted: (data) => setCookie('userToken', data.signIn, { 
             maxAge: (60*60*24),
-            sameSite: true
+            sameSite: false
         })
     })
 

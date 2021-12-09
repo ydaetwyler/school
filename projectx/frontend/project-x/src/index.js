@@ -7,16 +7,18 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
+  createHttpLink,
 } from "@apollo/client"
 
 dotenv.config()
 const baseUrl = process.env.REACT_APP_BASE_URL
 
-console.log(baseUrl)
-
 const client = new ApolloClient({
-  uri: baseUrl,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  link: createHttpLink({
+    credentials: 'include',
+    uri: baseUrl
+  })
 })
 
 ReactDOM.render(

@@ -14,7 +14,7 @@ const ResetPassword = () => {
     const [resetPassword, { loading, error }] = useMutation(RESET_PASSWORD, {
         onCompleted: (data) => setCookie('userToken', data.resetPassword, { 
             maxAge: (60*60*24),
-            sameSite: true
+            sameSite: false
         })
     })
 

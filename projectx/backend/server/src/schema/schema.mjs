@@ -6,8 +6,7 @@ const typeDefs = gql`
 
     type Query {
         "Get family Object with all needed subfields"
-        load: [Family!]!
-        getFamily(userId: ID!): Family
+        getFamily: Family
     }
 
     type Mutation {

@@ -1,9 +1,6 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
-import Family from '../models/family.mjs'
-import User from '../models/user.mjs'
-
 dotenv.config()
 
 const SECRET_KEY = process.env.SECRET_KEY
@@ -27,7 +24,7 @@ const Auth = async ({ req }) => {
         const userId = validateUser(token)
 
         if (userId) {
-            return { isAuth: true, userId }
+            return { isAuth: true, userId: userId.iat }
         }
     } catch(e) {
         console.log(`error auth -> ${e}`)
