@@ -7,9 +7,6 @@ import { GraphQLError } from 'graphql'
 
 import LostPasswordForm from './LostPasswordForm'
 import { LOST_PASSWORD } from '../../utils/mutations'
-import { BrowserRouter } from 'react-router-dom'
-
-import NewUserAccess from '../Forms/NewUserAccessForm'
 
 const leftClick = { button: 0 }
 
