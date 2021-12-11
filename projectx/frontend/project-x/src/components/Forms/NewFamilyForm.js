@@ -30,12 +30,13 @@ const NewFamilyForm = () => {
             >
                 <Form>
                     <TextInput
-                        label="Family Name"
+                        id="familyName"
+                        label="Family name"
                         name="familyName"
                         type="text"
                         placeholder=""
                     />
-                    <button disabled={loading} type="submit">Create Family</button>
+                    <button disabled={loading} type="submit">Create family</button>
                     {error && <p>{error.message}</p>}
                 </Form>
             </Formik>

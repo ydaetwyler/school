@@ -1,3 +1,4 @@
+import { AuthenticationError } from 'apollo-server-express'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
@@ -12,7 +13,7 @@ const validateUser = token => {
         try {
             return jwt.verify(token, SECRET_KEY)
         } catch(e) {
-            throw new Error('Session invalid')
+            throw new AuthenticationError('Session invalid')
         }
     }
 }

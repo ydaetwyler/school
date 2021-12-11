@@ -17,8 +17,6 @@ const Family = () => {
     if (loading) return 'Loading...'
     if (error) return `Error -> ${error}`
 
-    console.log(data)
-
     return (
         <div>
             <h1>Family Board</h1>

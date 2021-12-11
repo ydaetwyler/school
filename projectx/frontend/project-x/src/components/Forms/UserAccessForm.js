@@ -34,12 +34,14 @@ const UserAccessForm = () => {
             >
                 <Form>
                     <TextInput
+                        id="email"
                         label="E-Mail"
                         name="email"
                         type="text"
                         placeholder=""
                     />
                     <TextInput
+                        id="password"
                         label="Password"
                         name="password"
                         type="password"

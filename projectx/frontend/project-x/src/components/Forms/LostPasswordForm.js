@@ -14,7 +14,7 @@ const LostPasswordForm = () => {
 
     if (sent) return (
         <div>
-            <p>Reset Link Sent</p>
+            <p>Reset link sent</p>
         </div>
     )
 
@@ -33,6 +33,7 @@ const LostPasswordForm = () => {
             >
                 <Form>
                     <TextInput
+                        id="email"
                         label="E-Mail"
                         name="email"
                         type="text"

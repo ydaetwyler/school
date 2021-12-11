@@ -8,7 +8,7 @@ import TextInput from './Utils/TextInput'
 import { SIGN_UP } from '../../utils/mutations'
 import { validateNewUserAccess } from './Utils/validations'
 
-const NewUserAccess = () => {
+const NewUserAccessForm = () => {
     const [userHash] = useState(useParams().hash)
     const [cookies, setCookie] = useCookies(['userToken'])
     const [signUp, { loading, error }] = useMutation(SIGN_UP, {
@@ -27,8 +27,8 @@ const NewUserAccess = () => {
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(() => {
                         signUp({ variables: { 
-                            email: values.email,
                             username: values.username,
+                            email: values.email,
                             password: values.password,
                             userHash
                             } })
@@ -38,24 +38,28 @@ const NewUserAccess = () => {
             >
                 <Form>
                     <TextInput
+                        id="email"
                         label="E-Mail"
                         name="email"
                         type="text"
                         placeholder=""
                     />
                     <TextInput
+                        id="username"
                         label="Name"
                         name="username"
                         type="text"
                         placeholder=""
                     />
                     <TextInput
+                        id="password"
                         label="Password"
                         name="password"
                         type="password"
                         placeholder=""
                     />
                     <TextInput
+                        id="passwordConfirm"
                         label="Password confirmation"
                         name="passwordConfirm"
                         type="password"
@@ -69,4 +73,4 @@ const NewUserAccess = () => {
     )
 }
 
-export default NewUserAccess
+export default NewUserAccessForm

@@ -8,7 +8,7 @@ import TextInput from './Utils/TextInput'
 import { RESET_PASSWORD } from '../../utils/mutations'
 import { validateResetPassword } from './Utils/validations'
 
-const ResetPassword = () => {
+const ResetPasswordForm = () => {
     const [userHash] = useState(useParams().hash)
     const [cookies, setCookie] = useCookies(['userToken'])
     const [resetPassword, { loading, error }] = useMutation(RESET_PASSWORD, {
@@ -36,12 +36,14 @@ const ResetPassword = () => {
             >
                 <Form>
                     <TextInput
+                        id="password"
                         label="Password"
                         name="password"
                         type="password"
                         placeholder=""
                     />
                     <TextInput
+                        id="passwordConfirm"
                         label="Password confirmation"
                         name="passwordConfirm"
                         type="password"
@@ -56,4 +58,4 @@ const ResetPassword = () => {
     )
 }
 
-export default ResetPassword
+export default ResetPasswordForm

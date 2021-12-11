@@ -25,7 +25,7 @@ const signUp = async (args, User) => {
 
         const user = await User.findOne({ hash: overwriteHash })
 
-        console.log(user.id)
+        if (!user) throw new AuthenticationError('User hash invalid')
         
         const token = jwt.sign({
             id: user._id,
@@ -35,8 +35,7 @@ const signUp = async (args, User) => {
         
         return token
     } catch (e) {
-        console.log(`Error creating User -> ${e}`)
-        throw e
+        throw new AuthenticationError('User hash invalid')
     }
 }
 
