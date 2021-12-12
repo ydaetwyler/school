@@ -20,7 +20,7 @@ const ResetPasswordForm = () => {
 
     return (
         <div>
-            <h1>Reset Password</h1>
+            <h1>Set new password</h1>
             <Formik
                 initialValues={{ password: '', passwordConfirm: '' }}
                 validationSchema={validateResetPassword}
@@ -49,7 +49,7 @@ const ResetPasswordForm = () => {
                         type="password"
                         placeholder=""
                     />
-                    <button disabled={loading} type="submit">Reset password</button>
+                    <button disabled={loading} type="submit">Set password</button>
                     {error && <p>{error.message}</p>}
                 </Form>
             </Formik>
