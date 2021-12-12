@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import dotenv from 'dotenv'
 import { CookiesProvider } from 'react-cookie'
 import { 
   ApolloClient,
@@ -10,7 +9,6 @@ import {
   createHttpLink,
 } from "@apollo/client"
 
-dotenv.config()
 const baseUrl = process.env.REACT_APP_BASE_URL
 
 const client = new ApolloClient({

@@ -21,7 +21,7 @@ const Family = () => {
 
     return (
         <div>
-            <h1>Family Board</h1>
+            <h1 className="text-3xl font-bold underline text-blue-600">Family Board</h1>
             <p>{data.getFamily.familyName}</p>
         </div>
     )

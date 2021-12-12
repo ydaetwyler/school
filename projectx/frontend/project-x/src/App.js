@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css'
 import { useCookies } from 'react-cookie'
 
 import Dashboard from './components/Dashboard/Dashboard'
