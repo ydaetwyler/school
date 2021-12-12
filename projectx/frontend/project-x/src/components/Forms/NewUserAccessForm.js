@@ -11,11 +11,13 @@ import { validateNewUserAccess } from './Utils/validations'
 const NewUserAccessForm = () => {
     const [userHash] = useState(useParams().hash)
     const [cookies, setCookie] = useCookies(['userToken'])
+    const [fail, setFail] = useState(false)
     const [signUp, { loading, error }] = useMutation(SIGN_UP, {
         onCompleted: (data) => setCookie('userToken', data.signUp, { 
             maxAge: (60*60*24),
             sameSite: false
-        })
+        }),
+        onError: () => setFail(true)
     })
 
     return (

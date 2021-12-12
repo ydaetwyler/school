@@ -9,8 +9,10 @@ import { validateNewFamily } from './Utils/validations'
 
 const NewFamilyForm = () => {
     const [redirect, setRedirect] = useState("")
+    const [fail, setFail] = useState(false)
     const [createFamily, { loading, error }] = useMutation(CREATE_FAMILY, {
-        onCompleted: (data) => setRedirect(`/login/${data.createFamily}`)
+        onCompleted: (data) => setRedirect(`/login/${data.createFamily}`),
+        onError: () => setFail(true)
     })
 
     if (redirect) return <Navigate to={redirect} />

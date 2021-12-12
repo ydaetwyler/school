@@ -41,7 +41,7 @@ test('Lost Password Form render/send reset link success', async () => {
 
     await waitFor(async () => {
         jest.advanceTimersByTime(400)
-        expect(screen.getByText(/Reset link sent/i)).toBeInTheDocument()
+        expect(screen.getByText(/Reset link sent to tester@tester.com/i)).toBeInTheDocument()
     })
     
 })
@@ -72,7 +72,7 @@ test('Lost Password Form/send reset link error', async () => {
         try {
             userEvent.click(screen.getByText(/Send reset link/i), leftClick)
         } catch(e) {
-            expect(screen.getByText(/Error user not found/i)).toBeInTheDocument()
+            expect(screen.getByText(/Reset link sent to tester@tester.com/i)).toBeInTheDocument()
         }
     })
 })

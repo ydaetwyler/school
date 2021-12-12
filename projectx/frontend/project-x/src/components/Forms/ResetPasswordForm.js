@@ -11,11 +11,13 @@ import { validateResetPassword } from './Utils/validations'
 const ResetPasswordForm = () => {
     const [userHash] = useState(useParams().hash)
     const [cookies, setCookie] = useCookies(['userToken'])
+    const [fail, setFail] = useState(false)
     const [resetPassword, { loading, error }] = useMutation(RESET_PASSWORD, {
         onCompleted: (data) => setCookie('userToken', data.resetPassword, { 
             maxAge: (60*60*24),
             sameSite: false
-        })
+        }),
+        onError: () => setFail(true)
     })
 
     return (
