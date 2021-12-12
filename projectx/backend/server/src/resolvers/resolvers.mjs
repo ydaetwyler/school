@@ -18,6 +18,7 @@ import createEventComment from './services/createEventComment.mjs'
 import removeEventComment from './services/removeEventComment.mjs'
 
 import getFamily from './services/getFamily.mjs'
+import getUser from './services/getUser.mjs'
 
 const resolvers = {
     Mutation: {
@@ -27,16 +28,17 @@ const resolvers = {
         lostPassword: (_, args) => lostPassword(args, user),
         resetPassword: (_, args) => resetPassword(args, user),
         updateAvatarImage: (_, args, context) => updateAvatarImage(args, context, user),
-        updateFamilyName: (_, args, context) => updateFamilyName(args, context, family),
+        updateFamilyName: (_, args, context) => updateFamilyName(args, context, user, family),
         updateUserName: (_, args, context) => updateUserName(args, context, user),
-        createEventItem: (_, args, context) => createEventItem(args, context, eventItem, family),
+        createEventItem: (_, args, context) => createEventItem(args, context, eventItem, user, family),
         updateEventItem: (_, args, context) => updateEventItem(args, context, eventItem),
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),
         createEventComment: (_, args, context) => createEventComment(args, context, comment, eventItem),
         removeEventComment: (_, args, context) => removeEventComment(args, context, comment, eventItem),
     },
     Query: {
-        getFamily: (_, __, context) => getFamily(context, user, family)
+        getFamily: (_, __, context) => getFamily(context, user, family),
+        getUser: (_, __, context) => getUser(context, user)
     },
 }
 

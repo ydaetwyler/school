@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-express'
 
-const updateEventItem = async (args, context, EventItem) => {
+const updateEventItem = async (args, context, User, EventItem) => {
     if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')
     }
@@ -10,11 +10,9 @@ const updateEventItem = async (args, context, EventItem) => {
             activityName,
             activityImageUrl,
             activityDate,
-            activityOwner,
             activityDescription,
             activityLocation,
-            activityUrl,
-            eventItemHash,
+            activityUrl
         } = args
     
         const updateEventItem = await EventItem.findOne({ hash: eventItemHash })
@@ -22,7 +20,6 @@ const updateEventItem = async (args, context, EventItem) => {
         if (activityName) updateEventItem.activityName = activityName
         if (activityImageUrl) updateEventItem.activityImageUrl = activityImageUrl
         if (activityDate) updateEventItem.activityDate = activityDate
-        if (activityOwner) updateEventItem.activityOwner = activityOwner
         if (activityDescription) updateEventItem.activityDescription = activityDescription
         if (activityLocation) updateEventItem.activityLocation = activityLocation
         if (activityUrl) updateEventItem.activityUrl = activityUrl

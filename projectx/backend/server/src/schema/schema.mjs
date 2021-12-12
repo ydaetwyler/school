@@ -6,7 +6,8 @@ const typeDefs = gql`
 
     type Query {
         "Get family Object with all needed subfields"
-        getFamily: Family
+        getFamily: Family,
+        getUser: User,
     }
 
     type Mutation {
@@ -19,14 +20,13 @@ const typeDefs = gql`
         createFamily(familyName: String!): String
         lostPassword(email: String!): String
         resetPassword(password: String!, userHash: String!): String
-        updateAvatarImage(userHash: String!, avatarImageUrl: String!): User
-        updateFamilyName(familyHash: String!, familyName: String!): Family
-        updateUserName(userHash: String!, userName: String): User
+        updateAvatarImage(avatarImageUrl: String!): User
+        updateFamilyName(familyName: String!): Family
+        updateUserName(userName: String): User
         createEventItem(
             activityName: String!,
             activityImageUrl: String,
             activityDate: Date,
-            activityOwner: String,
             activityDescription: String,
             activityLocation: String,
             activityUrl: String,
@@ -36,11 +36,9 @@ const typeDefs = gql`
             activityName: String,
             activityImageUrl: String,
             activityDate: Date,
-            activityOwner: String,
             activityDescription: String,
             activityLocation: String,
             activityUrl: String,
-            eventItemHash: String!
         ): EventItem
         removeEventItem(eventItemHash: String!, familyHash: String!): Family
         createEventComment(
@@ -58,7 +56,6 @@ const typeDefs = gql`
         familyMembers: [User]
         eventList: [EventItem]
         collectionList: [CollectionList]
-        hash: String
     }
 
     "One user"

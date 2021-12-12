@@ -2,22 +2,25 @@ import { AuthenticationError } from 'apollo-server-express'
 
 const updateFamilyName = async (args, context, Family) => {
     const { 
-        familyName,
-        familyHash,
+        familyName
     } = args
     
-    if (!context.isAuth && !(context.checkFamilyHash === familyHash)) {
+    if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')
     }
     
     try {
-        let updateFamily = await Family.findOne({ hash: familyHash })
+        const user = User.findById({ _id: context.userId })
+
+        const familyId = user.family
+
+        let updateFamily = await Family.findById({ _id: familyId })
     
         updateFamily.familyName = familyName
     
         const newFamily = await updateFamily.save()
     
-        return newFamily.toJSON()
+        return newFamily
     } catch(e) {
         console.log(`Error updating family name -> ${e}`)
         throw e

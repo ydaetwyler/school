@@ -1,42 +1,43 @@
 import { AuthenticationError } from 'apollo-server-express'
-import { nanoid } from 'nanoid'
 
-const createEventItem = async (args, context, EventItem, Family) => {
+const createEventItem = async (args, context, EventItem, User, Family) => {
     const { 
         activityName,
         activityImageUrl,
         activityDate,
-        activityOwner,
         activityDescription,
         activityLocation,
-        activityUrl,
-        familyHash,
+        activityUrl
     } = args
     
-    if (!context.isAuth && !(context.checkFamilyHash === familyHash)) {
+    if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')
     }
     
     try {
+
+        const user = User.findById({ _id: context.userId })
+
+        const familyId = user.family
+
         const eventItem = new EventItem({
-            hash: nanoid(),
             activityName,
             activityImageUrl,
             activityDate,
-            activityOwner,
+            activityOwner: user.id,
             activityDescription,
             activityLocation,
-            activityUrl,
+            activityUrl
         })
         const newEventItem = await eventItem.save()
 
-        let updateFamily = await Family.findOne({ hash: familyHash })
+        let updateFamily = await Family.findById({ _id: familyId })
 
         updateFamily.eventList.push(newEventItem.id)
 
         await updateFamily.save()
 
-        return newEventItem.toJSON()
+        return newEventItem
         
     } catch (e) {
         console.log(`Error creating Event -> ${e}`)

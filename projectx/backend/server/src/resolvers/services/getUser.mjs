@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-express'
 
-const getFamily = async (context, User, Family) => {
+const getFamily = async (context, User) => {
     if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')
     }
@@ -8,13 +8,7 @@ const getFamily = async (context, User, Family) => {
     try {
         const user = await User.findById({ _id: context.userId })
 
-        const familyId = user.family
-
-        const familyFetched = await Family.findById({ _id: familyId })
-            .populate('familyMembers')
-            .populate('eventList')
-
-        return familyFetched
+        return user
     } catch (e) {
         console.log(`Error fetching family, -> ${e}`)
         throw e

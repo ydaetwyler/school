@@ -4,15 +4,17 @@ import { gql, useQuery } from '@apollo/client'
 const GET_FAMILY = gql`
     query GetFamily {
         getFamily {
-            familyName
+            familyName,
+            familyMembers {
+                userName,
+                userEmail
+            }
         }
     }
 `
 
 const Family = () => {
     const { loading, error, data } = useQuery(GET_FAMILY)
-
-    window.history.replaceState(null, "Family Board", "/")
 
     if (loading) return 'Loading...'
     if (error) return `Error -> ${error}`
