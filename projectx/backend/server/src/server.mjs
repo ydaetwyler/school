@@ -35,6 +35,9 @@ const server = new ApolloServer({
         if (err.message.startsWith('Database Error: ')) {
             return new Error('Internal server error');
         }
+        if (err.message.startsWith('Mongo')) {
+            return new Error('Internal server error');
+        }
         // Otherwise return the original error
         return err;
     },
