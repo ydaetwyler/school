@@ -30,6 +30,14 @@ app.use(cookieParser())
 const server = new ApolloServer({ 
     typeDefs,
     resolvers,
+    formatError: (err) => {
+        // Don't give the specific errors to the client
+        if (err.message.startsWith('Database Error: ')) {
+            return new Error('Internal server error');
+        }
+        // Otherwise return the original error
+        return err;
+    },
     cors: corsOptions,
     context: Auth,
     playground: process.env.NODE_ENV === 'development' ? true : false,
