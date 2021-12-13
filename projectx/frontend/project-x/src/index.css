@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-family {
+    background-image: url("/public/background/roberto-nickson-640x426.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+@media (min-width: 640px) {
+    .bg-family {
+        background-image: url("/public/background/roberto-nickson-1920x1280.jpg");
+    }
+}
+
+@media (min-width: 1024px) {
+    .bg-family {
+        background-image: url("/public/background/roberto-nickson-2400x1600.jpg");
+    }
+}
+
+@media (min-width: 1536px) {
+    .bg-family {
+        background-image: url("/public/background/roberto-nickson-5472x3648.jpg");
+    }
+}

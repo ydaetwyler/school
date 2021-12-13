@@ -47,42 +47,52 @@ const UserAccessForm = () => {
     }
 
     return (
-        <div>
-        <h1>Login</h1>
-            <Formik
-                initialValues={{ email: '', password: '' }}
-                validationSchema={validateUserAccess}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        signIn({ 
-                            variables: {
-                            email: values.email,
-                            password: values.password
-                            } 
-                        })
-                        setSubmitting(false)
-                    }, 400)
-                }}
-            >
-                <Form>
-                    <TextInput
-                        id="email"
-                        label="E-Mail"
-                        name="email"
-                        type="text"
-                        placeholder=""
-                    />
-                    <TextInput
-                        id="password"
-                        label="Password"
-                        name="password"
-                        type="password"
-                        placeholder=""
-                    />
-                    <button disabled={loading} type="submit">Enter</button>
-                    {error && <p>{error.message}</p>}
-                </Form>
-            </Formik>
+        <div className="h-2/6 w-80 bg-white/[.13] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md backdrop-blur-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border)">
+            <h3 
+                className="text-center text-3xl text-white font-medium leading-9">
+                Login
+            </h3>
+                <Formik
+                    initialValues={{ email: '', password: '' }}
+                    validationSchema={validateUserAccess}
+                    onSubmit={(values, { setSubmitting }) => {
+                        setTimeout(() => {
+                            signIn({ 
+                                variables: {
+                                email: values.email,
+                                password: values.password
+                                } 
+                            })
+                            setSubmitting(false)
+                        }, 400)
+                    }}
+                >
+                    <Form>
+                        <TextInput
+                            className="block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-sm font-light text-white"
+                            id="email"
+                            label="E-Mail"
+                            name="email"
+                            type="text"
+                            placeholder=""
+                        />
+                        <TextInput
+                            className="block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-sm font-light text-white"
+                            id="password"
+                            label="Password"
+                            name="password"
+                            type="password"
+                            placeholder=""
+                        />
+                        <button
+                            className="mt-12 w-full bg-white text-black py-3 text-xl font-semibold rounded-sm cursor-pointer"
+                            disabled={loading} 
+                            type="submit">
+                                Enter
+                        </button>
+                        {error && <p>{error.message}</p>}
+                    </Form>
+                </Formik>
         </div>
     )
 }
