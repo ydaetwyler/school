@@ -47,7 +47,7 @@ const UserAccessForm = () => {
     }
 
     return (
-        <div className="h-2/6 w-96 bg-white/[.13] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md backdrop-blur-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border)">
+        <div className="h-2/5 w-96 bg-white/[.13] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md backdrop-blur-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border)">
             <h3 
                 className="text-center text-3xl text-white font-medium leading-9">
                 Login
