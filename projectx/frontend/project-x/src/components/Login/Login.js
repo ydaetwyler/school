@@ -21,10 +21,6 @@ const Login = () => {
                     <Route path='/lost' element={<LostPasswordForm />} />
                     <Route exact path='/' element={<UserAccessForm />} />
                 </Routes>
-                <div>
-                    <Link to="/lost">Lost password</Link>
-                    <Link to="/new">Create new family</Link>
-                </div>
             </BrowserRouter>
         </div>
     )

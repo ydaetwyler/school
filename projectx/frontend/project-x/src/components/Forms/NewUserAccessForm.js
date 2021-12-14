@@ -21,8 +21,10 @@ const NewUserAccessForm = () => {
     })
 
     return (
-        <div>
-        <h1>Join family</h1>
+        <div className="h-3/5 min-h-[630px] w-96 min-w-[300px] bg-white/[.13] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md backdrop-blur-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
+            <h3 className="mb-2 text-center text-4xl text-white font-medium leading-9">
+                Join family
+            </h3>
             <Formik
                 initialValues={{ email: '', username: '', password: '', passwordConfirm: '' }}
                 validationSchema={validateNewUserAccess}
@@ -40,6 +42,7 @@ const NewUserAccessForm = () => {
             >
                 <Form>
                     <TextInput
+                        className="mb-3 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-sm font-light text-white"
                         id="email"
                         label="E-Mail"
                         name="email"
@@ -47,6 +50,7 @@ const NewUserAccessForm = () => {
                         placeholder=""
                     />
                     <TextInput
+                        className="mb-3 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-sm font-light text-white"
                         id="username"
                         label="Name"
                         name="username"
@@ -54,6 +58,7 @@ const NewUserAccessForm = () => {
                         placeholder=""
                     />
                     <TextInput
+                        className="mb-3 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-sm font-light text-white"
                         id="password"
                         label="Password"
                         name="password"
@@ -61,13 +66,20 @@ const NewUserAccessForm = () => {
                         placeholder=""
                     />
                     <TextInput
+                        className="mb-3 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-sm font-light text-white"
                         id="passwordConfirm"
                         label="Password confirmation"
                         name="passwordConfirm"
                         type="password"
                         placeholder=""
                     />
-                    <button disabled={loading} type="submit">Create new user</button>
+                    <button
+                        className="mt-12 w-full bg-white text-black py-3 text-xl font-semibold rounded-sm cursor-pointer" 
+                        disabled={loading} 
+                        type="submit"
+                    >
+                        Create new user
+                    </button>
                     {error && <p>{error.message}</p>}
                 </Form>
             </Formik>
