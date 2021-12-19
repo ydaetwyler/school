@@ -2,7 +2,7 @@ import { AuthenticationError } from 'apollo-server-express'
 
 const updateAvatarImage = async (args, context, User) => {
     const { 
-        avatarImageUrl
+        avatarUrl
     } = args
     
     if (!context.isAuth) {
@@ -12,7 +12,7 @@ const updateAvatarImage = async (args, context, User) => {
     try {
         let updateUser = await User.findById({ _id: context.userId })
     
-        updateUser.avatarUrl = avatarImageUrl
+        updateUser.avatarUrl = avatarUrl
     
         const newUser = await updateUser.save()
     

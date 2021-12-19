@@ -13,8 +13,8 @@ export const CREATE_FAMILY = gql`
 `
 
 export const SIGN_UP = gql`
-    mutation SignUp($username: String!, $email: String!, $password: String!, $userHash: String!) {
-        signUp(username: $username, email: $email, password: $password, userHash: $userHash)
+    mutation SignUp($username: String!, $email: String!, $password: String!, $userHash: String!, $avatarUrl: String!) {
+        signUp(username: $username, email: $email, password: $password, userHash: $userHash, avatarUrl: $avatarUrl)
     }
 `
 

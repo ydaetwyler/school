@@ -20,6 +20,7 @@ const signUp = async (args, User) => {
             userEmail: userEmail,
             password: hashed,
             userName: username,
+            avatarUrl,
             hash: overwriteHash
         })
 
