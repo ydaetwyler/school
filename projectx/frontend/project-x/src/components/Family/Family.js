@@ -5,6 +5,7 @@ const GET_FAMILY = gql`
     query GetFamily {
         getFamily {
             familyName,
+            familyAvatarUrl,
             familyMembers {
                 userName,
                 userEmail
@@ -20,9 +21,11 @@ const Family = () => {
     if (error) return `Error -> ${error}`
 
     return (
-        <div>
-            <h1 className="text-3xl font-bold underline text-blue-600">Family Board</h1>
-            <p>{data.getFamily.familyName}</p>
+        <div className="group flex flex-col pr-8 items-center">
+            <img src={data.getFamily.familyAvatarUrl} className="h-10 w-12 group-hover:animate-bounce" />
+            <p className="-mt-1 text-center text-sm text-white font-medium font-['Mulish']">
+                {data.getFamily.familyName}
+            </p>
         </div>
     )
 }

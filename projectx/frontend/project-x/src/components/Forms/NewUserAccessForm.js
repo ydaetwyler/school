@@ -92,9 +92,9 @@ const NewUserAccessForm = () => {
                         placeholder=""
                     />
                     <div className="flex flex-row overflow-x-scroll mt-6">
-                    {emojis.map((emoji) => 
-                        <img key={emoji} className={`h-12 w-12 mb-4 ${(emoji === selectEmoji) ? "bg-blue-400/[.5]" : "bg-none"}`} src={emoji} onClick={() => setSelectEmoji(emoji)} />
-                    )}
+                        {emojis.map((emoji) => 
+                            <img key={emoji} className={`h-12 w-12 mb-4 ${(emoji === selectEmoji) ? "bg-blue-400/[.5]" : "bg-none"}`} src={emoji} onClick={() => setSelectEmoji(emoji)} />
+                        )}
                     </div>
                     <button
                         className="mt-6 w-full bg-white text-black py-3 text-xl font-semibold rounded-sm cursor-pointer" 

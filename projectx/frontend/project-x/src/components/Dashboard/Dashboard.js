@@ -12,9 +12,14 @@ const Dashboard = () => {
     window.history.replaceState(null, "Dashboard", "/")
 
     return (
-        <div>
-            <User />
-            <Family />
+        <div className="bg-colors w-full h-screen">
+            <div className="pt-2 pl-2 flex flex-row w-full justify-between">
+                <h1 className="text-4xl font-bold text-white font font-['Righteous']">Family Board</h1>
+                <div className="flex flex-row justify-between pr-5">
+                    <User />
+                    <Family />
+                </div>
+            </div>
         </div>
     )
 }

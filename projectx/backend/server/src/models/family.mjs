@@ -8,6 +8,10 @@ const familySchema = new Schema(
             type: String,
             required: false,
         },
+        familyAvatarUrl: {
+            type: String,
+            required: false,
+        },
         familyMembers: {
             type: [Schema.Types.ObjectId],
             ref: 'user',

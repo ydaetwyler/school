@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import { useMutation } from '@apollo/client'
 import { Navigate } from 'react-router-dom'
@@ -11,10 +11,26 @@ import { validateNewFamily } from './Utils/validations'
 const NewFamilyForm = () => {
     const [redirect, setRedirect] = useState("")
     const [fail, setFail] = useState(false)
+    const [emojis, setEmojis] = useState([])
+    const [selectEmoji, setSelectEmoji] = useState('/openmoji/emoji49.png')
     const [createFamily, { loading, error }] = useMutation(CREATE_FAMILY, {
         onCompleted: (data) => setRedirect(`/login/${data.createFamily}`),
         onError: () => setFail(true)
     })
+
+    const getEmojis = () => {
+        const arr = []
+        
+        for (let i = 1; i <= 117; i++) {
+            arr.push(`/openmoji/emoji${i}.png`)
+        }
+
+        return arr
+    }
+
+    useEffect(() => {
+        setEmojis(getEmojis())
+    }, [])
 
     if (redirect) return <Navigate to={redirect} />
 
@@ -28,7 +44,12 @@ const NewFamilyForm = () => {
                 validationSchema={validateNewFamily}
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(() => {
-                        createFamily({ variables: { familyName: values.familyName } })
+                        createFamily({ 
+                            variables: { 
+                                familyName: values.familyName, 
+                                familyAvatarUrl: selectEmoji
+                            } 
+                        })
                         setSubmitting(false)
                     }, 400)
                 }}
@@ -42,6 +63,11 @@ const NewFamilyForm = () => {
                         type="text"
                         placeholder=""
                     />
+                    <div className="flex flex-row overflow-x-scroll mt-6">
+                        {emojis.map((emoji) => 
+                            <img key={emoji} className={`h-12 w-12 mb-4 ${(emoji === selectEmoji) ? "bg-blue-400/[.5]" : "bg-none"}`} src={emoji} onClick={() => setSelectEmoji(emoji)} />
+                        )}
+                    </div>
                     <button 
                         className="mt-12 w-full bg-white text-black py-3 text-xl font-semibold rounded-sm cursor-pointer" 
                         disabled={loading} 

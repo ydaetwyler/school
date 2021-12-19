@@ -17,7 +17,7 @@ const typeDefs = gql`
         userHash: String!,
         avatarUrl: String!): String
         signIn(email: String!, password: String!): String
-        createFamily(familyName: String!): String
+        createFamily(familyName: String!, familyAvatarUrl: String!): String
         lostPassword(email: String!): String
         resetPassword(password: String!, userHash: String!): String
         updateAvatarImage(avatarUrl: String!): User
@@ -53,6 +53,7 @@ const typeDefs = gql`
     type Family {
         _id: ID
         familyName: String
+        familyAvatarUrl: String
         familyMembers: [User]
         eventList: [EventItem]
         collectionList: [CollectionList]

@@ -11,9 +11,10 @@ const createFamily = async (args, Family, User) => {
 
         const newUser = await user.save()
 
-        const { familyName } = args
+        const { familyName, familyAvatarUrl } = args
         const family = new Family({
-            familyName
+            familyName,
+            familyAvatarUrl
         })
         
         const newFamily = await family.save()

@@ -7,8 +7,8 @@ mutation LostPassword($email: String!) {
 `
 
 export const CREATE_FAMILY = gql`
-    mutation CreateFamily($familyName: String!) {
-        createFamily(familyName: $familyName)
+    mutation CreateFamily($familyName: String!, $familyAvatarUrl: String!) {
+        createFamily(familyName: $familyName, familyAvatarUrl: $familyAvatarUrl)
     }
 `
 
