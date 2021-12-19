@@ -29,3 +29,21 @@ export const SIGN_IN = gql`
     signIn(email: $email, password: $password)
     }
 `
+
+export const UPDATE_USER = gql`
+    mutation UpdateUser($username: String!, $avatarUrl: String!) {
+        updateUser(username: $username, avatarUrl: $avatarUrl) {
+            userName,
+            avatarUrl
+        }
+    }
+`
+
+export const UPDATE_FAMILY = gql`
+    mutation UpdateFamily($familyName: String!, $familyAvatarUrl: String!) {
+        updateFamily(familyName: $familyName, familyAvatarUrl: $familyAvatarUrl) {
+            familyName,
+            familyAvatarUrl
+        }
+    }
+`

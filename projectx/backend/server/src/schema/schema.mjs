@@ -20,9 +20,8 @@ const typeDefs = gql`
         createFamily(familyName: String!, familyAvatarUrl: String!): String
         lostPassword(email: String!): String
         resetPassword(password: String!, userHash: String!): String
-        updateAvatarImage(avatarUrl: String!): User
-        updateFamilyName(familyName: String!): Family
-        updateUserName(userName: String): User
+        updateFamily(familyName: String, familyAvatarUrl: String): Family
+        updateUser(username: String, avatarUrl: String): User
         createEventItem(
             activityName: String!,
             activityImageUrl: String,

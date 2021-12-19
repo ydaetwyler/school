@@ -8,9 +8,9 @@ import signIn from './services/signin.mjs'
 import createFamily from './services/createFamily.mjs'
 import lostPassword from './services/lostPassword.mjs'
 import resetPassword from './services/resetPassword.mjs'
-import updateUserName from './services/updateUserName.mjs'
+import updateUser from './services/updateUser.mjs'
 import updateAvatarImage from './services/updateAvatarImage.mjs'
-import updateFamilyName from './services/updateFamilyName.mjs'
+import updateFamily from './services/UpdateFamily.mjs'
 import createEventItem from './services/createEventItem.mjs'
 import updateEventItem from './services/updateEventItem.mjs'
 import removeEventItem from './services/removeEventItem.mjs'
@@ -27,9 +27,8 @@ const resolvers = {
         signIn: (_, args) => signIn(args, user),
         lostPassword: (_, args) => lostPassword(args, user),
         resetPassword: (_, args) => resetPassword(args, user),
-        updateAvatarImage: (_, args, context) => updateAvatarImage(args, context, user),
-        updateFamilyName: (_, args, context) => updateFamilyName(args, context, user, family),
-        updateUserName: (_, args, context) => updateUserName(args, context, user),
+        updateFamily: (_, args, context) => updateFamily(args, context, user, family),
+        updateUser: (_, args, context) => updateUser(args, context, user),
         createEventItem: (_, args, context) => createEventItem(args, context, eventItem, user, family),
         updateEventItem: (_, args, context) => updateEventItem(args, context, eventItem),
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),

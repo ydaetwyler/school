@@ -1,8 +1,9 @@
 import { AuthenticationError } from 'apollo-server-express'
 
-const updateUserName = async (args, context, User) => {
+const updateUser = async (args, context, User) => {
     const { 
-        userName
+        username,
+        avatarUrl
     } = args
     
     if (!context.isAuth) {
@@ -10,11 +11,10 @@ const updateUserName = async (args, context, User) => {
     }
 
     try {
-        let updateUser = await User.findById({ _id: context.userId })
-    
-        updateUser.userName = userName
-    
-        const newUser = await updateUser.save()
+        const newUser = await User.findByIdAndUpdate({ _id: context.userId }, {
+            userName: username,
+            avatarUrl
+        })
     
         return newUser
     } catch (e) {
@@ -23,4 +23,4 @@ const updateUserName = async (args, context, User) => {
     }
 }
 
-export default updateUserName
+export default updateUser

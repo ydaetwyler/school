@@ -55,3 +55,10 @@ export const validateUserAccess = Yup.object({
     password: Yup.string()
         .required('Required')
 })
+
+export const validateUserUpdate = Yup.object({
+    username: Yup.string()
+        .max(18, 'Must be 18 characters or less')
+        .required('Required')
+        .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed')
+})
