@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ydaetwyler/school/tree/master#readme",
   "dependencies": {
+    "@graphql-tools/schema": "^8.3.1",
     "apollo-server-express": "^3.3.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -31,10 +32,12 @@
     "graphql-compose-connection": "^8.2.1",
     "graphql-compose-mongoose": "^9.6.0",
     "graphql-middleware": "^6.1.6",
+    "graphql-subscriptions": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
     "mongoose": "^6.0.6",
-    "nanoid": "^3.1.30"
+    "nanoid": "^3.1.30",
+    "subscriptions-transport-ws": "^0.11.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

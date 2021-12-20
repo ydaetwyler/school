@@ -1,3 +1,7 @@
+import { PubSub, withFilter } from 'graphql-subscriptions'
+
+const pubsub = new PubSub()
+
 import family from '../models/family.mjs'
 import user from '../models/user.mjs'
 import eventItem from '../models/eventItem.mjs'
@@ -27,7 +31,10 @@ const resolvers = {
         signIn: (_, args) => signIn(args, user),
         lostPassword: (_, args) => lostPassword(args, user),
         resetPassword: (_, args) => resetPassword(args, user),
-        updateFamily: (_, args, context) => updateFamily(args, context, user, family),
+        updateFamily: (_, args, context) => {
+            pubsub.publish('FAMILY_CHANGED', { familyChanged: args })
+            updateFamily(args, context, user, family)
+        },
         updateUser: (_, args, context) => updateUser(args, context, user),
         createEventItem: (_, args, context) => createEventItem(args, context, eventItem, user, family),
         updateEventItem: (_, args, context) => updateEventItem(args, context, eventItem),
@@ -39,6 +46,16 @@ const resolvers = {
         getFamily: (_, __, context) => getFamily(context, user, family),
         getUser: (_, __, context) => getUser(context, user)
     },
+    Subscription: {
+        familyChanged: {
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('FAMILY_CHANGED'),
+                (payload, variables) => {
+                    return (payload.familyChanged.id === variables.familyId)
+                }
+            )
+        }
+    }
 }
 
 export default resolvers

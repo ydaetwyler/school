@@ -48,6 +48,10 @@ const typeDefs = gql`
         removeEventComment(commentHash: String!): EventItem
     }
 
+    type Subscription {
+        familyChanged(familyID: ID!): Family
+    }
+
     "Family is the main object"
     type Family {
         _id: ID

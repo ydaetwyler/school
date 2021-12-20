@@ -3,12 +3,17 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
+import { createServer } from 'http'
+import { execute, subscribe } from 'graphql'
+import { SubscriptionServer } from 'subscriptions-transport-ws'
+import { makeExecutableSchema } from '@graphql-tools/schema'
 
 import typeDefs from './schema/schema.mjs'
 import resolvers from './resolvers/resolvers.mjs'
 
 import connect from './utils/db.mjs'
 import Auth from './utils/Auth.mjs'
+import AuthSubscription from './utils/AuthSubscription.mjs'
 
 dotenv.config()
 
@@ -26,9 +31,22 @@ const corsOptions = {
 
 app.use(cookieParser())
 
+const httpServer = createServer(app)
+
+const schema = makeExecutableSchema({ typeDefs, resolvers })
+
+const subscriptionServer = SubscriptionServer.create(
+    { 
+        schema, 
+        execute, 
+        subscribe,
+        onConnect: (connectionsParams, webSocket, context) => AuthSubscription(webSocket)        
+    },
+    { server: httpServer, path: '/subscribe' }
+)
+
 const server = new ApolloServer({ 
-    typeDefs,
-    resolvers,
+    schema,
     formatError: (err) => {
         // Don't give the specific errors to the client
         if (err.message.startsWith('Database Error: ')) {
@@ -41,19 +59,34 @@ const server = new ApolloServer({
         return err;
     },
     cors: corsOptions,
-    context: Auth,
+    context: ({ req, connection }) => {
+        if (connection) {
+            return connection.context
+        } else {
+            return Auth({ req })
+        }
+    },
     playground: process.env.NODE_ENV === 'development' ? true : false,
     introspection: true,
     tracing: true,
     path: '/',
+    plugins: [{
+        async serverWillStart() {
+            return {
+                async drainServer() {
+                    subscriptionServer.close()
+                }
+            }
+        }
+    }]
 })
 
 await server.start()
 
 server.applyMiddleware({
     app,
-    cors: corsOptions,
     path: '/dashboard',
+    cors: corsOptions,
     onHealthCheck: () => {
         new Promise((resolve, reject) => {
             (mongoose.connection.readyState > 0)

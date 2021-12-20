@@ -18,13 +18,13 @@ const validateUser = token => {
     }
 }
 
-const Auth = async ({ req }) => {
+const AuthSubscription = async webSocket => {
     try {
-        const userToken = req.cookies.userToken
+        const token = webSocket.upgradeReq.headers.cookie.userToken
 
-        if (!userToken) return { isAuth: false }
+        if (!token) return { isAuth: false }
 
-        const user = validateUser(userToken)
+        const user = validateUser(token)
 
         const userExists = await User.findById({_id: user.id})
 
@@ -36,4 +36,4 @@ const Auth = async ({ req }) => {
     }
 }
 
-export default Auth
+export default AuthSubscription
