@@ -20,7 +20,7 @@ const typeDefs = gql`
         createFamily(familyName: String!, familyAvatarUrl: String!): String
         lostPassword(email: String!): String
         resetPassword(password: String!, userHash: String!): String
-        updateFamily(familyName: String, familyAvatarUrl: String): Family
+        updateFamily(_id: ID, familyName: String, familyAvatarUrl: String): Family
         updateUser(username: String, avatarUrl: String): User
         createEventItem(
             activityName: String!,
@@ -49,7 +49,7 @@ const typeDefs = gql`
     }
 
     type Subscription {
-        familyChanged(familyID: ID!): Family
+        familyChanged(_id: ID!): Family
     }
 
     "Family is the main object"

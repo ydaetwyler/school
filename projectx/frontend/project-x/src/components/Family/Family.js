@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import UpdateFamily from './UpdateFamily'
 
 const GET_FAMILY = gql`
     query GetFamily {
         getFamily {
+            _id,
             familyName,
             familyAvatarUrl,
             familyMembers {
@@ -15,12 +16,36 @@ const GET_FAMILY = gql`
     }
 `
 
-const Family = () => {
-    const { loading, error, data } = useQuery(GET_FAMILY)
+const FAMILY_SUBSCRIPTION = gql`
+    subscription FamilyChanged($_id: ID!) {
+        familyChanged(_id: $_id) {
+            familyName,
+            familyAvatarUrl
+        }
+    }
+`
+
+const Family = ({ familyID }) => {
+    const { loading, error, data, subscribeToMore } = useQuery(GET_FAMILY)
     const [clicked, setClicked] = useState(false)
 
+    useEffect(() => {
+        subscribeToMore({
+            document: FAMILY_SUBSCRIPTION,
+            variables: { _id: familyID },
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+                const newFamily = subscriptionData.data.familyChanged
+
+                return {
+                    getFamily: {...prev.getFamily, ...newFamily}
+                }
+            }
+        })
+    }, [])
+
     if (loading) return 'Loading...'
-    if (error) return `Error -> ${error}`
+    if (error) return JSON.stringify(error, null, 2)
 
     return (
         <div>
@@ -31,6 +56,7 @@ const Family = () => {
                 </p>
             </div>
             <UpdateFamily 
+                familyID={familyID}
                 clicked={clicked}
                 setClicked={setClicked}
                 initialFamily={data.getFamily.familyName} 

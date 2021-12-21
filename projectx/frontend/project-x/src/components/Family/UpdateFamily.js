@@ -19,13 +19,13 @@ const GET_FAMILY = gql`
     }
 `
 
-const UpdateFamily = ({ clicked, setClicked, initialFamily, initialAvatar, familyMembers }) => {
+const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAvatar, familyMembers }) => {
     const [emojis, setEmojis] = useState([])
     const [selectEmoji, setSelectEmoji] = useState(initialAvatar)
     const [fail, setFail] = useState(false)
     
-    const [updateUser, { loading, error }] = useMutation(UPDATE_FAMILY, {
-        update: (cache, { data }) => {
+    const [updateFamily, { loading, error }] = useMutation(UPDATE_FAMILY, {
+        /*update: (cache, { data }) => {
 
             cache.writeQuery({
                 query: GET_FAMILY,
@@ -36,7 +36,7 @@ const UpdateFamily = ({ clicked, setClicked, initialFamily, initialAvatar, famil
                    } 
                 }
             })
-        },
+        },*/
         onCompleted: () => setClicked(false),
         onError: () => setFail(true)
     })
@@ -88,7 +88,8 @@ const UpdateFamily = ({ clicked, setClicked, initialFamily, initialAvatar, famil
                 validationSchema={validateNewFamily}
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(() => {
-                        updateUser({ variables: { 
+                        updateFamily({ variables: { 
+                            _id: familyID,
                             familyName: values.familyName,
                             familyAvatarUrl: selectEmoji
                             } })

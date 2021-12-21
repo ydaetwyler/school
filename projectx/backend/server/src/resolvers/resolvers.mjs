@@ -51,7 +51,7 @@ const resolvers = {
             subscribe: withFilter(
                 () => pubsub.asyncIterator('FAMILY_CHANGED'),
                 (payload, variables) => {
-                    return (payload.familyChanged.id === variables.familyId)
+                    return (payload.familyChanged._id === variables._id)
                 }
             )
         }

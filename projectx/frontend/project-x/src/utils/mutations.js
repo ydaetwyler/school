@@ -40,8 +40,9 @@ export const UPDATE_USER = gql`
 `
 
 export const UPDATE_FAMILY = gql`
-    mutation UpdateFamily($familyName: String!, $familyAvatarUrl: String!) {
-        updateFamily(familyName: $familyName, familyAvatarUrl: $familyAvatarUrl) {
+    mutation UpdateFamily($_id: ID, $familyName: String!, $familyAvatarUrl: String!) {
+        updateFamily(_id: $_id, familyName: $familyName, familyAvatarUrl: $familyAvatarUrl) {
+            _id,
             familyName,
             familyAvatarUrl
         }

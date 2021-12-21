@@ -40,9 +40,14 @@ const subscriptionServer = SubscriptionServer.create(
         schema, 
         execute, 
         subscribe,
-        onConnect: (connectionsParams, webSocket, context) => AuthSubscription(webSocket)        
+        onConnect(connectionsParams, webSocket, context) {
+            AuthSubscription(webSocket) 
+        }        
     },
-    { server: httpServer, path: '/subscribe' }
+    { 
+        server: httpServer, 
+        path: '/dashboard' 
+    }
 )
 
 const server = new ApolloServer({ 
@@ -96,7 +101,7 @@ server.applyMiddleware({
     }
 })
 
-app.listen({ port: process.env.PORT }, () => {
+httpServer.listen({ port: process.env.PORT }, () => {
     console.log(`
         🚀  Server is running!
         🔉  Listening on port ${process.env.PORT}

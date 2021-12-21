@@ -2,6 +2,8 @@ import { AuthenticationError } from 'apollo-server-express'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
+import getCookie from './getCookie.mjs'
+
 import User from '../models/user.mjs'
 
 dotenv.config()
@@ -20,11 +22,14 @@ const validateUser = token => {
 
 const AuthSubscription = async webSocket => {
     try {
-        const token = webSocket.upgradeReq.headers.cookie.userToken
+        
+        const cookies = webSocket.upgradeReq.headers.cookie
 
-        if (!token) return { isAuth: false }
+        const userToken = getCookie(cookies, 'userToken')
 
-        const user = validateUser(token)
+        if (!userToken) return { isAuth: false }
+
+        const user = validateUser(userToken)
 
         const userExists = await User.findById({_id: user.id})
 
