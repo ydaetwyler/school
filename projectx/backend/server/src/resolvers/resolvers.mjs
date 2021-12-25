@@ -13,8 +13,8 @@ import createFamily from './services/createFamily.mjs'
 import lostPassword from './services/lostPassword.mjs'
 import resetPassword from './services/resetPassword.mjs'
 import updateUser from './services/updateUser.mjs'
-import updateAvatarImage from './services/updateAvatarImage.mjs'
 import updateFamily from './services/UpdateFamily.mjs'
+import invite from './services/invite.mjs'
 import createEventItem from './services/createEventItem.mjs'
 import updateEventItem from './services/updateEventItem.mjs'
 import removeEventItem from './services/removeEventItem.mjs'
@@ -36,6 +36,7 @@ const resolvers = {
             updateFamily(args, context, user, family)
         },
         updateUser: (_, args, context) => updateUser(args, context, user),
+        invite: (_, args, context) => invite(args, context, family, user),
         createEventItem: (_, args, context) => createEventItem(args, context, eventItem, user, family),
         updateEventItem: (_, args, context) => updateEventItem(args, context, eventItem),
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),

@@ -6,7 +6,8 @@ const createFamily = async (args, Family, User) => {
             hash: nanoid(),
             userEmail: nanoid(),
             userName: nanoid(),
-            password: nanoid()
+            password: nanoid(),
+            active: false,
         })
 
         const newUser = await user.save()

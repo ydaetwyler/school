@@ -2,22 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
 
+import Invite from './Invite'
+
 import TextInput from '../Forms/Utils/TextInput'
 import { UPDATE_FAMILY } from '../../utils/mutations'
 import { validateNewFamily} from '../Forms/Utils/validations'
-
-const GET_FAMILY = gql`
-    query GetFamily {
-        getFamily {
-            familyName,
-            familyAvatarUrl,
-            familyMembers {
-                userName,
-                avatarUrl
-            }
-        }
-    }
-`
 
 const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAvatar, familyMembers }) => {
     const [emojis, setEmojis] = useState([])
@@ -25,18 +14,6 @@ const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAva
     const [fail, setFail] = useState(false)
     
     const [updateFamily, { loading, error }] = useMutation(UPDATE_FAMILY, {
-        /*update: (cache, { data }) => {
-
-            cache.writeQuery({
-                query: GET_FAMILY,
-                data: {
-                   getFamily: {
-                       familyName: data.familyName,
-                       familyAvatarUrl: data.familyAvatarUrl
-                   } 
-                }
-            })
-        },*/
         onCompleted: () => setClicked(false),
         onError: () => setFail(true)
     })
@@ -61,7 +38,7 @@ const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAva
     if (!clicked) return null
 
     return (
-        <div className="h-2/5 min-h-[530px] w-96 min-w-[300px] bg-white/[.13] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md backdrop-blur-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
+        <div className="h-3/5 min-h-[780px] w-96 min-w-[300px] bg-white/[.13] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md backdrop-blur-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
             <img 
                 src="/icons/close.png" 
                 className="absolute top-1.5 right-1.5 h-6 w-6 opacity-30 hover:opacity-100 cursor-pointer"
@@ -72,15 +49,19 @@ const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAva
             </h3>
             <div className="flex flex-row overflow-x-scroll mt-2">
                 <div className="flex flex-col items-center">
-                    {familyMembers.map((member) =>
-                        <p key={member.userName} className="text-white">{member.userName}</p>
-                    )}
-                    {familyMembers.map((member) => 
-                        <img key={member.userName} className="h-12 w-12 mb-4" src={member.avatarUrl} />
-                    )}
+                    {familyMembers.map((member) => {
+                        if (member.active) {
+                            return <p key={member.userName} className="text-white">{member.userName}</p>
+                        }
+                    })}
+                    {familyMembers.map((member) => {
+                        if (member.active) {
+                            return <img key={member.userName} className="h-12 w-12" src={member.avatarUrl} />
+                        }
+                    })}
                 </div>
             </div>
-            <h3 className="mb-2 text-center text-4xl text-white font-medium leading-9">
+            <h3 className="mt-8 mb-2 text-center text-4xl text-white font-medium leading-9">
                 Change family
             </h3>
             <Formik
@@ -121,6 +102,7 @@ const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAva
                     {error && <p>{error.message}</p>}
                 </Form>
             </Formik>
+            <Invite familyID={familyID} />
         </div>
 )
 }

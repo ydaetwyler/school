@@ -21,7 +21,8 @@ const signUp = async (args, User) => {
             password: hashed,
             userName: username,
             avatarUrl,
-            hash: overwriteHash
+            hash: overwriteHash,
+            active: true,
         })
 
         const user = await User.findOne({ hash: overwriteHash })

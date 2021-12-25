@@ -62,3 +62,10 @@ export const validateUserUpdate = Yup.object({
         .required('Required')
         .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed')
 })
+
+export const validateEmail = Yup.object({
+    email: Yup.string()
+    .max(40, 'Must be 40 characters or less')
+    .required('Required')
+    .email('Invalid email'),
+})

@@ -18,6 +18,7 @@ const typeDefs = gql`
         avatarUrl: String!): String
         signIn(email: String!, password: String!): String
         createFamily(familyName: String!, familyAvatarUrl: String!): String
+        invite(_id: ID, email: String!): String
         lostPassword(email: String!): String
         resetPassword(password: String!, userHash: String!): String
         updateFamily(_id: ID, familyName: String, familyAvatarUrl: String): Family
@@ -69,6 +70,7 @@ const typeDefs = gql`
         userName: String
         password: String
         hash: String
+        active: Boolean
         avatarUrl: String
     }
 

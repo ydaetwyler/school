@@ -25,6 +25,10 @@ const userSchema = new Schema(
             type: String,
             required: false,
         },
+        active: {
+            type: Boolean,
+            required: false,
+        },
         family: {
             type: Schema.Types.ObjectId,
             ref: 'family',

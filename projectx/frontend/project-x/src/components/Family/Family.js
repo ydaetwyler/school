@@ -10,7 +10,8 @@ const GET_FAMILY = gql`
             familyAvatarUrl,
             familyMembers {
                 userName,
-                avatarUrl
+                avatarUrl,
+                active
             }
         }
     }

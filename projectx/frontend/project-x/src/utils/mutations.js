@@ -48,3 +48,9 @@ export const UPDATE_FAMILY = gql`
         }
     }
 `
+
+export const INVITE = gql`
+    mutation Invite($_id: ID, $email: String!) {
+        invite(_id: $_id, email: $email)
+    }
+`
