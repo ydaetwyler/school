@@ -37,7 +37,7 @@ const Dashboard = () => {
                     <Family familyID={data.getFamily._id} />
                     <img 
                         src="/icons/logout.png" 
-                        className="h-9 w-9 ml-3 cursor-pointer" 
+                        className="h-9 w-9 ml-3 cursor-pointer opacity-60 hover:opacity-100" 
                         onClick={handleLogout}
                     />
                 </div>
