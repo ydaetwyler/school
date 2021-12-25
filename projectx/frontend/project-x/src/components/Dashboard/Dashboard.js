@@ -19,7 +19,7 @@ const Dashboard = () => {
 
     if (!cookies.userToken) return <Login />
 
-    if (loading) return 'Loading...'
+    if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error) return `Error -> ${error}`
 
     window.history.replaceState(null, "Dashboard", "/")

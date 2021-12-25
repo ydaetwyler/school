@@ -15,7 +15,7 @@ const User = () => {
     const { loading, error, data } = useQuery(GET_USER)
     const [clicked, setClicked] = useState(false)
 
-    if (loading) return 'Loading...'
+    if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error) return `Error -> ${error}`
 
     return (

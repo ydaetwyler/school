@@ -51,7 +51,7 @@ const UpdateUser = ({ clicked, setClicked, initialUser, initialAvatar }) => {
         setEmojis(getEmojis())
     }, [])
 
-    if (loading) return 'Loading...'
+    if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error) return JSON.stringify(error, null, 2)
 
     if (!clicked) return null
