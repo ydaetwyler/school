@@ -15,7 +15,7 @@ const GET_FAMILY = gql`
 
 const Dashboard = () => {
     const { loading, error, data } = useQuery(GET_FAMILY)
-    const [cookies] = useCookies(['userToken'])
+    const [cookies, setCookie, removeCookie] = useCookies(['userToken'])
 
     if (!cookies.userToken) return <Login />
 
@@ -24,6 +24,10 @@ const Dashboard = () => {
 
     window.history.replaceState(null, "Dashboard", "/")
 
+    const handleLogout = () => {
+        removeCookie('userToken')
+    } 
+
     return (
         <div className="bg-colors w-full h-screen">
             <div className="pt-2 pl-2 flex flex-row w-full justify-between">
@@ -31,6 +35,11 @@ const Dashboard = () => {
                 <div className="flex flex-row justify-between pr-5">
                     <User />
                     <Family familyID={data.getFamily._id} />
+                    <img 
+                        src="/icons/logout.png" 
+                        className="h-9 w-9 ml-3 cursor-pointer" 
+                        onClick={handleLogout}
+                    />
                 </div>
             </div>
         </div>
