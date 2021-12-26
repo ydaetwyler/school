@@ -4,6 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 import Login from '../Login/Login'
 import Family from '../Family/Family'
 import User from '../User/User'
+import ActivityList from '../Activity/ActivityList'
 
 const GET_FAMILY = gql`
     query GetFamily {
@@ -42,6 +43,7 @@ const Dashboard = () => {
                     />
                 </div>
             </div>
+            <ActivityList familyID={data.getFamily._id} />
         </div>
     )
 }

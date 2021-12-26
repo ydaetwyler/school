@@ -54,3 +54,9 @@ export const INVITE = gql`
         invite(_id: $_id, email: $email)
     }
 `
+
+export const SET_COORDINATES = gql`
+    mutation SetCoordinates($_id: ID, $coordinates: String) {
+        setCoordinates(_id: $_id, coordinates: $coordinates)
+    }
+`

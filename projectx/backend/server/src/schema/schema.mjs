@@ -32,6 +32,7 @@ const typeDefs = gql`
             activityUrl: String,
             familyHash: String!
         ): EventItem
+        setCoordinates(_id: ID, coordinates: String): String
         updateEventItem(
             activityName: String,
             activityImageUrl: String,
@@ -85,6 +86,8 @@ const typeDefs = gql`
         activityOwner: String
         activityDescription: String
         activityLocation: String
+        activityCoordinates: String
+        activityAddress: String
         activityUrl: String
         activityImageList: ActivityImageList
         comments: [Comment]
@@ -131,7 +134,7 @@ const typeDefs = gql`
         _id: ID
         hash: String
         commentText: String
-        commentOwner: String
+        commentOwner: User
         commentDate: Date
     }
 `

@@ -7,6 +7,7 @@ const createEventItem = async (args, context, EventItem, User, Family) => {
         activityDate,
         activityDescription,
         activityLocation,
+        activityAddress,
         activityUrl
     } = args
     
@@ -27,6 +28,7 @@ const createEventItem = async (args, context, EventItem, User, Family) => {
             activityOwner: user.id,
             activityDescription,
             activityLocation,
+            activityAddress,
             activityUrl
         })
         const newEventItem = await eventItem.save()

@@ -24,6 +24,14 @@ const eventItemSchema = new Schema(
             type: String,
             required: false,
         },
+        activityCoordinates: {
+            type: String,
+            required: false,
+        },
+        activityAddress: {
+            type: String,
+            required: false,
+        },
         activityUrl: {
             type: String,
             required: false,

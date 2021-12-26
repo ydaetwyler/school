@@ -21,7 +21,10 @@ const updateEventItem = async (args, context, User, EventItem) => {
         if (activityImageUrl) updateEventItem.activityImageUrl = activityImageUrl
         if (activityDate) updateEventItem.activityDate = activityDate
         if (activityDescription) updateEventItem.activityDescription = activityDescription
-        if (activityLocation) updateEventItem.activityLocation = activityLocation
+        if (activityLocation) {
+            updateEventItem.activityLocation = activityLocation
+            // Remove coordinates!
+        } 
         if (activityUrl) updateEventItem.activityUrl = activityUrl
     
         const newEventItem = await updateEventItem.save()
