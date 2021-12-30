@@ -70,8 +70,8 @@ const EventItemTeaser = ({ item, setCoordinates }) => {
             <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish']">
                 <img className="rounded-t-lg" src={item.activityImageUrl} />
                 <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">{item.activityName}</h5>
-                <p className="ml-4 font-normal mb-3 text-gray-400">{item.activityLocation}</p>
-                <p className="ml-4 font-normal mb-3 text-gray-400">{getDate(item.activityDate)}</p>
+                <p className="ml-4 text-base font-normal mb-3 text-gray-400">{item.activityLocation}</p>
+                <p className="ml-4 text-base font-normal mb-3 text-gray-400">{getDate(item.activityDate)}</p>
                 <div className="text-sm w-24 text-center text-gray-400 absolute right-2 top-3/4">
                     <Weather 
                         id={item._id}
