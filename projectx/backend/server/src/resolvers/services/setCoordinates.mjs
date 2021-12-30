@@ -8,14 +8,22 @@ const setCoordinates = async (args, context, EventItem) => {
     try {
         const { 
             _id,
-            coordinates
+            coordinates,
+            activityApiCityNotFound,
         } = args
 
-        console.log(coordinates)
+        if (coordinates) {
+            const updateEventItem = await EventItem.findByIdAndUpdate({ _id }, { 
+                activityCoordinates: coordinates 
+            })
+        }
+
+        if (activityApiCityNotFound) {
+            const updateEventItem = await EventItem.findByIdAndUpdate({ _id }, { 
+                activityApiCityNotFound: activityApiCityNotFound
+            })
+        }
     
-        const updateEventItem = await EventItem.findByIdAndUpdate({ _id }, { 
-            activityCoordinates: coordinates 
-        })
 
     } catch(e) {
         console.log(`Error updating event item -> ${e}`)

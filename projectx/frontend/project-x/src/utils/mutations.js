@@ -56,7 +56,13 @@ export const INVITE = gql`
 `
 
 export const SET_COORDINATES = gql`
-    mutation SetCoordinates($_id: ID, $coordinates: String) {
-        setCoordinates(_id: $_id, coordinates: $coordinates)
+    mutation SetCoordinates($_id: ID, $coordinates: String, $activityApiCityNotFound: Boolean) {
+        setCoordinates(_id: $_id, coordinates: $coordinates, activityApiCityNotFound: $activityApiCityNotFound)
+    }
+`
+
+export const SET_WEATHER = gql`
+    mutation SetWeather($_id: ID, $activityApiLastCall: Date, $activityWeatherIcon: String, $activityWeatherTemp: String, $activityWeatherDesc: String, $activityWeatherSunrise: String, $activityWeatherSunset: String, $activityWeatherWind: String) {
+        setWeather(_id: $_id, activityApiLastCall: $activityApiLastCall, activityWeatherIcon: $activityWeatherIcon, activityWeatherTemp: $activityWeatherTemp, activityWeatherDesc: $activityWeatherDesc, activityWeatherSunrise: $activityWeatherSunrise, activityWeatherSunset: $activityWeatherSunset, activityWeatherWind: $activityWeatherWind)
     }
 `

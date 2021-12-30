@@ -13,7 +13,15 @@ const GET_ACTIVITIES = gql`
                activityImageUrl,
                activityDate,
                activityLocation,
-               activityCoordinates
+               activityCoordinates,
+               activityApiCityNotFound,
+               activityApiLastCall,
+               activityWeatherIcon,
+               activityWeatherTemp,
+               activityWeatherDesc,
+               activityWeatherSunrise,
+               activityWeatherSunset,
+               activityWeatherWind
            }
         }
     }

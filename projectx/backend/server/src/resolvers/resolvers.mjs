@@ -18,6 +18,7 @@ import invite from './services/invite.mjs'
 import createEventItem from './services/createEventItem.mjs'
 import updateEventItem from './services/updateEventItem.mjs'
 import setCoordinates from './services/setCoordinates.mjs'
+import setWeather from './services/setWeather.mjs'
 import removeEventItem from './services/removeEventItem.mjs'
 import createEventComment from './services/createEventComment.mjs'
 import removeEventComment from './services/removeEventComment.mjs'
@@ -40,6 +41,7 @@ const resolvers = {
         invite: (_, args, context) => invite(args, context, family, user),
         createEventItem: (_, args, context) => createEventItem(args, context, eventItem, user, family),
         setCoordinates: (_, args, context) => setCoordinates(args, context, eventItem),
+        setWeather: (_, args, context) => setWeather(args, context, eventItem),
         updateEventItem: (_, args, context) => updateEventItem(args, context, eventItem),
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),
         createEventComment: (_, args, context) => createEventComment(args, context, comment, eventItem),

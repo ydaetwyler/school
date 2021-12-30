@@ -11,11 +11,13 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        signUp(username: String!,
-        email: String!, 
-        password: String!,
-        userHash: String!,
-        avatarUrl: String!): String
+        signUp(
+            username: String!,
+            email: String!, 
+            password: String!,
+            userHash: String!,
+            avatarUrl: String!
+        ): String
         signIn(email: String!, password: String!): String
         createFamily(familyName: String!, familyAvatarUrl: String!): String
         invite(_id: ID, email: String!): String
@@ -33,6 +35,16 @@ const typeDefs = gql`
             familyHash: String!
         ): EventItem
         setCoordinates(_id: ID, coordinates: String): String
+        setWeather(
+            _id: ID, 
+            activityApiLastCall: Date,  
+            activityWeatherIcon: String,
+            activityWeatherTemp: String,
+            activityWeatherDesc: String,
+            activityWeatherSunrise: String,
+            activityWeatherSunset: String,
+            activityWeatherWind: String
+        ): String
         updateEventItem(
             activityName: String,
             activityImageUrl: String,
@@ -87,6 +99,14 @@ const typeDefs = gql`
         activityDescription: String
         activityLocation: String
         activityCoordinates: String
+        activityApiCityNotFound: Boolean
+        activityApiLastCall: Date
+        activityWeatherIcon: String
+        activityWeatherTemp: String
+        activityWeatherDesc: String
+        activityWeatherSunrise: String
+        activityWeatherSunset: String
+        activityWeatherWind: String
         activityAddress: String
         activityUrl: String
         activityImageList: ActivityImageList
