@@ -77,7 +77,7 @@ const eventItemSchema = new Schema(
             ref: 'user',
             required: true,
         },
-        participantsList: {
+        activityParticipantsList: {
             type: [Schema.Types.ObjectId],
             ref: 'user',
             required: false

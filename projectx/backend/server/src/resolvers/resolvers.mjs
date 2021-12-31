@@ -19,6 +19,8 @@ import createEventItem from './services/createEventItem.mjs'
 import updateEventItem from './services/updateEventItem.mjs'
 import setCoordinates from './services/setCoordinates.mjs'
 import setWeather from './services/setWeather.mjs'
+import removeParticipant from './services/removeParticipant.mjs'
+import addParticipant from './services/addParticipant.mjs'
 import removeEventItem from './services/removeEventItem.mjs'
 import createEventComment from './services/createEventComment.mjs'
 import removeEventComment from './services/removeEventComment.mjs'
@@ -42,6 +44,14 @@ const resolvers = {
         createEventItem: (_, args, context) => createEventItem(args, context, eventItem, user, family),
         setCoordinates: (_, args, context) => setCoordinates(args, context, eventItem),
         setWeather: (_, args, context) => setWeather(args, context, eventItem),
+        removeParticipant: (_, args, context) => {
+            pubsub.publish('FAMILY_CHANGED', { familyChanged: args })
+            removeParticipant(args, context, eventItem)
+        },
+        addParticipant: (_, args, context) => {
+            pubsub.publish('FAMILY_CHANGED', { familyChanged: args })
+            addParticipant(args, context, eventItem)
+        },
         updateEventItem: (_, args, context) => updateEventItem(args, context, eventItem),
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),
         createEventComment: (_, args, context) => createEventComment(args, context, comment, eventItem),

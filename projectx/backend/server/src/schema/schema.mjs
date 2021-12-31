@@ -45,6 +45,8 @@ const typeDefs = gql`
             activityWeatherSunset: String,
             activityWeatherWind: String
         ): String
+        removeParticipant(_id: ID!, eventId: ID!): String
+        addParticipant(_id: ID!, eventId: ID!): String
         updateEventItem(
             activityName: String,
             activityImageUrl: String,
@@ -94,7 +96,6 @@ const typeDefs = gql`
         activityName: String
         activityImageUrl: String
         activityDate: Date
-        participantsList: [String]
         activityOwner: String
         activityDescription: String
         activityLocation: String
@@ -110,6 +111,7 @@ const typeDefs = gql`
         activityAddress: String
         activityUrl: String
         activityImageList: ActivityImageList
+        activityParticipantsList: [User]
         comments: [Comment]
     }
 

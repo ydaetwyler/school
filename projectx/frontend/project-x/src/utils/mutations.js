@@ -66,3 +66,15 @@ export const SET_WEATHER = gql`
         setWeather(_id: $_id, activityApiLastCall: $activityApiLastCall, activityWeatherIcon: $activityWeatherIcon, activityWeatherTemp: $activityWeatherTemp, activityWeatherDesc: $activityWeatherDesc, activityWeatherSunrise: $activityWeatherSunrise, activityWeatherSunset: $activityWeatherSunset, activityWeatherWind: $activityWeatherWind)
     }
 `
+
+export const REMOVE_PARTICIPANT = gql`
+    mutation RemoveParticipant($_id: ID!, $eventId: ID!) {
+        removeParticipant(_id: $_id, eventId: $eventId)
+    }
+`
+
+export const ADD_PARTICIPANT = gql`
+    mutation AddParticipant($_id: ID!, $eventId: ID!) {
+        addParticipant(_id: $_id, eventId: $eventId)
+    }
+`

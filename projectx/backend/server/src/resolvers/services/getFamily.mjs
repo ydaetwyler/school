@@ -13,6 +13,10 @@ const getFamily = async (context, User, Family) => {
         const familyFetched = await Family.findById({ _id: familyId })
             .populate('familyMembers')
             .populate('eventList')
+            .populate({
+                path: 'eventList',
+                populate: 'activityParticipantsList'
+            })
 
         return familyFetched
     } catch (e) {
