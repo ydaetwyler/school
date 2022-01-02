@@ -17,7 +17,7 @@ import {
     UPDATE_EVENT_ITEM
  } from '../../utils/mutations'
 
-const GET_EVENTPARTICIPANTS = gql`
+const GET_EVENT_PARTICIPANTS = gql`
     query GetEventParticipants($_id: ID!) {
         getEventParticipants(_id: $_id) {
             activityParticipantsList {
@@ -29,7 +29,7 @@ const GET_EVENTPARTICIPANTS = gql`
 `
 
 const PARTICIPANTS_SUBSCRIPTION = gql`
-    subscription  EventParticipantsChanged($_id: ID!) {
+    subscription EventParticipantsChanged($_id: ID!) {
         eventParticipantsChanged(_id: $_id) {
             activityParticipantsList {
                 userName,
@@ -39,30 +39,35 @@ const PARTICIPANTS_SUBSCRIPTION = gql`
     }
 `
 
-const UpdateEvent = ({ clicked, setClicked, id, item }) => {
+const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
     const [removeParticipant] = useMutation(REMOVE_PARTICIPANT, {
         onError: () => setFail(true)
     })
     const [addParticipant] = useMutation(ADD_PARTICIPANT, {
         onError: () => setFail(true)
     })
-    const { loading, error, data: dataParticipants, subscribeToMore } = useQuery(GET_EVENTPARTICIPANTS, {
+    const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_EVENT_PARTICIPANTS, {
         variables: { _id: id }
     })
     const [galleryClicked, setGalleryClicked] = useState(false)
     const [imgUrl, setImgUrl] = useState(item.activityImageUrl)
+    const [participants, setParticipants] = useState([])
     const [fail, setFail] = useState(false)
     const [joined, setJoined] = useState()
-
-    const [checkUserParticipant, { data }] = useMutation(CHECK_USER_PARTICIPANT, {
+    const [checkUserParticipant] = useMutation(CHECK_USER_PARTICIPANT, {
         onError: () => setFail(true),
         onCompleted: data => setJoined(data.checkUserParticipant)
     })
-
     const [updateEventItem, { loading: loadingUpdateEvent, error: errorUpdateEvent }] = useMutation(UPDATE_EVENT_ITEM, {
         onCompleted: () => setClicked(false),
         onError: () => setFail(true)
     })
+
+    useEffect(() => {
+        if (data) {
+            setParticipants(data.getEventParticipants.activityParticipantsList)
+        }
+    }, [data])
 
     useEffect(() => {
         checkUserParticipant({ 
@@ -78,11 +83,9 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
             variables: { _id: id },
             updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev
-                const newEventItem = subscriptionData.data.eventItemChanged
-
-                return {
-                    getEventParticipants: {...prev.getEventItem, ...newEventItem}
-                }
+                
+                refetch()
+                return prev
             }
         })
     }, [])
@@ -237,10 +240,10 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
                     <h4 className="block text-xl font-medium text-gray-300">Participants</h4>
                     <div className="flex flex-row overflow-x-scroll mt-3 mb-6">
                         <div className="flex flex-col items-center">
-                            {dataParticipants.getEventParticipants.activityParticipantsList ? dataParticipants.getEventParticipants.activityParticipantsList.map((member) => 
+                            {participants ? participants.map((member) => 
                                 <p key={member.userName} className="text-white">{member.userName}</p>
                             ) : null}
-                            {dataParticipants.getEventParticipants.activityParticipantsList ? dataParticipants.getEventParticipants.activityParticipantsList.map((member) =>
+                            {participants ? participants.map((member) =>
                                 <img key={member.userName} className="h-12 w-12" src={member.avatarUrl} />
                             ) : null}
                         </div>
@@ -249,28 +252,28 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
                         <h4 className="block text-xl font-medium text-gray-300">Weather forecast</h4>
                         <div className="flex flex-row flex-nowrap w-full">
                             <div className="flex flex-col w-1/2 items-center">
-                                <img className="-mt-3 w-26" src={item.activityWeatherIcon} />
+                                <img className="-mt-3 w-26" src={weather.activityWeatherIcon} />
                                 <p className="-mt-7 text-white text-base font-light">
-                                    {item.activityWeatherDesc}
+                                    {weather.activityWeatherDesc}
                                 </p>
                                 <p className="mt-1 text-white text-base font-medium">
-                                    {item.activityWeatherTemp}
+                                    {weather.activityWeatherTemp}
                                 </p>
                                 <p className="text-white text-base font-light">
-                                    {item.activityWeatherWind}
+                                    {weather.activityWeatherWind}
                                 </p>
                             </div>
                             <div className="pl-6 pt-6 flex flex-col w-1/2 items-start">
                                 <div className="flex flex-row flex-nowrap items-baseline mb-5">
                                     <img src="/icons/sunrise.png" className="w-10 mr-4" />
                                     <p className="text-white text-base font-light">
-                                        {item.activityWeatherSunrise}
+                                        {weather.activityWeatherSunrise}
                                     </p>
                                 </div>
                                 <div className="flex flex-row flex-nowrap items-baseline">
                                     <img src="/icons/sunset.png" className="w-10 mr-4" />
                                     <p className="text-white text-base font-light">
-                                        {item.activityWeatherSunset}
+                                        {weather.activityWeatherSunset}
                                     </p>
                                 </div>
                             </div>

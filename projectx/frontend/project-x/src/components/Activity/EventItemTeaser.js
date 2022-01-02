@@ -4,6 +4,8 @@ import getDate from '../../utils/getDate'
 import Weather from './Weather'
 import axios from 'axios'
 
+import { SET_COORDINATES } from '../../utils/mutations'
+
 import UpdateEvent from './UpdateEvent'
 
 const GET_EVENT_ITEM = gql`
@@ -16,19 +18,6 @@ const GET_EVENT_ITEM = gql`
             activityLocation,
             activityAddress,
             activityUrl,
-            activityCoordinates,
-            activityApiCityNotFound,
-            activityApiLastCall,
-            activityWeatherIcon,
-            activityWeatherTemp,
-            activityWeatherDesc,
-            activityWeatherSunrise,
-            activityWeatherSunset,
-            activityWeatherWind,
-            activityParticipantsList {
-                userName,
-                avatarUrl
-            }
         }
     }
 `
@@ -47,15 +36,67 @@ const EVENT_ITEM_SUBSCRIPTION = gql`
     }
 `
 
-const EventItemTeaser = ({ eventId, setCoordinates }) => {
+const GET_WEATHER = gql`
+    query GetWeather($_id: ID!) {
+        getWeather(_id: $_id) {
+            activityApiLastCall,
+            activityWeatherIcon,
+            activityWeatherTemp,
+            activityWeatherDesc,
+            activityWeatherSunrise,
+            activityWeatherSunset,
+            activityWeatherWind,
+        }
+    }
+`
+
+const WEATHER_SUBSCRIPTION = gql`
+    subscription WeatherChanged($_id: ID!) {
+        weatherChanged(_id: $_id) {
+            activityApiLastCall,
+            activityWeatherIcon,
+            activityWeatherTemp,
+            activityWeatherDesc,
+            activityWeatherSunrise,
+            activityWeatherSunset,
+            activityWeatherWind,
+        }
+    }
+`
+
+const GET_COORDINATES = gql`
+    query GetCoordinates($_id: ID!) {
+        getCoordinates(_id: $_id) {
+            activityCoordinates,
+            activityApiCityNotFound,
+        }
+    }
+`
+
+const COORDINATES_SUBSCRIPTION = gql`
+    subscription CoordinatesChanged($_id: ID!) {
+        coordinatesChanged(_id: $_id) {
+            activityCoordinates,
+            activityApiCityNotFound,
+        }
+    }
+`
+
+const EventItemTeaser = ({ eventId }) => {
     const [dateDiff, setDateDiff] = useState()
     const [currentDate] = useState(new Date())
     const [newCoordinates, setNewCoordinates] = useState()
     const [clicked, setClicked] = useState(false)
-
     const { loading, error, data, subscribeToMore } = useQuery(GET_EVENT_ITEM, {
         variables: { _id: eventId }
     })
+    const { loading: getWeatherLoading, error: getWeatherError, data: getWeatherData, refetch: getWeatherRefetch, subscribeToMore: getWeatherSubscribeToMore } = useQuery(GET_WEATHER, {
+        variables: { _id: eventId }
+    })
+    const { loading: getCoordinatesLoading, error: getCoordinatesError, data: getCoordinatesData, refetch: getCoordinatesRefetch, subscribeToMore: getCoordinatesSubscribeToMore } = useQuery(GET_COORDINATES, {
+        variables: { _id: eventId }
+    })
+    const [setCoordinates] = useMutation(SET_COORDINATES)
 
     useEffect(() => {
         subscribeToMore({
@@ -73,6 +114,32 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
     }, [])
 
     useEffect(() => {
+        getWeatherSubscribeToMore({
+            document: WEATHER_SUBSCRIPTION,
+            variables: { _id: eventId },
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+
+                getWeatherRefetch()
+                return prev
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        getCoordinatesSubscribeToMore({
+            document: COORDINATES_SUBSCRIPTION,
+            variables: { _id: eventId },
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+                
+                getCoordinatesRefetch()
+                return prev
+            }
+        })
+    }, [])
+
+    useEffect(() => {
         if (data) {
             const eventDate = new Date(data.getEventItem.activityDate)
             const timeDiff = eventDate.getTime() - currentDate.getTime()
@@ -85,8 +152,8 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
     const locationUrl = 'http://api.openweathermap.org/geo/1.0/direct?q='
 
     useEffect(() => {
-        if (data) {
-            if (!data.getEventItem.activityCoordinates && !data.getEventItem.activityApiCityNotFound) {
+        if (getCoordinatesData) {
+            if ((!getCoordinatesData.getCoordinates.activityCoordinates) && !getCoordinatesData.getCoordinates.activityApiCityNotFound) {
                 axios
                     .get(`${locationUrl}${data.getEventItem.activityLocation}&limit=1&appid=${apiKey}`)
                     .then(response => {
@@ -97,7 +164,7 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
                             setCoordinates({
                                 variables: {
                                     _id: eventId,
-                                    coordinates
+                                    activityCoordinates: coordinates,
                                 }
                             })
                         } else {
@@ -186,10 +253,10 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
                         <Weather 
                             id={eventId}
                             dateDiff={dateDiff} 
-                            coordinates={data.getEventItem.activityCoordinates ? data.getEventItem.activityCoordinates : newCoordinates}
-                            lastCall={data.getEventItem.activityApiLastCall}
-                            savedIcon={data.getEventItem.activityWeatherIcon}
-                            savedTemp={data.getEventItem.activityWeatherTemp}
+                            coordinates={getCoordinatesData ? getCoordinatesData.getCoordinates.activityCoordinates : newCoordinates}
+                            lastCall={getWeatherData ? getWeatherData.getWeather.activityApiLastCall : null}
+                            savedIcon={getWeatherData ? getWeatherData.getWeather.activityWeatherIcon : null}
+                            savedTemp={getWeatherData ? getWeatherData.getWeather.activityWeatherTemp : null}
                         />
                     </div>
                 </div>
@@ -198,6 +265,7 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
                     setClicked={setClicked}
                     id={eventId}
                     item={data.getEventItem}
+                    weather={getWeatherData.getWeather}
                 />
             </div>
         )

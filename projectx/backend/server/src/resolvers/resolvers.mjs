@@ -30,6 +30,8 @@ import getFamily from './services/getFamily.mjs'
 import getUser from './services/getUser.mjs'
 import getEventItem from './services/getEventItem.mjs'
 import getEventParticipants from './services/getEventParticipants.mjs'
+import getWeather from './services/getWeather.mjs'
+import getCoordinates from './services/getCoordinates.mjs'
 
 const resolvers = {
     Mutation: {
@@ -45,14 +47,20 @@ const resolvers = {
         updateUser: (_, args, context) => updateUser(args, context, user),
         invite: (_, args, context) => invite(args, context, family, user),
         createEventItem: (_, args, context) => createEventItem(args, context, eventItem, user, family),
-        setCoordinates: (_, args, context) => setCoordinates(args, context, eventItem),
-        setWeather: (_, args, context) => setWeather(args, context, eventItem),
+        setCoordinates: (_, args, context) => {
+            pubsub.publish('COORDINATES_CHANGED', { coordinatesChanged: args }),
+            setCoordinates(args, context, eventItem)
+        },
+        setWeather: (_, args, context) => {
+            pubsub.publish('WEATHER_CHANGED', { weatherChanged: args }),
+            setWeather(args, context, eventItem)
+        },
         removeParticipant: (_, args, context) => {
-            pubsub.publish('PARTICIPANTS_CHANGED', { eventItemChanged: args })
+            pubsub.publish('PARTICIPANTS_CHANGED', { eventParticipantsChanged: args }),
             removeParticipant(args, context, eventItem)
         },
         addParticipant: (_, args, context) => {
-            pubsub.publish('PARTICIPANTS_CHANGED', { eventItemChanged: args })
+            pubsub.publish('PARTICIPANTS_CHANGED', { eventParticipantsChanged: args }),
             addParticipant(args, context, eventItem)
         },
         checkUserParticipant: (_, args, context) => checkUserParticipant(args, context, eventItem),
@@ -69,6 +77,8 @@ const resolvers = {
         getUser: (_, __, context) => getUser(context, user),
         getEventItem: (_, args, context) => getEventItem(args, context, eventItem),
         getEventParticipants: (_, args, context) => getEventParticipants(args, context, eventItem),
+        getWeather: (_, args, context) => getWeather(args, context, eventItem),
+        getCoordinates: (_, args, context) => getCoordinates(args, context, eventItem),
     },
     Subscription: {
         familyChanged: {
@@ -91,7 +101,23 @@ const resolvers = {
             subscribe: withFilter(
                 () => pubsub.asyncIterator('PARTICIPANTS_CHANGED'),
                 (payload, variables) => {
-                    return (payload.eventItemChanged._id === variables._id)
+                    return (payload.eventParticipantsChanged._id === variables._id)
+                }
+            )
+        },
+        weatherChanged: {
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('WEATHER_CHANGED'),
+                (payload, variables) => {
+                    return (payload.weatherChanged._id === variables._id)
+                }
+            )
+        },
+        coordinatesChanged: {
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('COORDINATES_CHANGED'),
+                (payload, variables) => {
+                    return (payload.coordinatesChanged._id === variables._id)
                 }
             )
         }

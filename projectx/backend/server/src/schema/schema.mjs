@@ -10,6 +10,8 @@ const typeDefs = gql`
         getUser: User,
         getEventItem(_id: ID!): EventItem,
         getEventParticipants(_id: ID!): EventItem,
+        getWeather(_id: ID!): EventItem,
+        getCoordinates(_id: ID!): EventItem,
     }
 
     type Mutation {
@@ -36,7 +38,7 @@ const typeDefs = gql`
             activityUrl: String,
             familyHash: String!
         ): EventItem
-        setCoordinates(_id: ID, coordinates: String): String
+        setCoordinates(_id: ID, activityCoordinates: String, activityApiCityNotFound: Boolean): String
         setWeather(
             _id: ID, 
             activityApiLastCall: Date,  
@@ -73,6 +75,8 @@ const typeDefs = gql`
         familyChanged(_id: ID!): Family,
         eventItemChanged(_id: ID!): EventItem,
         eventParticipantsChanged(_id: ID!): EventItem,
+        weatherChanged(_id: ID!): EventItem,
+        coordinatesChanged(_id: ID!): EventItem,
     }
 
     "Family is the main object"

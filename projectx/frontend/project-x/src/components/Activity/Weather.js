@@ -36,22 +36,17 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
     }, [])
 
     useEffect(() => {
-        if (hoursDiff) {
+        if (hoursDiff && coordinates) {
             if (hoursDiff >= 6) {
-                console.log('hours diff is more than 6 hours, call API -> ')
                 const coordinatesArr = coordinates.split(',')
                 const lat = coordinatesArr[0]
                 const lon = coordinatesArr[1]
                 axios
                     .get(`${weatherUrl}lat=${lat}&lon=${lon}&exclude=${exclude}&units=metric&appid=${apiKey}`)
                     .then(response => {
-                        console.log(`called API and received: ${response}`)
-
                         if (dateDiff > 1) {
-                            console.log('event date is more than one day from now, use daily forecast -> ')
                             setWeatherData(response.data.daily[Math.round(dateDiff)])
                         } else {
-                            console.log('event date is less than one day from now, use current forecast -> ')
                             setWeatherData(response.data.current)
                         }
                     })

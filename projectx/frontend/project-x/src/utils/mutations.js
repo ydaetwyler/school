@@ -56,8 +56,8 @@ export const INVITE = gql`
 `
 
 export const SET_COORDINATES = gql`
-    mutation SetCoordinates($_id: ID, $coordinates: String, $activityApiCityNotFound: Boolean) {
-        setCoordinates(_id: $_id, coordinates: $coordinates, activityApiCityNotFound: $activityApiCityNotFound)
+    mutation SetCoordinates($_id: ID, $activityCoordinates: String, $activityApiCityNotFound: Boolean) {
+        setCoordinates(_id: $_id, activityCoordinates: $activityCoordinates, activityApiCityNotFound: $activityApiCityNotFound)
     }
 `
 
@@ -75,7 +75,7 @@ export const REMOVE_PARTICIPANT = gql`
 
 export const ADD_PARTICIPANT = gql`
     mutation AddParticipant($_id: ID!) {
-        addParticipant(_id: $_id)
+        addParticipant(_id: $_id) 
     }
 `
 

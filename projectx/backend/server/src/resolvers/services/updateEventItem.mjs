@@ -46,7 +46,7 @@ const updateEventItem = async (args, context, EventItem) => {
         if (activityDate) {
             if (activityDate !== eventItemBefore.activityDate) {
                 await EventItem.findByIdAndUpdate({ _id: _id }, {
-                    activityApiLastCall: undefined,
+                    activityApiLastCall: '',
                     activityDate: activityDate,
                 })
             }
@@ -55,9 +55,9 @@ const updateEventItem = async (args, context, EventItem) => {
         if (activityLocation) {
             if (activityLocation !== eventItemBefore.activityLocation) {
                 await EventItem.findByIdAndUpdate({ _id: _id }, {
-                    activityCoordinates: undefined,
+                    activityCoordinates: '',
                     activityApiCityNotFound: false,
-                    activityApiLastCall: undefined,
+                    activityApiLastCall: '',
                     activityLocation: activityLocation
                 })
             }

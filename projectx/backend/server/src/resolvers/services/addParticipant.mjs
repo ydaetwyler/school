@@ -15,6 +15,7 @@ const removeParticipant = async (args, context, EventItem) => {
                 activityParticipantsList: [context.userId]
             }
         })
+
     } catch (e) {
         console.log(`Error updating user name -> ${e}`)
         throw e

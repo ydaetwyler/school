@@ -12,7 +12,7 @@ export const validateNewFamily = Yup.object({
         .trim()
         .max(15, 'Must be 15 characters or less')
         .required('Required')
-        .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed')
+        .matches(/^[a-zA-Z\x7f-\xff]+$/, 'Only alphates are allowed')
 })
 
 export const validateNewUserAccess = Yup.object({
@@ -25,7 +25,7 @@ export const validateNewUserAccess = Yup.object({
         .trim()
         .max(18, 'Must be 18 characters or less')
         .required('Required')
-        .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed'),
+        .matches(/^[a-zA-Z\x7f-\xff]+$/, 'Only alphates are allowed'),
     password: Yup.string()
         .max(50, 'Must be 50 characters or less')
         .min(8, 'Password has to be 8 characters or more')
@@ -65,7 +65,7 @@ export const validateUserUpdate = Yup.object({
         .trim()
         .max(18, 'Must be 18 characters or less')
         .required('Required')
-        .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed')
+        .matches(/^[a-zA-Z\x7f-\xff]+$/, 'Only alphates are allowed')
 })
 
 export const validateEmail = Yup.object({
@@ -100,11 +100,11 @@ export const validateEvent = Yup.object({
     activityLocation: Yup.string()
         .trim()
         .max(25, 'Must be 25 characters or less')
-        .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed'),
+        .matches(/^[a-zA-Z\x7f-\xff]+$/, 'Only alphates are allowed'),
     activityAddress: Yup.string()
         .trim()
         .max(25, 'Must be 25 characters or less')
-        .matches(/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/, 'Only alphates and numbers are allowed'),
+        .matches(/^[A-Za-z\x7f-\xff0-9 _]*[A-Za-z\x7f-\xff0-9][A-Za-z\x7f-\xff0-9 _]*$/, 'Only alphates and numbers are allowed'),
     activityUrl: Yup.string()
         .trim()
         .max(50, 'Must be 50 characters or less')
