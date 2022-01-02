@@ -36,7 +36,7 @@ const Invite = ({ familyID }) => {
             >
                 <Form>
                     <TextInput
-                        className="mb-3 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-sm font-light text-white"
+                        className="mb-3 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-base font-medium text-white"
                         id="email"
                         label="E-Mail"
                         name="email"
