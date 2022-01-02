@@ -56,7 +56,10 @@ const resolvers = {
             addParticipant(args, context, eventItem)
         },
         checkUserParticipant: (_, args, context) => checkUserParticipant(args, context, eventItem),
-        updateEventItem: (_, args, context) => updateEventItem(args, context, eventItem),
+        updateEventItem: (_, args, context) => {
+            pubsub.publish('EVENT_ITEM_CHANGED', { eventItemChanged: args }),
+            updateEventItem(args, context, eventItem)
+        },
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),
         createEventComment: (_, args, context) => createEventComment(args, context, comment, eventItem),
         removeEventComment: (_, args, context) => removeEventComment(args, context, comment, eventItem),
@@ -78,7 +81,7 @@ const resolvers = {
         },
         eventItemChanged: {
             subscribe: withFilter(
-                () => pubsub.asyncIterator('PARTICIPANTS_CHANGED'),
+                () => pubsub.asyncIterator('EVENT_ITEM_CHANGED'),
                 (payload, variables) => {
                     return (payload.eventItemChanged._id === variables._id)
                 }

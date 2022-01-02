@@ -112,15 +112,15 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
 
     return (
         <div>
-            <div className="h-screen w-full backdrop-blur-md top-0 fixed">
-                <div className="h-auto w-96 min-w-[480px] bg-gray-800/[.9] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
+            <div className="h-[170vh] w-full backdrop-blur-md top-0 absolute">
+                <div className="h-auto max-w-[480px] w-[95%] mb-10 bg-gray-800/[.9] relative top-5 mx-auto rounded-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
                     <img 
                         src="/icons/close.png" 
                         className="absolute top-1.5 right-1.5 h-6 w-6 opacity-30 hover:opacity-100 cursor-pointer"
                         onClick={() => setClicked(false)}
                     />
                     <img 
-                        className="-mt-7 mb-5 rounded-lg w-80 mx-auto cursor-pointer" 
+                        className="-mt-7 mb-5 rounded-lg w-80 h-60 mx-auto cursor-pointer" 
                         src={imgUrl} 
                         onClick={() => setGalleryClicked(true)}
                     />

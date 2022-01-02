@@ -5,47 +5,74 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .bg-colors {
     background:
         linear-gradient(
             rgba(0, 0, 0, .4),
             rgba(0, 0, 0, .4)
         ),
-        url("/public/background/jr-korpa-640.jpg");
+        url("/public/background/clouds640.jpg");
     background-position: center;
     background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 200vh;
+    width: 100%;
+    height: auto;
 }
 
 @media (min-width: 640px) {
     .bg-colors {
-        background:
+    background:
         linear-gradient(
             rgba(0, 0, 0, .4),
             rgba(0, 0, 0, .4)
         ),
-            url("/public/background/jr-korpa-1920.jpg");
+        url("/public/background/clouds1920.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 140vh;
+    width: 100%;
+    height: auto;
     }
 }
 
 @media (min-width: 1024px) {
     .bg-colors {
         background:
-        linear-gradient(
-            rgba(0, 0, 0, .4),
-            rgba(0, 0, 0, .4)
-        ),
-            url("/public/background/jr-korpa-2400.jpg");
+            linear-gradient(
+                rgba(0, 0, 0, .4),
+                rgba(0, 0, 0, .4)
+            ),
+            url("/public/background/clouds2400.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        min-height: 140vh;
+        width: 100%;
+        height: auto;
     }
 }
 
 @media (min-width: 1536px) {
     .bg-colors {
         background:
-        linear-gradient(
-            rgba(0, 0, 0, .4),
-            rgba(0, 0, 0, .4)
-        ),
-        url("/public/background/jr-korpa-3600.jpg");
+            linear-gradient(
+                rgba(0, 0, 0, .4),
+                rgba(0, 0, 0, .4)
+            ),
+            url("/public/background/clouds3950.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        min-height: 140vh;
+        width: 100%;
+        height: auto;
     }
 }
 

@@ -6,7 +6,7 @@ import axios from 'axios'
 
 import UpdateEvent from './UpdateEvent'
 
-const GET_EVENTITEM = gql`
+const GET_EVENT_ITEM = gql`
     query GetEventItem($_id: ID!) {
         getEventItem(_id: $_id) {
             activityName,
@@ -33,16 +33,19 @@ const GET_EVENTITEM = gql`
     }
 `
 
-/*const EVENTITEM_SUBSCRIPTION = gql`
+const EVENT_ITEM_SUBSCRIPTION = gql`
     subscription EventItemChanged($_id: ID!) {
         eventItemChanged(_id: $_id) {
-            activityParticipantsList {
-                userName,
-                avatarUrl
-            }
+            activityName,
+            activityImageUrl,
+            activityDate,
+            activityDescription,
+            activityLocation,
+            activityAddress,
+            activityUrl,
         }
     }
-`*/
+`
 
 const EventItemTeaser = ({ eventId, setCoordinates }) => {
     const [dateDiff, setDateDiff] = useState()
@@ -50,13 +53,13 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
     const [newCoordinates, setNewCoordinates] = useState()
     const [clicked, setClicked] = useState(false)
 
-    const { loading, error, data, subscribeToMore } = useQuery(GET_EVENTITEM, {
+    const { loading, error, data, subscribeToMore } = useQuery(GET_EVENT_ITEM, {
         variables: { _id: eventId }
     })
 
-    /*useEffect(() => {
+    useEffect(() => {
         subscribeToMore({
-            document: EVENTITEM_SUBSCRIPTION,
+            document: EVENT_ITEM_SUBSCRIPTION,
             variables: { _id: eventId },
             updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev
@@ -67,7 +70,7 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
                 }
             }
         })
-    }, [])*/
+    }, [])
 
     useEffect(() => {
         if (data) {
@@ -117,7 +120,7 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
         return (
             <div>
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
-                    <img className="rounded-t-lg max-h-px[212]" src={data.getEventItem.activityImageUrl} />
+                    <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
                         {data.getEventItem.activityName}
                     </h5>
@@ -143,7 +146,7 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
         return (
             <div>
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
-                    <img className="rounded-t-lg max-h-px[212]" src={data.getEventItem.activityImageUrl} />
+                    <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
                         {data.getEventItem.activityName}
                     </h5>
@@ -169,7 +172,7 @@ const EventItemTeaser = ({ eventId, setCoordinates }) => {
         return (
             <div>
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
-                    <img className="rounded-t-lg max-h-px[212]" src={data.getEventItem.activityImageUrl} />
+                    <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
                         {data.getEventItem.activityName}
                     </h5>
