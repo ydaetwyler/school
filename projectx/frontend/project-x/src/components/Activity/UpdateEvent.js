@@ -87,6 +87,15 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
         })
     }, [])
 
+    useEffect(() => {
+        const handleEsc = event => {
+            if (event.keyCode === 27) {
+                setClicked(false)
+            }
+        }
+        window.addEventListener('keydown', handleEsc)
+    })
+
     const handleJoinChange = () => {
         if (joined) {
             removeParticipant({ 
@@ -112,7 +121,7 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
 
     return (
         <div>
-            <div className="h-[170vh] w-full backdrop-blur-md top-0 absolute">
+            <div className="h-[140vh] w-full backdrop-blur-md top-0 absolute">
                 <div className="h-auto max-w-[480px] w-[95%] mb-10 bg-gray-800/[.9] relative top-5 mx-auto rounded-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
                     <img 
                         src="/icons/close.png" 
