@@ -76,6 +76,15 @@ export const validateEmail = Yup.object({
         .email('Invalid email')
 })
 
+const isValidUrl = url => {
+    try {
+        new URL(url)
+    } catch (e) {
+        return false
+    }
+    return true
+}
+
 export const validateEvent = Yup.object({
     activityName: Yup.string()
         .trim()
@@ -87,5 +96,17 @@ export const validateEvent = Yup.object({
     activityDate: Yup.string()
         .trim()
         .required('Required')
-        .matches(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/, 'Date must be dd.mm.yyyy')
+        .matches(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/, 'Date must be dd.mm.yyyy'),
+    activityLocation: Yup.string()
+        .trim()
+        .max(25, 'Must be 25 characters or less')
+        .matches(/^[aA-zZ\s]+$/, 'Only alphates are allowed'),
+    activityAddress: Yup.string()
+        .trim()
+        .max(25, 'Must be 25 characters or less')
+        .matches(/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/, 'Only alphates and numbers are allowed'),
+    activityUrl: Yup.string()
+        .trim()
+        .max(50, 'Must be 50 characters or less')
+        .test("is-url-valid", "URL is not valid", value => isValidUrl(value))
 })

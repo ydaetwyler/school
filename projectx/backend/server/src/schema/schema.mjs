@@ -51,13 +51,15 @@ const typeDefs = gql`
         addParticipant(_id: ID!): String
         checkUserParticipant(_id: ID!): Boolean
         updateEventItem(
-            activityName: String,
+            _id: ID!,
             activityImageUrl: String,
-            activityDate: Date,
+            activityName: String,
             activityDescription: String,
+            activityDate: Date,
             activityLocation: String,
+            activityAddress: String,
             activityUrl: String,
-        ): EventItem
+        ): String
         removeEventItem(eventItemHash: String!, familyHash: String!): Family
         createEventComment(
             eventItemHash: String!,

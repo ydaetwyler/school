@@ -15,6 +15,7 @@ const GET_EVENTITEM = gql`
             activityDescription,
             activityLocation,
             activityAddress,
+            activityUrl,
             activityCoordinates,
             activityApiCityNotFound,
             activityApiLastCall,

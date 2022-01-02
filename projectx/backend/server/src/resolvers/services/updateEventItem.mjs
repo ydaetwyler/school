@@ -1,35 +1,83 @@
 import { AuthenticationError } from 'apollo-server-express'
 
-const updateEventItem = async (args, context, User, EventItem) => {
+const updateEventItem = async (args, context, EventItem) => {
     if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')
     }
 
     try {
         const { 
-            activityName,
+            _id,
             activityImageUrl,
-            activityDate,
+            activityName,
             activityDescription,
+            activityDate,
             activityLocation,
+            activityAddress,
             activityUrl
         } = args
     
-        const updateEventItem = await EventItem.findOne({ hash: eventItemHash })
+        const eventItemBefore = await EventItem.findById({ _id: _id })
+
+        if (activityImageUrl) {
+            if (activityImageUrl !== eventItemBefore.activityImageUrl) {
+                await EventItem.findByIdAndUpdate({ _id: _id }, {
+                    activityImageUrl: activityImageUrl,
+                })
+            }
+        }
+
+        if (activityName) {
+            if (activityName !== eventItemBefore.activityName) {
+                await EventItem.findByIdAndUpdate({ _id: _id }, {
+                    activityName: activityName,
+                })
+            }
+        }
         
-        if (activityName) updateEventItem.activityName = activityName
-        if (activityImageUrl) updateEventItem.activityImageUrl = activityImageUrl
-        if (activityDate) updateEventItem.activityDate = activityDate
-        if (activityDescription) updateEventItem.activityDescription = activityDescription
+        if (activityDescription) {
+            if (activityDescription !== eventItemBefore.activityDescription) {
+                await EventItem.findByIdAndUpdate({ _id: _id }, {
+                    activityDescription: activityDescription,
+                })
+            }
+        }
+
+        if (activityDate) {
+            if (activityDate !== eventItemBefore.activityDate) {
+                await EventItem.findByIdAndUpdate({ _id: _id }, {
+                    activityApiLastCall: undefined,
+                    activityDate: activityDate,
+                })
+            }
+        }
+
         if (activityLocation) {
-            updateEventItem.activityLocation = activityLocation
-            // Remove coordinates!
-        } 
-        if (activityUrl) updateEventItem.activityUrl = activityUrl
-    
-        const newEventItem = await updateEventItem.save()
-    
-        return newEventItem.toJSON()
+            if (activityLocation !== eventItemBefore.activityLocation) {
+                await EventItem.findByIdAndUpdate({ _id: _id }, {
+                    activityCoordinates: undefined,
+                    activityApiCityNotFound: false,
+                    activityApiLastCall: undefined,
+                    activityLocation: activityLocation
+                })
+            }
+        }
+
+        if (activityAddress) {
+            if (activityAddress !== eventItemBefore.activityAddress) {
+                await EventItem.findByIdAndUpdate({ _id: _id }, {
+                    activityAddress: activityAddress,
+                })
+            }
+        }
+
+        if (activityUrl) {
+            if (activityUrl !== eventItemBefore.activityUrl) {
+                await EventItem.findByIdAndUpdate({ _id: _id }, {
+                    activityUrl: activityUrl,
+                })
+            }
+        }
 
     } catch(e) {
         console.log(`Error updating event item -> ${e}`)

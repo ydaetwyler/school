@@ -13,7 +13,8 @@ import { validateEvent } from '../Forms/Utils/validations'
 import { 
     REMOVE_PARTICIPANT,
     ADD_PARTICIPANT,
-    CHECK_USER_PARTICIPANT
+    CHECK_USER_PARTICIPANT,
+    UPDATE_EVENT_ITEM
  } from '../../utils/mutations'
 
 const GET_EVENTPARTICIPANTS = gql`
@@ -56,6 +57,11 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
     const [checkUserParticipant, { data }] = useMutation(CHECK_USER_PARTICIPANT, {
         onError: () => setFail(true),
         onCompleted: data => setJoined(data.checkUserParticipant)
+    })
+
+    const [updateEventItem, { loading: loadingUpdateEvent, error: errorUpdateEvent }] = useMutation(UPDATE_EVENT_ITEM, {
+        onCompleted: () => setClicked(false),
+        onError: () => setFail(true)
     })
 
     useEffect(() => {
@@ -101,10 +107,13 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
     
     if (!clicked) return null
 
+    if (loading || loadingUpdateEvent) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
+    if (error || errorUpdateEvent) return JSON.stringify(error ? error : errorUpdateEvent, null, 2)
+
     return (
         <div>
             <div className="h-screen w-full backdrop-blur-md top-0 fixed">
-                <div className="h-3/5 min-h-[1200px] w-96 min-w-[480px] bg-gray-800/[.9] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
+                <div className="h-auto w-96 min-w-[480px] bg-gray-800/[.9] absolute -translate-y-2/4 translate-x-2/4 top-2/4 right-2/4 rounded-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
                     <img 
                         src="/icons/close.png" 
                         className="absolute top-1.5 right-1.5 h-6 w-6 opacity-30 hover:opacity-100 cursor-pointer"
@@ -121,18 +130,24 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
                             activityDate: getShortDate(item.activityDate),
                             activityLocation: item.activityLocation,
                             activityAddress: item.activityAddress,
-                            activityDescription: item.activityDescription
+                            activityDescription: item.activityDescription,
+                            activityUrl: item.activityUrl,
                         }}
                         validationSchema={validateEvent}
                         onSubmit={(values, { setSubmitting }) => {
-                            /*setTimeout(() => {
-                                updateFamily({ variables: { 
-                                    _id: familyID,
-                                    familyName: values.familyName,
-                                    familyAvatarUrl: selectEmoji
+                            setTimeout(() => {
+                                updateEventItem({ variables: { 
+                                    _id: id,
+                                    activityImageUrl: imgUrl,
+                                    activityName: values.activityName,
+                                    activityDescription: values.activityDescription,
+                                    activityDate: stringToDate(values.activityDate),
+                                    activityLocation: values.activityLocation,
+                                    activityAddress: values.activityAddress,
+                                    activityUrl: values.activityUrl,
                                     } })
                                 setSubmitting(false)
-                            }, 400)*/
+                            }, 400)
                         }}
                     >
                         <Form>
@@ -174,6 +189,22 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
                                 type="text"
                                 placeholder=""
                             />
+                            <TextInput
+                                className="mb-6 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-xl font-medium text-white"
+                                id="activityUrl"
+                                label="Url"
+                                name="activityUrl"
+                                type="text"
+                                placeholder=""
+                            />
+                            <button
+                                className="mt-3 mb-6 w-full bg-white text-black py-3 text-xl font-semibold rounded-sm cursor-pointer" 
+                                disabled={loading || loadingUpdateEvent} 
+                                type="submit"
+                            >
+                            Update event
+                            </button>
+                            {errorUpdateEvent && <p>{errorUpdateEvent.message}</p>}
                         </Form>
                     </Formik>
                     <div className="absolute right-12">

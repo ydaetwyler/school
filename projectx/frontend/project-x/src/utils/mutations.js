@@ -84,3 +84,9 @@ export const CHECK_USER_PARTICIPANT = gql`
         checkUserParticipant(_id: $_id)
     }
 `
+
+export const UPDATE_EVENT_ITEM = gql`
+    mutation UpdateEventItem($_id: ID!, $activityImageUrl: String, $activityName: String, $activityDescription: String, $activityDate: Date, $activityLocation: String, $activityAddress: String, $activityUrl: String) {
+        updateEventItem(_id: $_id, activityImageUrl: $activityImageUrl, activityName: $activityName, activityDescription: $activityDescription, activityDate: $activityDate, activityLocation: $activityLocation, activityAddress: $activityAddress, activityUrl: $activityUrl)
+    }
+`

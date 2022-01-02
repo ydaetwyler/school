@@ -5,3 +5,5 @@ const stringToDate = (string) => {
 
     return ISOFormat.toISOString()  
 }
+
+export default stringToDate

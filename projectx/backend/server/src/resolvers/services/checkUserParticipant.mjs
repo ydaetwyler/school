@@ -16,7 +16,7 @@ const checkUserParticipant = async (args, context, EventItem) => {
         if (eventItemFetched.activityParticipantsList) {
             isParticipant = eventItemFetched.activityParticipantsList.some(user => user.id === context.userId)
         }
-        console.log(isParticipant)
+
         return isParticipant
     } catch (e) {
         console.log(`Error checking user is participant, -> ${e}`)
