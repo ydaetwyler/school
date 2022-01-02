@@ -90,7 +90,12 @@ const UpdateEvent = ({ clicked, setClicked, id, item }) => {
     useEffect(() => {
         const handleEsc = event => {
             if (event.keyCode === 27) {
-                setClicked(false)
+                if (galleryClicked) {
+                    setGalleryClicked(false)
+                    setClicked(true)
+                } else {
+                    setClicked(false)
+                }
             }
         }
         window.addEventListener('keydown', handleEsc)
