@@ -7,10 +7,10 @@ const removeParticipant = async (args, context, EventItem) => {
 
     try {
         const { 
-            eventId
+            _id
         } = args
 
-        await EventItem.findByIdAndUpdate({ _id: eventId }, {
+        await EventItem.findByIdAndUpdate({ _id: _id }, {
             $push: {
                 activityParticipantsList: [context.userId]
             }

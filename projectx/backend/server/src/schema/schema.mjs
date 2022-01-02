@@ -8,6 +8,8 @@ const typeDefs = gql`
         "Get family Object with all needed subfields"
         getFamily: Family,
         getUser: User,
+        getEventItem(_id: ID!): EventItem,
+        getEventParticipants(_id: ID!): EventItem,
     }
 
     type Mutation {
@@ -45,8 +47,9 @@ const typeDefs = gql`
             activityWeatherSunset: String,
             activityWeatherWind: String
         ): String
-        removeParticipant(_id: ID!, eventId: ID!): String
-        addParticipant(_id: ID!, eventId: ID!): String
+        removeParticipant(_id: ID!): String
+        addParticipant(_id: ID!): String
+        checkUserParticipant(_id: ID!): Boolean
         updateEventItem(
             activityName: String,
             activityImageUrl: String,
@@ -65,7 +68,9 @@ const typeDefs = gql`
     }
 
     type Subscription {
-        familyChanged(_id: ID!): Family
+        familyChanged(_id: ID!): Family,
+        eventItemChanged(_id: ID!): EventItem,
+        eventParticipantsChanged(_id: ID!): EventItem,
     }
 
     "Family is the main object"

@@ -21,12 +21,15 @@ import setCoordinates from './services/setCoordinates.mjs'
 import setWeather from './services/setWeather.mjs'
 import removeParticipant from './services/removeParticipant.mjs'
 import addParticipant from './services/addParticipant.mjs'
+import checkUserParticipant from './services/checkUserParticipant.mjs'
 import removeEventItem from './services/removeEventItem.mjs'
 import createEventComment from './services/createEventComment.mjs'
 import removeEventComment from './services/removeEventComment.mjs'
 
 import getFamily from './services/getFamily.mjs'
 import getUser from './services/getUser.mjs'
+import getEventItem from './services/getEventItem.mjs'
+import getEventParticipants from './services/getEventParticipants.mjs'
 
 const resolvers = {
     Mutation: {
@@ -45,13 +48,14 @@ const resolvers = {
         setCoordinates: (_, args, context) => setCoordinates(args, context, eventItem),
         setWeather: (_, args, context) => setWeather(args, context, eventItem),
         removeParticipant: (_, args, context) => {
-            pubsub.publish('FAMILY_CHANGED', { familyChanged: args })
+            pubsub.publish('PARTICIPANTS_CHANGED', { eventItemChanged: args })
             removeParticipant(args, context, eventItem)
         },
         addParticipant: (_, args, context) => {
-            pubsub.publish('FAMILY_CHANGED', { familyChanged: args })
+            pubsub.publish('PARTICIPANTS_CHANGED', { eventItemChanged: args })
             addParticipant(args, context, eventItem)
         },
+        checkUserParticipant: (_, args, context) => checkUserParticipant(args, context, eventItem),
         updateEventItem: (_, args, context) => updateEventItem(args, context, eventItem),
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),
         createEventComment: (_, args, context) => createEventComment(args, context, comment, eventItem),
@@ -59,7 +63,9 @@ const resolvers = {
     },
     Query: {
         getFamily: (_, __, context) => getFamily(context, user, family),
-        getUser: (_, __, context) => getUser(context, user)
+        getUser: (_, __, context) => getUser(context, user),
+        getEventItem: (_, args, context) => getEventItem(args, context, eventItem),
+        getEventParticipants: (_, args, context) => getEventParticipants(args, context, eventItem),
     },
     Subscription: {
         familyChanged: {
@@ -67,6 +73,22 @@ const resolvers = {
                 () => pubsub.asyncIterator('FAMILY_CHANGED'),
                 (payload, variables) => {
                     return (payload.familyChanged._id === variables._id)
+                }
+            )
+        },
+        eventItemChanged: {
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('PARTICIPANTS_CHANGED'),
+                (payload, variables) => {
+                    return (payload.eventItemChanged._id === variables._id)
+                }
+            )
+        },
+        eventParticipantsChanged: {
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('PARTICIPANTS_CHANGED'),
+                (payload, variables) => {
+                    return (payload.eventItemChanged._id === variables._id)
                 }
             )
         }

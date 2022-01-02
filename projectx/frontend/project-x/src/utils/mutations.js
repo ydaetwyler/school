@@ -68,13 +68,19 @@ export const SET_WEATHER = gql`
 `
 
 export const REMOVE_PARTICIPANT = gql`
-    mutation RemoveParticipant($_id: ID!, $eventId: ID!) {
-        removeParticipant(_id: $_id, eventId: $eventId)
+    mutation RemoveParticipant($_id: ID!) {
+        removeParticipant(_id: $_id)
     }
 `
 
 export const ADD_PARTICIPANT = gql`
-    mutation AddParticipant($_id: ID!, $eventId: ID!) {
-        addParticipant(_id: $_id, eventId: $eventId)
+    mutation AddParticipant($_id: ID!) {
+        addParticipant(_id: $_id)
+    }
+`
+
+export const CHECK_USER_PARTICIPANT = gql`
+    mutation CheckUserParticipant($_id: ID!) {
+        checkUserParticipant(_id: $_id)
     }
 `

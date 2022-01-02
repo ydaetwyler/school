@@ -9,25 +9,6 @@ const GET_ACTIVITIES = gql`
         getFamily {
            eventList {
                _id,
-               activityName,
-               activityImageUrl,
-               activityDate,
-               activityDescription,
-               activityLocation,
-               activityAddress,
-               activityCoordinates,
-               activityApiCityNotFound,
-               activityApiLastCall,
-               activityWeatherIcon,
-               activityWeatherTemp,
-               activityWeatherDesc,
-               activityWeatherSunrise,
-               activityWeatherSunset,
-               activityWeatherWind,
-               activityParticipantsList {
-                   userName,
-                   avatarUrl
-               }
            }
         }
     }
@@ -44,8 +25,8 @@ const ActivityList = ({ familyID }) => {
         <div className="mt-10">
             {data.getFamily.eventList.map((item) => {
                 return <EventItemTeaser 
-                            key={item._id} 
-                            item={item} 
+                            key={item._id}
+                            eventId={item._id}
                             setCoordinates={setCoordinates} 
                             familyID={familyID} 
                         />

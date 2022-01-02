@@ -10,59 +10,95 @@ import TextInput from '../Forms/Utils/TextInput'
 import TextArea from '../Forms/Utils/TextArea'
 import { validateEvent } from '../Forms/Utils/validations'
 
-import { REMOVE_PARTICIPANT } from '../../utils/mutations'
-import { ADD_PARTICIPANT } from '../../utils/mutations'
+import { 
+    REMOVE_PARTICIPANT,
+    ADD_PARTICIPANT,
+    CHECK_USER_PARTICIPANT
+ } from '../../utils/mutations'
 
-const GET_USER = gql`
-    query GetUser {
-        getUser {
-            userName,
-            avatarUrl
+const GET_EVENTPARTICIPANTS = gql`
+    query GetEventParticipants($_id: ID!) {
+        getEventParticipants(_id: $_id) {
+            activityParticipantsList {
+                userName,
+                avatarUrl
+            }
         }
     }
 `
 
-const UpdateEvent = ({ clicked, setClicked, id, item, familyID }) => {
-    const [galleryClicked, setGalleryClicked] = useState(false)
-    const [imgUrl, setImgUrl] = useState(item.activityImageUrl)
-    const [joined, setJoined] = useState()
-    const [fail, setFail] = useState(false)
-    
-    const { data } = useQuery(GET_USER)
+const PARTICIPANTS_SUBSCRIPTION = gql`
+    subscription  EventParticipantsChanged($_id: ID!) {
+        eventParticipantsChanged(_id: $_id) {
+            activityParticipantsList {
+                userName,
+                avatarUrl
+            }
+        }
+    }
+`
 
-    const [removeParticipant ,{error}] = useMutation(REMOVE_PARTICIPANT, {
+const UpdateEvent = ({ clicked, setClicked, id, item }) => {
+    const [removeParticipant] = useMutation(REMOVE_PARTICIPANT, {
         onError: () => setFail(true)
     })
     const [addParticipant] = useMutation(ADD_PARTICIPANT, {
         onError: () => setFail(true)
     })
+    const { loading, error, data: dataParticipants, subscribeToMore } = useQuery(GET_EVENTPARTICIPANTS, {
+        variables: { _id: id }
+    })
+    const [galleryClicked, setGalleryClicked] = useState(false)
+    const [imgUrl, setImgUrl] = useState(item.activityImageUrl)
+    const [fail, setFail] = useState(false)
+    const [joined, setJoined] = useState()
+
+    const [checkUserParticipant, { data }] = useMutation(CHECK_USER_PARTICIPANT, {
+        onError: () => setFail(true),
+        onCompleted: data => setJoined(data.checkUserParticipant)
+    })
 
     useEffect(() => {
-        if (data) {
-            setJoined(item.activityParticipantsList.some(user => user.userName === data.getUser.userName))
-        }
-    }, [data])
+        checkUserParticipant({ 
+            variables: { 
+                _id: id
+            } 
+        })
+    }, [])
+
+    useEffect(() => {
+        subscribeToMore({
+            document: PARTICIPANTS_SUBSCRIPTION,
+            variables: { _id: id },
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+                const newEventItem = subscriptionData.data.eventItemChanged
+
+                return {
+                    getEventParticipants: {...prev.getEventItem, ...newEventItem}
+                }
+            }
+        })
+    }, [])
 
     const handleJoinChange = () => {
         if (joined) {
             removeParticipant({ 
                 variables: { 
-                    _id: familyID,
-                    eventId: id
+                    _id: id,
                 } 
             })
             setJoined(false)
         } else {
             addParticipant({ 
                 variables: { 
-                    _id: familyID,
-                    eventId: id
+                    _id: id,
                 } 
             })
             setJoined(true)
         }
     }
-    if (error) return JSON.stringify(error, null, 2)
+    
     if (!clicked) return null
 
     return (
@@ -156,12 +192,12 @@ const UpdateEvent = ({ clicked, setClicked, id, item, familyID }) => {
                     <h4 className="block text-xl font-medium text-gray-300">Participants</h4>
                     <div className="flex flex-row overflow-x-scroll mt-3 mb-6">
                         <div className="flex flex-col items-center">
-                            {item.activityParticipantsList.map((member) => 
+                            {dataParticipants.getEventParticipants.activityParticipantsList ? dataParticipants.getEventParticipants.activityParticipantsList.map((member) => 
                                 <p key={member.userName} className="text-white">{member.userName}</p>
-                            )}
-                            {item.activityParticipantsList.map((member) =>
+                            ) : null}
+                            {dataParticipants.getEventParticipants.activityParticipantsList ? dataParticipants.getEventParticipants.activityParticipantsList.map((member) =>
                                 <img key={member.userName} className="h-12 w-12" src={member.avatarUrl} />
-                            )}
+                            ) : null}
                         </div>
                     </div>
                     <div>
