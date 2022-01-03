@@ -9,7 +9,7 @@ const getEventComments = async (args, context, EventItem) => {
         const { _id } = args
 
         const eventItemFetched = await EventItem.findById({ _id: _id })
-            .populate('comments')
+            .populate({path: 'comments', select: 'createdAt', options: { sort: { createdAt: -1 } }})
 
         return eventItemFetched
     } catch (e) {

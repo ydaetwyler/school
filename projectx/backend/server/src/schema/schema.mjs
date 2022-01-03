@@ -13,6 +13,8 @@ const typeDefs = gql`
         getWeather(_id: ID!): EventItem,
         getCoordinates(_id: ID!): EventItem,
         getEventComments(_id: ID!): EventItem,
+        getEventComment(_id: ID!): Comment,
+        checkCommentOwner(_id: ID!): Boolean
     }
 
     type Mutation {
@@ -65,11 +67,10 @@ const typeDefs = gql`
         ): String
         removeEventItem(eventItemHash: String!, familyHash: String!): Family
         createEventComment(
-            eventItemHash: String!,
-            commentText: String!,
-            commentOwner: String!
-        ): EventItem
-        removeEventComment(commentHash: String!): EventItem
+            _id: ID!,
+            commentText: String!
+        ): String
+        removeEventComment(commentId: ID!, eventItemId: ID!): String
     }
 
     type Subscription {
@@ -166,10 +167,9 @@ const typeDefs = gql`
     "Comment can be used in Events and Tasks"
     type Comment {
         _id: ID
-        hash: String
         commentText: String
         commentOwner: User
-        commentDate: Date
+        createdAt: Date
     }
 `
 

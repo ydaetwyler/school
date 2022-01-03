@@ -33,6 +33,8 @@ import getEventParticipants from './services/getEventParticipants.mjs'
 import getWeather from './services/getWeather.mjs'
 import getCoordinates from './services/getCoordinates.mjs'
 import getEventComments from './services/getEventComments.mjs'
+import getEventComment from './services/getEventComment.mjs'
+import checkCommentOwner from './services/checkCommentOwner.mjs'
 
 const resolvers = {
     Mutation: {
@@ -81,6 +83,8 @@ const resolvers = {
         getWeather: (_, args, context) => getWeather(args, context, eventItem),
         getCoordinates: (_, args, context) => getCoordinates(args, context, eventItem),
         getEventComments: (_, args, context) => getEventComments(args, context, eventItem),
+        getEventComment: (_, args, context) => getEventComment(args, context, comment),
+        checkCommentOwner: (_, args, context) => checkCommentOwner(args, context, comment),
     },
     Subscription: {
         familyChanged: {

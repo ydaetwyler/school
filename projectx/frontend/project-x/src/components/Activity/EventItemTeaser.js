@@ -264,8 +264,8 @@ const EventItemTeaser = ({ eventId }) => {
                     clicked={clicked}
                     setClicked={setClicked}
                     id={eventId}
-                    item={data.getEventItem}
-                    weather={getWeatherData.getWeather}
+                    item={data ? data.getEventItem : null}
+                    weather={getWeatherData ? getWeatherData.getWeather : null}
                 />
             </div>
         )

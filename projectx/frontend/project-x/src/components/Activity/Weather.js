@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useMutation } from '@apollo/client'
 import { SET_WEATHER } from '../../utils/mutations'
-import getTimeFromUtc from '../../utils/getTimeFromUtc' 
+
+import { getTimeFromUtc } from '../../utils/dateHelpers.js'
 
 const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) => {
     const [currentTime] = useState(new Date())

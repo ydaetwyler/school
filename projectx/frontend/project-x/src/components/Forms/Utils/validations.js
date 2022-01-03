@@ -110,3 +110,10 @@ export const validateEvent = Yup.object({
         .max(50, 'Must be 50 characters or less')
         .test("is-url-valid", "URL is not valid", value => isValidUrl(value))
 })
+
+export const validateComment = Yup.object({
+    commentText: Yup.string()
+        .trim()
+        .required('required')
+        .max(75, 'Must be 75 characters or less')
+})

@@ -1,5 +1,4 @@
 import { AuthenticationError } from 'apollo-server-express'
-import { nanoid } from 'nanoid'
 
 const createEventComment = async (args, context, Comment, EventItem) => {
     if (!context.isAuth) {
@@ -8,27 +7,25 @@ const createEventComment = async (args, context, Comment, EventItem) => {
 
     try {
         const { 
-            commentText,
-            commentOwner,
-            eventItemHash,
+            _id,
+            commentText
         } = args
-        const comment = new Comment({
-            hash: nanoid(),
+
+        const comment = await new Comment({
             commentText,
-            commentOwner,
+            commentOwner: context.userId
         })
-        const newComment = await comment.save()
 
-        let updateEventItem = await EventItem.findOne({ hash: eventItemHash })
+        await comment.save()
 
-        updateEventItem.comments.push(newComment.id)
-
-        const newEventItem = await updateEventItem.save()
-
-        return newEventItem.toJSON()
+        await EventItem.findByIdAndUpdate({ _id: _id }, {
+            $push: {
+                comments: [comment]
+            }
+        })
         
     } catch (e) {
-        console.log(`Error creating Event -> ${e}`)
+        console.log(`Error creating event comment -> ${e}`)
         throw e
     }
 }

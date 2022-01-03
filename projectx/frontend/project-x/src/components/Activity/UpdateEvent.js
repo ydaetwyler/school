@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import { gql, useQuery, useMutation } from '@apollo/client'
-import getShortDate from '../../utils/getShortDate'
-import stringToDate from '../../utils/stringToDate'
+
+import { getShortDate, stringToDate } from '../../utils/dateHelpers.js'
 
 import Gallery from './Gallery'
+import EventComments from './EventComments'
+import WeatherForecast from './WeatherForecast'
+import AddEventComment from './AddEventComment'
 
 import TextInput from '../Forms/Utils/TextInput'
 import TextArea from '../Forms/Utils/TextArea'
@@ -43,14 +46,11 @@ const GET_EVENT_COMMENTS = gql`
     query GetEventComments($_id: ID!) {
         getEventComments(_id: $_id) {
             comments {
-                _id,
-                commentText
+                _id
             }
         }
     }
 `
-
-// Add comment owner query
 
 const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
     const [removeParticipant] = useMutation(REMOVE_PARTICIPANT, {
@@ -231,7 +231,7 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
                                 placeholder=""
                             />
                             <button
-                                className="mt-3 mb-6 w-full bg-white text-black py-3 text-xl font-semibold rounded-sm cursor-pointer" 
+                                className="mt-3 mb-9 w-full bg-white text-black py-3 text-xl font-semibold rounded-sm cursor-pointer" 
                                 disabled={loading || loadingUpdateEvent} 
                                 type="submit"
                             >
@@ -254,7 +254,7 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
                         </label>
                     </div>
                     <h4 className="block text-xl font-medium text-gray-300">Participants</h4>
-                    <div className="flex flex-row overflow-x-scroll mt-3 mb-6">
+                    <div className="flex flex-row overflow-x-scroll mt-3 mb-9">
                         <div className="flex flex-col items-center">
                             {participants ? participants.map((member) => 
                                 <p key={member.userName} className="text-white">{member.userName}</p>
@@ -264,52 +264,12 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
                             ) : null}
                         </div>
                     </div>
-                    <div>
-                        <h4 className="block text-xl font-medium text-gray-300">Weather forecast</h4>
-                        <div className="flex flex-row flex-nowrap w-full">
-                            <div className="flex flex-col w-1/2 items-center">
-                                <img className="-mt-3 w-26" src={weather.activityWeatherIcon} />
-                                <p className="-mt-7 text-white text-base font-light">
-                                    {weather.activityWeatherDesc}
-                                </p>
-                                <p className="mt-1 text-white text-base font-medium">
-                                    {weather.activityWeatherTemp}
-                                </p>
-                                <p className="text-white text-base font-light">
-                                    {weather.activityWeatherWind}
-                                </p>
-                            </div>
-                            <div className="pl-6 pt-6 flex flex-col w-1/2 items-start">
-                                <div className="flex flex-row flex-nowrap items-baseline mb-5">
-                                    <img src="/icons/sunrise.png" className="w-10 mr-4" />
-                                    <p className="text-white text-base font-light">
-                                        {weather.activityWeatherSunrise}
-                                    </p>
-                                </div>
-                                <div className="flex flex-row flex-nowrap items-baseline">
-                                    <img src="/icons/sunset.png" className="w-10 mr-4" />
-                                    <p className="text-white text-base font-light">
-                                        {weather.activityWeatherSunset}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 className="block mt-6 text-xl font-medium text-gray-300">Comments</h4>
-                        <div className="flex flex-row flex-nowrap w-full mt-3">
-                            <div className="flex flex-col w-1/4 items-center">
-                            {getEventCommentsData ? getEventCommentsData.getEventComments.comments.map(comment =>
-                                <p key={comment._id} className="text-white">{comment.commentOwner}</p>
-                            ) : null}
-                            </div>
-                            <div className="pl-6 pt-6 flex flex-col w-1/2 items-start">
-                            {getEventCommentsData ? getEventCommentsData.getEventComments.comments.map(comment =>
-                                <p key={comment._id} className="text-white">{comment.commentText}</p>
-                            ) : null}
-                            </div>
-                        </div>
-                    </div>
+                    <WeatherForecast weather={weather} />
+                    <h4 className="block mt-9 text-xl font-medium text-gray-300">Comments</h4>
+                    <AddEventComment id={id} />
+                    {getEventCommentsData ? getEventCommentsData.getEventComments.comments.map(comment => 
+                        <EventComments key={comment._id} id={comment._id} eventId={id} />
+                    ) : null}
                 </div>
             </div>
             <Gallery

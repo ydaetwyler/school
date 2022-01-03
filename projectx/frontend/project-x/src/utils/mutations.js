@@ -90,3 +90,15 @@ export const UPDATE_EVENT_ITEM = gql`
         updateEventItem(_id: $_id, activityImageUrl: $activityImageUrl, activityName: $activityName, activityDescription: $activityDescription, activityDate: $activityDate, activityLocation: $activityLocation, activityAddress: $activityAddress, activityUrl: $activityUrl)
     }
 `
+
+export const CREATE_EVENT_COMMENT = gql`
+    mutation createEventComment($_id: ID!, $commentText: String!) {
+        createEventComment(_id: $_id, commentText: $commentText)
+    }
+`
+
+export const REMOVE_EVENT_COMMENT = gql`
+    mutation removeEventComment($commentId: ID!, $eventItemId: ID!) {
+        removeEventComment(commentId: $commentId, eventItemId: $eventItemId)
+    }
+`

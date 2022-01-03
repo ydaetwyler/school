@@ -7,24 +7,22 @@ const removeEventComment = async (args, context, Comment, EventItem) => {
 
     try {
         const {
-            commentHash,
-            eventItemHash,
+            commentId,
+            eventItemId
         } = args
 
-        const commentToRemove = await Comment.findOne({ hash: commentHash})
+        const commentToRemove = await Comment.findById({ _id: commentId })
 
-        await Comment.deleteOne({ hash: commentHash })
+        await Comment.findByIdAndDelete({ _id: commentId })
 
-        const updateEventItem = await EventItem.findOne({ hash: eventItemHash })
-
-        updateEventItem.comments.pull({ _id: commentToRemove.id })
-
-        const newEventItem = await updateEventItem.save()
-
-        return newEventItem.toJSON()
+        await EventItem.findByIdAndUpdate({ _id: eventItemId }, {
+            $pullAll: {
+                comments: [commentToRemove._id]
+            }
+        })
 
     } catch(e) {
-        console.log(`Error updating event item -> ${e}`)
+        console.log(`Error removing event comment -> ${e}`)
         throw e
     }
 }
