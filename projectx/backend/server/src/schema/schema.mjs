@@ -70,7 +70,7 @@ const typeDefs = gql`
             _id: ID!,
             commentText: String!
         ): String
-        removeEventComment(commentId: ID!, eventItemId: ID!): String
+        removeEventComment(commentId: ID!, _id: ID!): String
     }
 
     type Subscription {
@@ -79,6 +79,7 @@ const typeDefs = gql`
         eventParticipantsChanged(_id: ID!): EventItem,
         weatherChanged(_id: ID!): EventItem,
         coordinatesChanged(_id: ID!): EventItem,
+        eventCommentsChanged(_id: ID!): EventItem,
     }
 
     "Family is the main object"

@@ -47,7 +47,7 @@ const EventComments = ({ id, eventId }) => {
         removeEventComment({ 
             variables: {
                 commentId: id,
-                eventItemId: eventId
+                _id: eventId
             } 
         })
     }

@@ -114,6 +114,6 @@ export const validateEvent = Yup.object({
 export const validateComment = Yup.object({
     commentText: Yup.string()
         .trim()
-        .required('required')
+        .required('')
         .max(75, 'Must be 75 characters or less')
 })

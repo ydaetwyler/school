@@ -8,14 +8,14 @@ const removeEventComment = async (args, context, Comment, EventItem) => {
     try {
         const {
             commentId,
-            eventItemId
+            _id
         } = args
 
         const commentToRemove = await Comment.findById({ _id: commentId })
 
         await Comment.findByIdAndDelete({ _id: commentId })
 
-        await EventItem.findByIdAndUpdate({ _id: eventItemId }, {
+        await EventItem.findByIdAndUpdate({ _id: _id }, {
             $pullAll: {
                 comments: [commentToRemove._id]
             }

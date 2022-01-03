@@ -52,6 +52,16 @@ const GET_EVENT_COMMENTS = gql`
     }
 `
 
+const EVENT_COMMENT_SUBSCRIPTION = gql`
+    subscription EventCommentsChanged($_id: ID!) {
+        eventCommentsChanged(_id: $_id) {
+            comments {
+                _id
+            }
+        }
+    }
+`
+
 const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
     const [removeParticipant] = useMutation(REMOVE_PARTICIPANT, {
         onError: () => setFail(true)
@@ -101,6 +111,19 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
                 if (!subscriptionData.data) return prev
                 
                 refetch()
+                return prev
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        getEventCommentsSubscribeToMore({
+            document: EVENT_COMMENT_SUBSCRIPTION,
+            variables: { _id: id },
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+                
+                getEventCommentsRefetch()
                 return prev
             }
         })

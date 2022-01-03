@@ -98,7 +98,7 @@ export const CREATE_EVENT_COMMENT = gql`
 `
 
 export const REMOVE_EVENT_COMMENT = gql`
-    mutation removeEventComment($commentId: ID!, $eventItemId: ID!) {
-        removeEventComment(commentId: $commentId, eventItemId: $eventItemId)
+    mutation removeEventComment($commentId: ID!, $_id: ID!) {
+        removeEventComment(commentId: $commentId, _id: $_id)
     }
 `

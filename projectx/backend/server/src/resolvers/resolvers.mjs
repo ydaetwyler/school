@@ -72,8 +72,14 @@ const resolvers = {
             updateEventItem(args, context, eventItem)
         },
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),
-        createEventComment: (_, args, context) => createEventComment(args, context, comment, eventItem),
-        removeEventComment: (_, args, context) => removeEventComment(args, context, comment, eventItem),
+        createEventComment: (_, args, context) => {
+            pubsub.publish('EVENT_COMMENTS_CHANGED', { eventCommentsChanged: args }),
+            createEventComment(args, context, comment, eventItem)
+        },
+        removeEventComment: (_, args, context) => {
+            pubsub.publish('EVENT_COMMENTS_CHANGED', { eventCommentsChanged: args }),
+            removeEventComment(args, context, comment, eventItem)
+        },
     },
     Query: {
         getFamily: (_, __, context) => getFamily(context, user, family),
@@ -126,7 +132,15 @@ const resolvers = {
                     return (payload.coordinatesChanged._id === variables._id)
                 }
             )
-        }
+        },
+        eventCommentsChanged: {
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('EVENT_COMMENTS_CHANGED'),
+                (payload, variables) => {
+                    return (payload.eventCommentsChanged._id === variables._id)
+                }
+            )
+        },
     }
 }
 
