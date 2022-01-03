@@ -32,6 +32,7 @@ import getEventItem from './services/getEventItem.mjs'
 import getEventParticipants from './services/getEventParticipants.mjs'
 import getWeather from './services/getWeather.mjs'
 import getCoordinates from './services/getCoordinates.mjs'
+import getEventComments from './services/getEventComments.mjs'
 
 const resolvers = {
     Mutation: {
@@ -79,6 +80,7 @@ const resolvers = {
         getEventParticipants: (_, args, context) => getEventParticipants(args, context, eventItem),
         getWeather: (_, args, context) => getWeather(args, context, eventItem),
         getCoordinates: (_, args, context) => getCoordinates(args, context, eventItem),
+        getEventComments: (_, args, context) => getEventComments(args, context, eventItem),
     },
     Subscription: {
         familyChanged: {

@@ -39,6 +39,19 @@ const PARTICIPANTS_SUBSCRIPTION = gql`
     }
 `
 
+const GET_EVENT_COMMENTS = gql`
+    query GetEventComments($_id: ID!) {
+        getEventComments(_id: $_id) {
+            comments {
+                _id,
+                commentText
+            }
+        }
+    }
+`
+
+// Add comment owner query
+
 const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
     const [removeParticipant] = useMutation(REMOVE_PARTICIPANT, {
         onError: () => setFail(true)
@@ -47,6 +60,9 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
         onError: () => setFail(true)
     })
     const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_EVENT_PARTICIPANTS, {
+        variables: { _id: id }
+    })
+    const { loading: getEventCommentsLoading, error: getEventCommentsError, data: getEventCommentsData, refetch: getEventCommentsRefetch, subscribeToMore: getEventCommentsSubscribeToMore } = useQuery(GET_EVENT_COMMENTS, {
         variables: { _id: id }
     })
     const [galleryClicked, setGalleryClicked] = useState(false)
@@ -276,6 +292,21 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
                                         {weather.activityWeatherSunset}
                                     </p>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 className="block mt-6 text-xl font-medium text-gray-300">Comments</h4>
+                        <div className="flex flex-row flex-nowrap w-full mt-3">
+                            <div className="flex flex-col w-1/4 items-center">
+                            {getEventCommentsData ? getEventCommentsData.getEventComments.comments.map(comment =>
+                                <p key={comment._id} className="text-white">{comment.commentOwner}</p>
+                            ) : null}
+                            </div>
+                            <div className="pl-6 pt-6 flex flex-col w-1/2 items-start">
+                            {getEventCommentsData ? getEventCommentsData.getEventComments.comments.map(comment =>
+                                <p key={comment._id} className="text-white">{comment.commentText}</p>
+                            ) : null}
                             </div>
                         </div>
                     </div>

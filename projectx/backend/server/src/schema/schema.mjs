@@ -12,6 +12,7 @@ const typeDefs = gql`
         getEventParticipants(_id: ID!): EventItem,
         getWeather(_id: ID!): EventItem,
         getCoordinates(_id: ID!): EventItem,
+        getEventComments(_id: ID!): EventItem,
     }
 
     type Mutation {
