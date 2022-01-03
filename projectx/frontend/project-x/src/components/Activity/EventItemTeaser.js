@@ -183,7 +183,7 @@ const EventItemTeaser = ({ eventId }) => {
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error) return JSON.stringify(error, null, 2)
 
-    if (dateDiff > 7 || dateDiff < 0) {
+    if (dateDiff > 7 || dateDiff < -1) {
         return (
             <div>
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
