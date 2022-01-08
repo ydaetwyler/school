@@ -183,7 +183,7 @@ const EventItemTeaser = ({ eventId }) => {
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error) return JSON.stringify(error, null, 2)
 
-    if (dateDiff > 7 || dateDiff < -1) {
+    if (dateDiff > 7) {
         return (
             <div>
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
@@ -199,6 +199,32 @@ const EventItemTeaser = ({ eventId }) => {
                     </p>
                     <p className="text-sm w-24 text-center text-gray-400 absolute right-2 top-3/4">
                         No weather forecast available yet
+                    </p>
+                </div>
+                <UpdateEvent
+                    clicked={clicked}
+                    setClicked={setClicked}
+                    id={eventId}
+                    item={data.getEventItem}
+                />
+            </div>
+        )
+    } else if (dateDiff < -1) {
+        return (
+            <div>
+                <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer opacity-70" onClick={() => setClicked(true)}>
+                    <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
+                        {data.getEventItem.activityName}
+                    </h5>
+                    <p className="ml-4 font-normal mb-3 text-gray-400">
+                        {data.getEventItem.activityLocation}
+                    </p>
+                    <p className="ml-4 font-normal mb-3 text-gray-400">
+                        {getDate(data.getEventItem.activityDate)}
+                    </p>
+                    <p className="text-sm w-24 text-center text-gray-400 absolute right-2 top-3/4">
+                        No weather data, past event
                     </p>
                 </div>
                 <UpdateEvent
