@@ -34,13 +34,13 @@ const typeDefs = gql`
         updateUser(username: String, avatarUrl: String): User
         createEventItem(
             activityName: String!,
-            activityImageUrl: String,
-            activityDate: Date,
+            activityImageUrl: String!,
+            activityDate: Date!,
+            activityAddress: String,
             activityDescription: String,
-            activityLocation: String,
-            activityUrl: String,
-            familyHash: String!
-        ): EventItem
+            activityLocation: String!,
+            activityUrl: String
+        ): String
         setCoordinates(_id: ID, activityCoordinates: String, activityApiCityNotFound: Boolean): String
         setWeather(
             _id: ID, 

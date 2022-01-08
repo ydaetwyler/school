@@ -6,7 +6,7 @@ const Gallery = ({ galleryClicked, setGalleryClicked, setImgUrl, imgUrl }) => {
     const getActivityImg = () => {
         const arr = []
         
-        for (let i = 1; i <= 37; i++) {
+        for (let i = 1; i <= 38; i++) {
             arr.push(`/activities/image${i}.jpg`)
         }
 
@@ -20,7 +20,7 @@ const Gallery = ({ galleryClicked, setGalleryClicked, setImgUrl, imgUrl }) => {
     if (!galleryClicked) return null
 
     return (
-        <div className="h-auto w-full absolute top-0 bg-gray-600">
+        <div className="h-auto w-full absolute top-0 left-0 bg-gray-600 z-50">
             <img 
                 src="/icons/close.png" 
                 className="absolute top-1.5 right-1.5 h-6 w-6 opacity-30 hover:opacity-100 cursor-pointer"

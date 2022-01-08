@@ -16,12 +16,11 @@ const createEventItem = async (args, context, EventItem, User, Family) => {
     }
     
     try {
+        const user = await User.findById({ _id: context.userId })
 
-        const user = User.findById({ _id: context.userId })
+        const familyId = await user.family
 
-        const familyId = user.family
-
-        const eventItem = new EventItem({
+        const eventItem = await new EventItem({
             activityName,
             activityImageUrl,
             activityDate,
@@ -31,16 +30,14 @@ const createEventItem = async (args, context, EventItem, User, Family) => {
             activityAddress,
             activityUrl
         })
+
         const newEventItem = await eventItem.save()
 
-        let updateFamily = await Family.findById({ _id: familyId })
-
-        updateFamily.eventList.push(newEventItem.id)
-
-        await updateFamily.save()
-
-        return newEventItem
-        
+        await Family.findByIdAndUpdate({ _id: familyId }, {
+            $push: {
+                eventList: [newEventItem.id]
+            }
+        })
     } catch (e) {
         console.log(`Error creating Event -> ${e}`)
         throw e
