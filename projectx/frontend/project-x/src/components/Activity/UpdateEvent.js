@@ -11,6 +11,7 @@ import AddEventComment from './AddEventComment'
 
 import TextInput from '../Forms/Utils/TextInput'
 import TextArea from '../Forms/Utils/TextArea'
+import Toggle from '../Forms/Utils/Toggle'
 import { validateEvent } from '../Forms/Utils/validations'
 
 import { 
@@ -263,19 +264,7 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
                             {errorUpdateEvent && <p>{errorUpdateEvent.message}</p>}
                         </Form>
                     </Formik>
-                    <div className="absolute right-12">
-                        <label htmlFor="toggle" className="flex items-center cursor-pointer relative mb-4">
-                            <input 
-                                type="checkbox" 
-                                id="toggle" 
-                                className="sr-only"
-                                onChange={handleJoinChange}
-                                defaultChecked={joined}
-                            />
-                            <div className="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"></div>
-                            <span className="ml-3 text-white text-sm font-medium">Join activity</span>
-                        </label>
-                    </div>
+                    <Toggle onChange={handleJoinChange} defaultChecked={joined} text='Join activity' />
                     <h4 className="block text-xl font-medium text-gray-300">Participants</h4>
                     <div className="flex flex-row overflow-x-scroll mt-3 mb-9">
                         <div className="flex flex-col items-center">
