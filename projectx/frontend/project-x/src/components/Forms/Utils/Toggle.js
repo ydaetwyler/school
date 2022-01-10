@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Toggle = ({ onChange, defaultChecked, text }) => (
-    <div className="absolute right-12">
-        <label htmlFor="toggle" className="flex items-center cursor-pointer relative mb-4">
+const Toggle = ({ onChange, defaultChecked, text, position, id }) => (
+    <div className={position}>
+        <label htmlFor={id} className="flex items-center cursor-pointer relative mb-4">
             <input 
                 type="checkbox" 
-                id="toggle" 
+                id={id} 
                 className="sr-only"
                 onChange={onChange}
                 defaultChecked={defaultChecked}

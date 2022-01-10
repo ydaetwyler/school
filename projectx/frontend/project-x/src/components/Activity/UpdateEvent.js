@@ -264,7 +264,13 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
                             {errorUpdateEvent && <p>{errorUpdateEvent.message}</p>}
                         </Form>
                     </Formik>
-                    <Toggle onChange={handleJoinChange} defaultChecked={joined} text='Join activity' />
+                    <Toggle 
+                        onChange={handleJoinChange} 
+                        defaultChecked={joined} 
+                        text='Join activity'
+                        position="absolute right-12"
+                        id="toggle-participate"
+                    />
                     <h4 className="block text-xl font-medium text-gray-300">Participants</h4>
                     <div className="flex flex-row overflow-x-scroll mt-3 mb-9">
                         <div className="flex flex-col items-center">

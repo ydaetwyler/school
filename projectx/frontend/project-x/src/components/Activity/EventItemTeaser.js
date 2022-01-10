@@ -185,7 +185,7 @@ const EventItemTeaser = ({ eventId }) => {
 
     if (dateDiff > 7) {
         return (
-            <div className="mb-10">
+            <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
                     <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
@@ -211,7 +211,7 @@ const EventItemTeaser = ({ eventId }) => {
         )
     } else if (dateDiff < -1) {
         return (
-            <div className="mb-10">
+            <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer opacity-70" onClick={() => setClicked(true)}>
                     <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
@@ -237,7 +237,7 @@ const EventItemTeaser = ({ eventId }) => {
         )
     } else if (data.getEventItem.activityApiCityNotFound) {
         return (
-            <div className="mb-10">
+            <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
                     <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
@@ -263,7 +263,7 @@ const EventItemTeaser = ({ eventId }) => {
         )
     } else {
         return (
-            <div className="mb-10">
+            <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
                     <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
