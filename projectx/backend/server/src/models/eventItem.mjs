@@ -86,8 +86,17 @@ const eventItemSchema = new Schema(
             type: [Schema.Types.ObjectId],
             ref: 'comment',
             required: false,
-        }
-
+        },
+        activityUpdateUsers: {
+            type: [Schema.Types.ObjectId],
+            ref: 'user',
+            required: false,
+        },
+        activityNewCommentUsers: {
+            type: [Schema.Types.ObjectId],
+            ref: 'user',
+            required: false,
+        },
     },
     { timestamps: true }
 )

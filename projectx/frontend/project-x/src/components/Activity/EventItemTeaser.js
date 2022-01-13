@@ -8,6 +8,8 @@ import { SET_COORDINATES } from '../../utils/mutations'
 
 import UpdateEvent from './UpdateEvent'
 import JoinedBadge from './JoinedBadge'
+import UpdateBadge from './UpdateBadge'
+import NewCommentBadge from './NewCommentBadge'
 
 const GET_EVENT_ITEM = gql`
     query GetEventItem($_id: ID!) {
@@ -19,7 +21,9 @@ const GET_EVENT_ITEM = gql`
             activityLocation,
             activityAddress,
             activityUrl,
-            userJoined
+            userJoined,
+            updated,
+            newComment
         }
     }
 `
@@ -84,6 +88,16 @@ const COORDINATES_SUBSCRIPTION = gql`
     }
 `
 
+const EVENT_COMMENT_SUBSCRIPTION = gql`
+    subscription EventCommentsChanged($_id: ID!) {
+        eventCommentsChanged(_id: $_id) {
+            comments {
+                _id
+            }
+        }
+    }
+`
+
 const EventItemTeaser = ({ eventId }) => {
     const [dateDiff, setDateDiff] = useState()
     const [currentDate] = useState(new Date())
@@ -141,6 +155,20 @@ const EventItemTeaser = ({ eventId }) => {
     }, [])
 
     useEffect(() => {
+        subscribeToMore({
+            document: EVENT_COMMENT_SUBSCRIPTION,
+            variables: { _id: eventId },
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+                
+                refetch()
+
+                return prev
+            }
+        })
+    }, [])
+
+    useEffect(() => {
         if (data) {
             const eventDate = new Date(data.getEventItem.activityDate)
             const timeDiff = eventDate.getTime() - currentDate.getTime()
@@ -190,6 +218,21 @@ const EventItemTeaser = ({ eventId }) => {
             <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
                     <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    {
+                        data.getEventItem.userJoined 
+                            ?  <JoinedBadge />
+                            : null
+                    }
+                    {
+                        data.getEventItem.updated
+                            ? <UpdateBadge />
+                            : null
+                    }
+                    {
+                        data.getEventItem.newComment
+                            ? <NewCommentBadge />
+                            : null
+                    }
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
                         {data.getEventItem.activityName}
                     </h5>
@@ -216,6 +259,21 @@ const EventItemTeaser = ({ eventId }) => {
             <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer opacity-70" onClick={() => setClicked(true)}>
                     <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    {
+                        data.getEventItem.userJoined 
+                            ?  <JoinedBadge />
+                            : null
+                    }
+                    {
+                        data.getEventItem.updated
+                            ? <UpdateBadge />
+                            : null
+                    }
+                    {
+                        data.getEventItem.newComment
+                            ? <NewCommentBadge />
+                            : null
+                    }
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
                         {data.getEventItem.activityName}
                     </h5>
@@ -245,6 +303,21 @@ const EventItemTeaser = ({ eventId }) => {
             <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
                     <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    {
+                        data.getEventItem.userJoined 
+                            ?  <JoinedBadge />
+                            : null
+                    }
+                    {
+                        data.getEventItem.updated
+                            ? <UpdateBadge />
+                            : null
+                    }
+                    {
+                        data.getEventItem.newComment
+                            ? <NewCommentBadge />
+                            : null
+                    }
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
                         {data.getEventItem.activityName}
                     </h5>
@@ -274,6 +347,16 @@ const EventItemTeaser = ({ eventId }) => {
                     {
                         data.getEventItem.userJoined 
                             ?  <JoinedBadge />
+                            : null
+                    }
+                    {
+                        data.getEventItem.updated
+                            ? <UpdateBadge />
+                            : null
+                    }
+                    {
+                        data.getEventItem.newComment
+                            ? <NewCommentBadge />
                             : null
                     }
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">

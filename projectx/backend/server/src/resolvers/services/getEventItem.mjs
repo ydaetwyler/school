@@ -16,6 +16,14 @@ const getEventItem = async (args, context, EventItem) => {
         ? eventItemFetched.userJoined = true
         : eventItemFetched.userJoined = false
 
+        eventItemFetched.activityUpdateUsers.some(user => user.id === context.userId)
+        ? eventItemFetched.updated = true
+        : eventItemFetched.updated = false
+
+        eventItemFetched.activityNewCommentUsers.some(user => user.id === context.userId)
+        ? eventItemFetched.newComment = true
+        : eventItemFetched.newComment = false
+
         return eventItemFetched
     } catch (e) {
         console.log(`Error fetching event item, -> ${e}`)

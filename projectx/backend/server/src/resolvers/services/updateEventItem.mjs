@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-express'
 
-const updateEventItem = async (args, context, EventItem) => {
+const updateEventItem = async (args, context, EventItem, User, Family) => {
     if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')
     }
@@ -79,6 +79,18 @@ const updateEventItem = async (args, context, EventItem) => {
             }
         }
 
+        const user = await User.findById({ _id: context.userId })
+
+        const familyId = await user.family
+
+        const familyFetched = await Family.findById({ _id: familyId })
+        const familyMembers = familyFetched.familyMembers
+
+        await familyMembers.pull(context.userId)
+
+        await EventItem.findByIdAndUpdate({ _id: _id}, {
+            activityUpdateUsers: familyMembers
+        })
     } catch(e) {
         console.log(`Error updating event item -> ${e}`)
         throw e

@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-express'
 
-const createEventComment = async (args, context, Comment, EventItem) => {
+const createEventComment = async (args, context, Comment, EventItem, User, Family) => {
     if (!context.isAuth) {
         throw new AuthenticationError('Login necessary')
     }
@@ -22,6 +22,19 @@ const createEventComment = async (args, context, Comment, EventItem) => {
             $push: {
                 comments: [comment]
             }
+        })
+
+        const user = await User.findById({ _id: context.userId })
+
+        const familyId = await user.family
+
+        const familyFetched = await Family.findById({ _id: familyId })
+        const familyMembers = familyFetched.familyMembers
+
+        await familyMembers.pull(context.userId)
+
+        await EventItem.findByIdAndUpdate({ _id: _id}, {
+            activityNewCommentUsers: familyMembers
         })
         
     } catch (e) {

@@ -128,8 +128,12 @@ const typeDefs = gql`
         activityUrl: String
         activityImageList: ActivityImageList
         userJoined: Boolean
+        updated: Boolean
+        newComment: Boolean
         activityParticipantsList: [User]
         comments: [Comment]
+        activityUpdateUsers: [User]
+        activityNewCommentUsers: [User]
     }
 
     "Event images list"

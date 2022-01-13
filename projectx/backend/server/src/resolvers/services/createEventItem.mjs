@@ -20,6 +20,11 @@ const createEventItem = async (args, context, EventItem, User, Family) => {
 
         const familyId = await user.family
 
+        const familyFetched = await Family.findById({ _id: familyId })
+        const familyMembers = familyFetched.familyMembers
+
+        await familyMembers.pull(context.userId)
+
         const eventItem = await new EventItem({
             activityName,
             activityImageUrl,
@@ -28,7 +33,8 @@ const createEventItem = async (args, context, EventItem, User, Family) => {
             activityDescription,
             activityLocation,
             activityAddress,
-            activityUrl
+            activityUrl,
+            activityUpdateUsers: familyMembers
         })
 
         const newEventItem = await eventItem.save()

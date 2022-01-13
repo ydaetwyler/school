@@ -127,6 +127,7 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
                 if (!subscriptionData.data) return prev
                 
                 getEventCommentsRefetch()
+
                 return prev
             }
         })

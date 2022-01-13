@@ -72,12 +72,12 @@ const resolvers = {
         checkUserParticipant: (_, args, context) => checkUserParticipant(args, context, eventItem),
         updateEventItem: (_, args, context) => {
             pubsub.publish('EVENT_ITEM_CHANGED', { eventItemChanged: args }),
-            updateEventItem(args, context, eventItem)
+            updateEventItem(args, context, eventItem, user, family)
         },
         removeEventItem: (_, args, context) => removeEventItem(args, context, eventItem, family),
         createEventComment: (_, args, context) => {
             pubsub.publish('EVENT_COMMENTS_CHANGED', { eventCommentsChanged: args }),
-            createEventComment(args, context, comment, eventItem)
+            createEventComment(args, context, comment, eventItem, user, family)
         },
         removeEventComment: (_, args, context) => {
             pubsub.publish('EVENT_COMMENTS_CHANGED', { eventCommentsChanged: args }),
