@@ -151,8 +151,12 @@ const EventItemTeaser = ({ eventId }) => {
     const locationUrl = 'http://api.openweathermap.org/geo/1.0/direct?q='
 
     useEffect(() => {
-        if (data && !getCoordinatesLoading) {
+        if (data) {
+        if (data.getEventItem.activityName === 'test') console.log('entering useeffect')
+        if (getCoordinatesData) {
+            if (data.getEventItem.activityName === 'test') console.log('data check passed')
             if (!getCoordinatesData.getCoordinates.activityCoordinates && !getCoordinatesData.getCoordinates.activityApiCityNotFound) {
+                if (data.getEventItem.activityName === 'test') console.log('calling axios')
                 axios
                     .get(`${locationUrl}${data.getEventItem.activityLocation}&limit=1&appid=${apiKey}`)
                     .then(response => {
@@ -176,7 +180,8 @@ const EventItemTeaser = ({ eventId }) => {
                     })
             }
         }
-    }, [data])
+    }
+    }, [getCoordinatesData])
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error) return JSON.stringify(error, null, 2)

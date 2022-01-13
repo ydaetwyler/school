@@ -54,7 +54,7 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
             }
         }
         
-    }, [hoursDiff])
+    }, [hoursDiff, coordinates])
 
     useEffect(() => {
         if (weatherData) {
