@@ -89,7 +89,7 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
     return (
         <div className="-mt-5">
             <img className="w-20" src={icon ? icon : savedIcon} />
-            <p className="-mt-6 -ml-2">{temp ? temp : savedTemp}</p>
+            <p className="-mt-5 -ml-2">{temp ? temp : savedTemp}</p>
         </div>
     )
 }

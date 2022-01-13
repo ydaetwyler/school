@@ -229,7 +229,7 @@ const EventItemTeaser = ({ eventId }) => {
                     <div className="text-sm w-24 text-center text-gray-400 absolute right-2 top-3/4">
                         <div className="-mt-5">
                             <img className="w-20" src={getWeatherData ? getWeatherData.getWeather.activityWeatherIcon : null} />
-                            <p className="-mt-6 -ml-2">{getWeatherData ? getWeatherData.getWeather.activityWeatherTemp : null}</p>
+                            <p className="-mt-5 -ml-2">{getWeatherData ? getWeatherData.getWeather.activityWeatherTemp : null}</p>
                         </div>
                     </div>
                 </div>
