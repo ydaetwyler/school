@@ -34,10 +34,16 @@ const ActivityList = ({ familyID }) => {
         }
     }, [data])
 
+    const parseActivityDate = (date) => {
+        const dateToChange = new Date(date)
+        const plusOneDate = new Date(dateToChange.setDate(dateToChange.getDate() + 1))
+        return plusOneDate.getTime()
+    }
+
     useEffect(() => {
         togglePast
-           ? setEvents(initialEvents.filter(item => new Date(item.activityDate).getTime() < new Date().getTime()))
-           : setEvents(initialEvents.filter(item => new Date(item.activityDate).getTime() > new Date().getTime()))
+           ? setEvents(initialEvents.filter(item => parseActivityDate(item.activityDate) < new Date().getTime()))
+           : setEvents(initialEvents.filter(item => parseActivityDate(item.activityDate) > new Date().getTime()))
     }, [togglePast])
 
     const toggleHistoryHandler = () => togglePast ? setTogglePast(false) : setTogglePast(true)
@@ -51,19 +57,12 @@ const ActivityList = ({ familyID }) => {
                 <Toggle 
                     onChange={toggleHistoryHandler} 
                     defaultChecked={false} 
-                    text='Past events'
+                    text='Show past events'
                     position=""
                     id="toggle-history"
                 />
-                <Toggle 
-                    onChange={null} 
-                    defaultChecked={false} 
-                    text='I participate'
-                    position="ml-16"
-                    id="toggle-joined"
-                />
             </div>
-            <AddEventItem />
+            {!togglePast ? <AddEventItem /> : null}
             {events.map((item) => {
                 return <EventItemTeaser 
                             key={item._id}
