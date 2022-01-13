@@ -20,9 +20,6 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: 200vh;
-    width: 100%;
-    height: auto;
 }
 
 @media (min-width: 640px) {
@@ -36,9 +33,6 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: 140vh;
-    width: 100%;
-    height: auto;
     }
 }
 
@@ -53,9 +47,6 @@
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        min-height: 140vh;
-        width: 100%;
-        height: auto;
     }
 }
 
@@ -70,9 +61,6 @@
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        min-height: 140vh;
-        width: 100%;
-        height: auto;
     }
 }
 

@@ -30,7 +30,7 @@ const Dashboard = () => {
     } 
 
     return (
-        <div className="bg-colors w-full h-screen">
+        <div className="bg-colors w-full min-h-screen h-[160vh] overflow-x-hidden overflow-y-auto">
             <div className="pt-2 pl-2 flex flex-row w-full justify-between">
                 <h1 className="text-2xl lg:text-4xl font-bold text-white font font-['Righteous']">Family Board</h1>
                 <div className="flex flex-row justify-between pr-5">
