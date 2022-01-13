@@ -127,6 +127,7 @@ const typeDefs = gql`
         activityAddress: String
         activityUrl: String
         activityImageList: ActivityImageList
+        userJoined: Boolean
         activityParticipantsList: [User]
         comments: [Comment]
     }

@@ -63,11 +63,13 @@ const EVENT_COMMENT_SUBSCRIPTION = gql`
     }
 `
 
-const UpdateEvent = ({ clicked, setClicked, id, item, weather }) => {
+const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) => {
     const [removeParticipant] = useMutation(REMOVE_PARTICIPANT, {
+        onCompleted: () => refetchEvents(),
         onError: () => setFail(true)
     })
     const [addParticipant] = useMutation(ADD_PARTICIPANT, {
+        onCompleted: () => refetchEvents(),
         onError: () => setFail(true)
     })
     const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_EVENT_PARTICIPANTS, {

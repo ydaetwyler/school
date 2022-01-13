@@ -7,6 +7,7 @@ import axios from 'axios'
 import { SET_COORDINATES } from '../../utils/mutations'
 
 import UpdateEvent from './UpdateEvent'
+import JoinedBadge from './JoinedBadge'
 
 const GET_EVENT_ITEM = gql`
     query GetEventItem($_id: ID!) {
@@ -18,6 +19,7 @@ const GET_EVENT_ITEM = gql`
             activityLocation,
             activityAddress,
             activityUrl,
+            userJoined
         }
     }
 `
@@ -86,7 +88,7 @@ const EventItemTeaser = ({ eventId }) => {
     const [dateDiff, setDateDiff] = useState()
     const [currentDate] = useState(new Date())
     const [clicked, setClicked] = useState(false)
-    const { loading, error, data, subscribeToMore } = useQuery(GET_EVENT_ITEM, {
+    const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_EVENT_ITEM, {
         variables: { _id: eventId }
     })
     const { loading: getWeatherLoading, error: getWeatherError, data: getWeatherData, refetch: getWeatherRefetch, subscribeToMore: getWeatherSubscribeToMore } = useQuery(GET_WEATHER, {
@@ -152,35 +154,32 @@ const EventItemTeaser = ({ eventId }) => {
 
     useEffect(() => {
         if (data) {
-        if (data.getEventItem.activityName === 'test') console.log('entering useeffect')
-        if (getCoordinatesData) {
-            if (data.getEventItem.activityName === 'test') console.log('data check passed')
-            if (!getCoordinatesData.getCoordinates.activityCoordinates && !getCoordinatesData.getCoordinates.activityApiCityNotFound) {
-                if (data.getEventItem.activityName === 'test') console.log('calling axios')
-                axios
-                    .get(`${locationUrl}${data.getEventItem.activityLocation}&limit=1&appid=${apiKey}`)
-                    .then(response => {
-                        const obj = response.data[0]
-                        if (obj) {
-                            const coordinates = `${obj.lat},${obj.lon}`
-                            setCoordinates({
-                                variables: {
-                                    _id: eventId,
-                                    activityCoordinates: coordinates,
-                                }
-                            })
-                        } else {
-                            setCoordinates({
-                                variables: {
-                                    _id: eventId,
-                                    activityApiCityNotFound: true,
-                                }
-                            })
-                        }
-                    })
+            if (getCoordinatesData) {
+                if (!getCoordinatesData.getCoordinates.activityCoordinates && !getCoordinatesData.getCoordinates.activityApiCityNotFound) {
+                    axios
+                        .get(`${locationUrl}${data.getEventItem.activityLocation}&limit=1&appid=${apiKey}`)
+                        .then(response => {
+                            const obj = response.data[0]
+                            if (obj) {
+                                const coordinates = `${obj.lat},${obj.lon}`
+                                setCoordinates({
+                                    variables: {
+                                        _id: eventId,
+                                        activityCoordinates: coordinates,
+                                    }
+                                })
+                            } else {
+                                setCoordinates({
+                                    variables: {
+                                        _id: eventId,
+                                        activityApiCityNotFound: true,
+                                    }
+                                })
+                            }
+                        })
+                }
             }
         }
-    }
     }, [getCoordinatesData])
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
@@ -272,6 +271,11 @@ const EventItemTeaser = ({ eventId }) => {
             <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
                     <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    {
+                        data.getEventItem.userJoined 
+                            ?  <JoinedBadge />
+                            : null
+                    }
                     <h5 className="ml-4 mt-2 font-bold text-2xl mb-2 text-white">
                         {data.getEventItem.activityName}
                     </h5>
@@ -298,6 +302,7 @@ const EventItemTeaser = ({ eventId }) => {
                     id={eventId}
                     item={data ? data.getEventItem : null}
                     weather={getWeatherData ? getWeatherData.getWeather : null}
+                    refetchEvents={refetch}
                 />
             </div>
         )

@@ -12,6 +12,10 @@ const getEventItem = async (args, context, EventItem) => {
             .populate('activityParticipantsList')
             .populate('comments')
 
+        eventItemFetched.activityParticipantsList.some(user => user.id === context.userId)
+        ? eventItemFetched.userJoined = true
+        : eventItemFetched.userJoined = false
+
         return eventItemFetched
     } catch (e) {
         console.log(`Error fetching event item, -> ${e}`)
