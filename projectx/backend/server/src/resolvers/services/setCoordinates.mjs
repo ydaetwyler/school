@@ -12,9 +12,6 @@ const setCoordinates = async (args, context, EventItem) => {
             activityApiCityNotFound,
         } = args
 
-        console.log(_id)
-        console.log(activityCoordinates)
-
         if (activityCoordinates) {
             await EventItem.findByIdAndUpdate({ _id }, { 
                 activityCoordinates: activityCoordinates 

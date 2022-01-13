@@ -152,8 +152,8 @@ const EventItemTeaser = ({ eventId }) => {
     const locationUrl = 'http://api.openweathermap.org/geo/1.0/direct?q='
 
     useEffect(() => {
-        if (getCoordinatesData) {
-            if ((!getCoordinatesData.getCoordinates.activityCoordinates) && !getCoordinatesData.getCoordinates.activityApiCityNotFound) {
+        if (data && !getCoordinatesLoading) {
+            if (!getCoordinatesData.getCoordinates.activityCoordinates && !getCoordinatesData.getCoordinates.activityApiCityNotFound) {
                 axios
                     .get(`${locationUrl}${data.getEventItem.activityLocation}&limit=1&appid=${apiKey}`)
                     .then(response => {
