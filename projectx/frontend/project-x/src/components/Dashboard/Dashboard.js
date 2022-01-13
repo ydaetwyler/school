@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { gql, useQuery } from '@apollo/client'
 import Login from '../Login/Login'
@@ -17,6 +17,7 @@ const GET_FAMILY = gql`
 const Dashboard = () => {
     const { loading, error, data } = useQuery(GET_FAMILY)
     const [cookies, setCookie, removeCookie] = useCookies(['userToken'])
+    const [bgSelection, setBgSelection] = useState('bg-clouds')
 
     if (!cookies.userToken) return <Login />
 
@@ -30,11 +31,11 @@ const Dashboard = () => {
     } 
 
     return (
-        <div className="bg-colors w-full min-h-screen h-[160vh] overflow-x-hidden overflow-y-auto">
+        <div className={bgSelection + " w-full min-h-screen h-[160vh] overflow-x-hidden overflow-y-auto"}>
             <div className="pt-2 pl-2 flex flex-row w-full justify-between">
                 <h1 className="text-2xl lg:text-4xl font-bold text-white font font-['Righteous']">Family Board</h1>
                 <div className="flex flex-row justify-between pr-5">
-                    <User />
+                    <User setBg={setBgSelection} />
                     <Family familyID={data.getFamily._id} />
                     <img 
                         src="/icons/logout.png" 

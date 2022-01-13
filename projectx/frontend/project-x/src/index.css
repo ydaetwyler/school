@@ -10,7 +10,7 @@
     padding: 0;
 }
 
-.bg-colors {
+.bg-clouds {
     background:
         linear-gradient(
             rgba(0, 0, 0, .4),
@@ -23,7 +23,7 @@
 }
 
 @media (min-width: 640px) {
-    .bg-colors {
+    .bg-clouds {
     background:
         linear-gradient(
             rgba(0, 0, 0, .4),
@@ -37,7 +37,7 @@
 }
 
 @media (min-width: 1024px) {
-    .bg-colors {
+    .bg-clouds {
         background:
             linear-gradient(
                 rgba(0, 0, 0, .4),
@@ -51,7 +51,7 @@
 }
 
 @media (min-width: 1536px) {
-    .bg-colors {
+    .bg-clouds {
         background:
             linear-gradient(
                 rgba(0, 0, 0, .4),
