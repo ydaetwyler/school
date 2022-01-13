@@ -17,13 +17,14 @@ const AddEventComment = ({ id }) => {
                     commentText: '',
                 }}
                 validationSchema={validateComment}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={(values, { setSubmitting, resetForm }) => {
                     setTimeout(() => {
                         createEventComment({ variables: { 
                             _id: id,
                             commentText: values.commentText    
                         } })
                         setSubmitting(false)
+                        resetForm({ values: '' })
                     }, 400)
                 }}
             >
