@@ -85,7 +85,6 @@ const COORDINATES_SUBSCRIPTION = gql`
 const EventItemTeaser = ({ eventId }) => {
     const [dateDiff, setDateDiff] = useState()
     const [currentDate] = useState(new Date())
-    const [newCoordinates, setNewCoordinates] = useState()
     const [clicked, setClicked] = useState(false)
     const { loading, error, data, subscribeToMore } = useQuery(GET_EVENT_ITEM, {
         variables: { _id: eventId }
@@ -160,7 +159,6 @@ const EventItemTeaser = ({ eventId }) => {
                         const obj = response.data[0]
                         if (obj) {
                             const coordinates = `${obj.lat},${obj.lon}`
-                            setNewCoordinates(coordinates)
                             setCoordinates({
                                 variables: {
                                     _id: eventId,
@@ -282,7 +280,7 @@ const EventItemTeaser = ({ eventId }) => {
                         <Weather 
                             id={eventId}
                             dateDiff={dateDiff} 
-                            coordinates={getCoordinatesData ? getCoordinatesData.getCoordinates.activityCoordinates : newCoordinates}
+                            coordinates={getCoordinatesData ? getCoordinatesData.getCoordinates.activityCoordinates : null}
                             lastCall={getWeatherData ? getWeatherData.getWeather.activityApiLastCall : null}
                             savedIcon={getWeatherData ? getWeatherData.getWeather.activityWeatherIcon : null}
                             savedTemp={getWeatherData ? getWeatherData.getWeather.activityWeatherTemp : null}

@@ -14,7 +14,7 @@ const getFamily = async (context, User, Family) => {
             .populate('familyMembers')
             .populate('eventList')
             .populate({
-                path: 'eventList',
+                path: 'eventList', select: 'activityDate', options: { sort: { activityDate: +1 } },
                 populate: 'activityParticipantsList'
             })
 
