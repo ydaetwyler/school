@@ -11,7 +11,7 @@ import { validateEvent } from '../Forms/Utils/validations'
 
 import { CREATE_EVENT_ITEM } from '../../utils/mutations'
 
-const CreateEventItem = ({ clicked, setClicked }) => {
+const CreateEventItem = ({ clicked, setClicked, familyID }) => {
     const [fail, setFail] = useState()
     const [galleryClicked, setGalleryClicked] = useState(false)
     const [imgUrl, setImgUrl] = useState('/activities/image38.jpg')
@@ -51,15 +51,18 @@ const CreateEventItem = ({ clicked, setClicked }) => {
                         validationSchema={validateEvent}
                         onSubmit={(values, { setSubmitting }) => {
                             setTimeout(() => {
-                                createEventItem({ variables: { 
-                                    activityImageUrl: imgUrl,
-                                    activityName: values.activityName,
-                                    activityDescription: values.activityDescription,
-                                    activityDate: stringToDate(values.activityDate),
-                                    activityLocation: values.activityLocation,
-                                    activityAddress: values.activityAddress,
-                                    activityUrl: values.activityUrl,
-                                    } })
+                                createEventItem({ 
+                                    variables: { 
+                                        familyID: familyID,
+                                        activityImageUrl: imgUrl,
+                                        activityName: values.activityName,
+                                        activityDescription: values.activityDescription,
+                                        activityDate: stringToDate(values.activityDate),
+                                        activityLocation: values.activityLocation,
+                                        activityAddress: values.activityAddress,
+                                        activityUrl: values.activityUrl,
+                                    } 
+                                })
                                 setSubmitting(false)
                             }, 400)
                         }}

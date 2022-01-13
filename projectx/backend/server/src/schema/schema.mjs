@@ -33,6 +33,7 @@ const typeDefs = gql`
         updateFamily(_id: ID, familyName: String, familyAvatarUrl: String): Family
         updateUser(username: String, avatarUrl: String): User
         createEventItem(
+            familyID: ID!,
             activityName: String!,
             activityImageUrl: String!,
             activityDate: Date!,
@@ -75,6 +76,7 @@ const typeDefs = gql`
 
     type Subscription {
         familyChanged(_id: ID!): Family,
+        eventItemCreated(_id: ID!): Family,
         eventItemChanged(_id: ID!): EventItem,
         eventParticipantsChanged(_id: ID!): EventItem,
         weatherChanged(_id: ID!): EventItem,

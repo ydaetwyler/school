@@ -49,7 +49,10 @@ const resolvers = {
         },
         updateUser: (_, args, context) => updateUser(args, context, user),
         invite: (_, args, context) => invite(args, context, family, user),
-        createEventItem: (_, args, context) => createEventItem(args, context, eventItem, user, family),
+        createEventItem: (_, args, context) => {
+            pubsub.publish('EVENT_ITEM_CREATED', { eventItemCreated: args }),
+            createEventItem(args, context, eventItem, user, family)
+        }, 
         setCoordinates: (_, args, context) => {
             pubsub.publish('COORDINATES_CHANGED', { coordinatesChanged: args }),
             setCoordinates(args, context, eventItem)
@@ -98,6 +101,14 @@ const resolvers = {
                 () => pubsub.asyncIterator('FAMILY_CHANGED'),
                 (payload, variables) => {
                     return (payload.familyChanged._id === variables._id)
+                }
+            )
+        },
+        eventItemCreated: {
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('EVENT_ITEM_CREATED'),
+                (payload, variables) => {
+                    return (payload.eventItemCreated.familyID === variables._id)
                 }
             )
         },

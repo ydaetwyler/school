@@ -20,19 +20,40 @@ const GET_ACTIVITIES = gql`
     }
 `
 
+const EVENT_ITEM_SUBSCRIPTION = gql`
+    subscription EventItemCreated($_id: ID!) {
+        eventItemCreated(_id: $_id) {
+            eventList {
+                _id,
+            }
+        }
+    }
+`
+
 const ActivityList = ({ familyID }) => {
-    const { loading, error, data, subscribeToMore } = useQuery(GET_ACTIVITIES)
+    const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_ACTIVITIES)
     const [initialEvents, setInitialEvents] = useState([])
     const [events, setEvents] = useState([])
-    const [togglePast, setTogglePast] = useState()
+    const [togglePast, setTogglePast] = useState(false)
 
     useEffect(() => {
         if (data) {
             setInitialEvents(data.getFamily.eventList)
-            setEvents(data.getFamily.eventList)
-            setTogglePast(false)
         }
     }, [data])
+
+    useEffect(() => {
+        subscribeToMore({
+            document: EVENT_ITEM_SUBSCRIPTION,
+            variables: { _id: familyID },
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+
+                refetch()
+                return prev
+            }
+        })
+    }, [])
 
     const parseActivityDate = (date) => {
         const dateToChange = new Date(date)
@@ -45,6 +66,14 @@ const ActivityList = ({ familyID }) => {
            ? setEvents(initialEvents.filter(item => parseActivityDate(item.activityDate) < new Date().getTime()))
            : setEvents(initialEvents.filter(item => parseActivityDate(item.activityDate) > new Date().getTime()))
     }, [togglePast])
+
+    useEffect(() => {
+        if (initialEvents) {
+            togglePast
+                ? setEvents(initialEvents.filter(item => parseActivityDate(item.activityDate) < new Date().getTime()))
+                : setEvents(initialEvents.filter(item => parseActivityDate(item.activityDate) > new Date().getTime()))
+        }
+    }, [initialEvents])
 
     const toggleHistoryHandler = () => togglePast ? setTogglePast(false) : setTogglePast(true)
 
@@ -62,7 +91,7 @@ const ActivityList = ({ familyID }) => {
                     id="toggle-history"
                 />
             </div>
-            {!togglePast ? <AddEventItem /> : null}
+            {!togglePast ? <AddEventItem familyID={familyID} /> : null}
             {events.map((item) => {
                 return <EventItemTeaser 
                             key={item._id}

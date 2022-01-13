@@ -86,8 +86,8 @@ export const CHECK_USER_PARTICIPANT = gql`
 `
 
 export const CREATE_EVENT_ITEM = gql`
-    mutation CreateEventItem($activityImageUrl: String!, $activityName: String!, $activityDescription: String, $activityDate: Date!, $activityLocation: String!, $activityAddress: String, $activityUrl: String) {
-        createEventItem(activityImageUrl: $activityImageUrl, activityName: $activityName, activityDescription: $activityDescription, activityDate: $activityDate, activityLocation: $activityLocation, activityAddress: $activityAddress, activityUrl: $activityUrl)
+    mutation CreateEventItem($familyID: ID!, $activityImageUrl: String!, $activityName: String!, $activityDescription: String, $activityDate: Date!, $activityLocation: String!, $activityAddress: String, $activityUrl: String) {
+        createEventItem(familyID: $familyID, activityImageUrl: $activityImageUrl, activityName: $activityName, activityDescription: $activityDescription, activityDate: $activityDate, activityLocation: $activityLocation, activityAddress: $activityAddress, activityUrl: $activityUrl)
     }
 `
 
