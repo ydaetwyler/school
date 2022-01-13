@@ -82,7 +82,7 @@ const ActivityList = ({ familyID }) => {
 
     return (
         <div className="mt-20 flex flex-row flex-wrap justify-evenly">
-            <div className="flex flex-row absolute top-20">
+            <div className="mx-auto absolute top-20">
                 <Toggle 
                     onChange={toggleHistoryHandler} 
                     defaultChecked={false} 

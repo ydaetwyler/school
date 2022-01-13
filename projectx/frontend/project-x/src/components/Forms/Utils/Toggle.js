@@ -1,4 +1,5 @@
 import React from 'react'
+import './toggle.css'
 
 const Toggle = ({ onChange, defaultChecked, text, position, id }) => (
     <div className={position}>
@@ -10,7 +11,7 @@ const Toggle = ({ onChange, defaultChecked, text, position, id }) => (
                 onChange={onChange}
                 defaultChecked={defaultChecked}
             />
-            <div className="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"></div>
+            <div className="bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full toggle-bg"></div>
             <span className="ml-3 text-white text-sm font-medium">{text}</span>
         </label>
     </div>
