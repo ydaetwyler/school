@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
+import Select from 'react-select'
 
 import TextInput from '../Forms/Utils/TextInput'
 import { UPDATE_USER } from '../../utils/mutations'
@@ -15,7 +16,13 @@ const GET_USER = gql`
     }
 `
 
-const UpdateUser = ({ clicked, setClicked, initialUser, initialAvatar }) => {
+const optionsBackground = [
+    { value: 'bg-clouds', label: 'Sunset clouds' },
+    { value: 'bg-colors', label: 'Art colors' },
+    { value: 'bg-space', label: 'Deep space' }
+]
+
+const UpdateUser = ({ clicked, setClicked, initialUser, initialAvatar, setBg, bg }) => {
     const [emojis, setEmojis] = useState([])
     const [selectEmoji, setSelectEmoji] = useState(initialAvatar)
     const [fail, setFail] = useState(false)
@@ -112,6 +119,13 @@ const UpdateUser = ({ clicked, setClicked, initialUser, initialAvatar }) => {
                     {error && <p>{error.message}</p>}
                 </Form>
             </Formik>
+            <p className="mt-10 text-white text-lg">Select background</p>
+            <Select 
+                className="mt-1"
+                options={optionsBackground}
+                defaultValue={bg}
+                onChange={setBg}
+            />
         </div>
 )
 }

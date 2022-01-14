@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import UpdateUser from './UpdateUser'
 
@@ -6,14 +6,28 @@ const GET_USER = gql`
     query GetUser {
         getUser {
             userName,
-            avatarUrl
+            avatarUrl,
+            selectedBgValue,
+            selectedBgLabel
         }
     }
 `
 
-const User = () => {
+const User = ({ setBg, bg }) => {
     const { loading, error, data } = useQuery(GET_USER)
     const [clicked, setClicked] = useState(false)
+
+    useEffect(() => {
+        if (data) {
+            if (data.getUser.selectedBgValue && data.getUser.selectedBgLabel) {
+                const bgSaved = {
+                    value: data.getUser.selectedBgValue,
+                    label: data.getUser.selectedBgLabel
+                }
+                setBg(bgSaved)
+            }
+        }
+    }, [data])
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error) return `Error -> ${error}`
@@ -31,6 +45,8 @@ const User = () => {
                 setClicked={setClicked}
                 initialUser={data.getUser.userName} 
                 initialAvatar={data.getUser.avatarUrl} 
+                setBg={setBg}
+                bg={bg}
             />
         </div>
     )

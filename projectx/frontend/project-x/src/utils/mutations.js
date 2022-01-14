@@ -39,6 +39,12 @@ export const UPDATE_USER = gql`
     }
 `
 
+export const SELECT_BG = gql`
+    mutation SelectBg($selectedBgValue: String, $selectedBgLabel: String) {
+        selectBg(selectedBgValue: $selectedBgValue, selectedBgLabel: $selectedBgLabel)
+    }
+`
+
 export const UPDATE_FAMILY = gql`
     mutation UpdateFamily($_id: ID, $familyName: String!, $familyAvatarUrl: String!) {
         updateFamily(_id: $_id, familyName: $familyName, familyAvatarUrl: $familyAvatarUrl) {

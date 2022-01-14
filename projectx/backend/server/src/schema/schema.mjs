@@ -32,6 +32,7 @@ const typeDefs = gql`
         resetPassword(password: String!, userHash: String!): String
         updateFamily(_id: ID, familyName: String, familyAvatarUrl: String): Family
         updateUser(username: String, avatarUrl: String): User
+        selectBg(selectedBgValue: String, selectedBgLabel: String): String
         createEventItem(
             familyID: ID!,
             activityName: String!,
@@ -103,6 +104,8 @@ const typeDefs = gql`
         hash: String
         active: Boolean
         avatarUrl: String
+        selectedBgValue: String
+        selectedBgLabel: String
     }
 
     "An event item"

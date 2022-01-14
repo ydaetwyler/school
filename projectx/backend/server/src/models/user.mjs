@@ -25,6 +25,14 @@ const userSchema = new Schema(
             type: String,
             required: false,
         },
+        selectedBgValue: {
+            type: String,
+            required: false,
+        },
+        selectedBgLabel: {
+            type: String,
+            required: false,
+        },
         active: {
             type: Boolean,
             required: false,

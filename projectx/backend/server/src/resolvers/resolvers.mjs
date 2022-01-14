@@ -13,6 +13,7 @@ import createFamily from './services/createFamily.mjs'
 import lostPassword from './services/lostPassword.mjs'
 import resetPassword from './services/resetPassword.mjs'
 import updateUser from './services/updateUser.mjs'
+import selectBg from './services/selectBg.mjs'
 import updateFamily from './services/UpdateFamily.mjs'
 import invite from './services/invite.mjs'
 import createEventItem from './services/createEventItem.mjs'
@@ -48,6 +49,7 @@ const resolvers = {
             updateFamily(args, context, user, family)
         },
         updateUser: (_, args, context) => updateUser(args, context, user),
+        selectBg: (_, args, context) => selectBg(args, context, user),
         invite: (_, args, context) => invite(args, context, family, user),
         createEventItem: (_, args, context) => {
             pubsub.publish('EVENT_ITEM_CREATED', { eventItemCreated: args }),
