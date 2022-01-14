@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import { gql, useQuery, useMutation } from '@apollo/client'
+import Toggle from 'react-toggle'
+import '../Forms/Utils/toggle.css'
 
 import { getShortDate, stringToDate } from '../../utils/dateHelpers.js'
 
@@ -11,7 +13,6 @@ import AddEventComment from './AddEventComment'
 
 import TextInput from '../Forms/Utils/TextInput'
 import TextArea from '../Forms/Utils/TextArea'
-import Toggle from '../Forms/Utils/Toggle'
 import { validateEvent } from '../Forms/Utils/validations'
 
 import { 
@@ -274,13 +275,14 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
                             {errorUpdateEvent && <p>{errorUpdateEvent.message}</p>}
                         </Form>
                     </Formik>
-                    <Toggle 
-                        onChange={handleJoinChange} 
-                        defaultChecked={joined} 
-                        text='Join activity'
-                        position="absolute right-12"
-                        id="toggle-participate"
-                    />
+                    <label className="absolute right-5 flex items-center cursor-pointer mb-4">
+                        <Toggle 
+                            onChange={handleJoinChange} 
+                            defaultChecked={joined} 
+                            id="toggle-participate"
+                        />
+                        <span className="ml-3 text-white text-sm font-medium">Join activity</span>
+                    </label>
                     <h4 className="block text-xl font-medium text-gray-300">Participants</h4>
                     <div className="flex flex-row overflow-x-scroll mt-3 mb-9">
                         <div className="flex flex-col items-center">

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
+import Toggle from 'react-toggle'
 
 import AddEventItem from './AddEventItem'
 import EventItemTeaser from './EventItemTeaser'
-
-import Toggle from '../Forms/Utils/Toggle'
 
 const GET_ACTIVITIES = gql`
     query GetFamily {
@@ -82,15 +81,14 @@ const ActivityList = ({ familyID }) => {
 
     return (
         <div className="mt-20 flex flex-row flex-wrap justify-evenly">
-            <div className="mx-auto absolute top-20">
+            <label className="mx-auto absolute top-20 flex items-center cursor-pointer mb-4">
                 <Toggle 
                     onChange={toggleHistoryHandler} 
                     defaultChecked={false} 
-                    text='Show past events'
-                    position=""
                     id="toggle-history"
                 />
-            </div>
+                <span className="ml-3 text-white text-sm font-medium">Show past events</span>
+            </label>
             {!togglePast ? <AddEventItem familyID={familyID} /> : null}
             {events.map((item) => {
                 return <EventItemTeaser 
