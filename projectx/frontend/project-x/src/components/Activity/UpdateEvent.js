@@ -249,14 +249,33 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
                                 type="text"
                                 placeholder=""
                             />
-                            <TextInput
-                                className="mb-6 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-xl font-medium text-white"
-                                id="activityAddress"
-                                label="Address"
-                                name="activityAddress"
-                                type="text"
-                                placeholder=""
-                            />
+                            <div>
+                                <TextInput
+                                    className="mb-6 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-xl font-medium text-white"
+                                    id="activityAddress"
+                                    label="Address"
+                                    name="activityAddress"
+                                    type="text"
+                                    placeholder=""
+                                />
+                                <a 
+                                    href={`https://www.google.ch/maps/place/${item.activityAddress},+${item.activityLocation}`} 
+                                    target="_blank"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14 absolute -mt-20 pt-2 right-10 opacity-70 hover:opacity-100 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="url(#GradientMaps)">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <defs>
+                                            <linearGradient id="GradientMaps" x2="100%" y2="55%">
+                                                <stop offset="30%" stop-color="#fc2c03" />
+                                                <stop offset="0%" stop-color="#1303fc" />
+                                                <stop offset="90%" stop-color="#1a9900" />
+                                                <stop offset="100%" stop-color="#c9bf00" />
+                                            </linearGradient>
+                                        </defs> 
+                                    </svg>
+                                </a>
+                            </div>
                             <TextInput
                                 className="mb-6 block h-12 w-full bg-white/[.07] rounded-sm px-2 mt-2 text-xl font-medium text-white"
                                 id="activityUrl"
