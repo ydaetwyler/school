@@ -183,11 +183,9 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
         <div>
             <div className="h-[160vh] w-full backdrop-blur-md top-0 left-0 absolute z-50">
                 <div className="h-auto max-w-[480px] w-[95%] mb-10 bg-gray-800/[.9] relative top-5 mx-auto rounded-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish']">
-                    <img 
-                        src="/icons/close.png" 
-                        className="absolute top-1.5 right-1.5 h-6 w-6 opacity-30 hover:opacity-100 cursor-pointer"
-                        onClick={() => setClicked(false)}
-                    />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 absolute top-1.5 right-1.5 opacity-30 hover:opacity-100 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" onClick={() => setClicked(false)}>
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
                     <img 
                         className="-mt-7 mb-5 rounded-lg w-80 h-60 mx-auto cursor-pointer" 
                         src={imgUrl} 
