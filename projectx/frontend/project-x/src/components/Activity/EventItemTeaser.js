@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
-import getDate from '../../utils/getDate'
+import { getDate } from '../../utils/dateHelpers'
 import Weather from './Weather'
 import axios from 'axios'
 
