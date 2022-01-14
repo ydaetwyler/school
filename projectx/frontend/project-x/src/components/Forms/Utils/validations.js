@@ -1,4 +1,5 @@
 import * as Yup from 'yup'
+import { stringToDate } from '../../../utils/dateHelpers'
 
 export const validateLostPassword = Yup.object({
     email: Yup.string()
@@ -96,7 +97,13 @@ export const validateEvent = Yup.object({
     activityDate: Yup.string()
         .trim()
         .required('Required')
-        .matches(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/, 'Date must be dd.mm.yyyy'),
+        .matches(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/, 'Date must be dd.mm.yyyy')
+        .test(
+            "is-date-future", 
+            "Date must be today or in the future",
+            date => new Date(stringToDate(date)).setHours(0,0,0,0) >= new Date().setHours(0,0,0,0)
+        )
+        ,
     activityLocation: Yup.string()
         .trim()
         .max(25, 'Must be 25 characters or less')
