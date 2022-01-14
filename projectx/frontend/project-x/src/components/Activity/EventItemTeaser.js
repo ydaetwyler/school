@@ -251,6 +251,7 @@ const EventItemTeaser = ({ eventId }) => {
                     setClicked={setClicked}
                     id={eventId}
                     item={data.getEventItem}
+                    refetchEvents={refetch()}
                 />
             </div>
         )
@@ -295,6 +296,7 @@ const EventItemTeaser = ({ eventId }) => {
                     setClicked={setClicked}
                     id={eventId}
                     item={data.getEventItem}
+                    refetchEvents={refetch()}
                 />
             </div>
         )
@@ -336,6 +338,7 @@ const EventItemTeaser = ({ eventId }) => {
                     setClicked={setClicked}
                     id={eventId}
                     item={data.getEventItem}
+                    refetchEvents={refetch()}
                 />
             </div>
         )
@@ -385,7 +388,7 @@ const EventItemTeaser = ({ eventId }) => {
                     id={eventId}
                     item={data ? data.getEventItem : null}
                     weather={getWeatherData ? getWeatherData.getWeather : null}
-                    refetchEvents={refetch}
+                    refetchEvents={refetch()}
                 />
             </div>
         )
