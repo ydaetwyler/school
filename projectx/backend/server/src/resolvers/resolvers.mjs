@@ -26,6 +26,7 @@ import checkUserParticipant from './services/checkUserParticipant.mjs'
 import removeEventItem from './services/removeEventItem.mjs'
 import createEventComment from './services/createEventComment.mjs'
 import removeEventComment from './services/removeEventComment.mjs'
+import removeNotifications from './services/removeNotifications.mjs'
 
 import getFamily from './services/getFamily.mjs'
 import getUser from './services/getUser.mjs'
@@ -84,6 +85,9 @@ const resolvers = {
         removeEventComment: (_, args, context) => {
             pubsub.publish('EVENT_COMMENTS_CHANGED', { eventCommentsChanged: args }),
             removeEventComment(args, context, comment, eventItem)
+        },
+        removeNotifications: (_, args, context) => {
+            removeNotifications(args, context, eventItem)
         },
     },
     Query: {

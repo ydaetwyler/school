@@ -114,3 +114,9 @@ export const REMOVE_EVENT_COMMENT = gql`
         removeEventComment(commentId: $commentId, _id: $_id)
     }
 `
+
+export const REMOVE_NOTIFICATIONS = gql`
+    mutation removeNotifications($eventId: ID!) {
+        removeNotifications(eventId: $eventId)
+    }
+`

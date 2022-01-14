@@ -73,6 +73,7 @@ const typeDefs = gql`
             commentText: String!
         ): String
         removeEventComment(commentId: ID!, _id: ID!): String
+        removeNotifications(eventId: ID!): String
     }
 
     type Subscription {

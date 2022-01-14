@@ -11,6 +11,8 @@ const getEventItem = async (args, context, EventItem) => {
         const eventItemFetched = await EventItem.findById({ _id: _id })
             .populate('activityParticipantsList')
             .populate('comments')
+            .populate('activityUpdateUsers')
+            .populate('activityNewCommentUsers')
 
         eventItemFetched.activityParticipantsList.some(user => user.id === context.userId)
         ? eventItemFetched.userJoined = true

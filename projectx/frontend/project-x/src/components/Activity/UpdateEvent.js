@@ -18,7 +18,8 @@ import {
     REMOVE_PARTICIPANT,
     ADD_PARTICIPANT,
     CHECK_USER_PARTICIPANT,
-    UPDATE_EVENT_ITEM
+    UPDATE_EVENT_ITEM,
+    REMOVE_NOTIFICATIONS
  } from '../../utils/mutations'
 
 const GET_EVENT_PARTICIPANTS = gql`
@@ -90,6 +91,9 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
     const [updateEventItem, { loading: loadingUpdateEvent, error: errorUpdateEvent }] = useMutation(UPDATE_EVENT_ITEM, {
         onCompleted: () => setClicked(false),
         onError: () => setFail(true)
+    })
+    const [removeNotifications] = useMutation(REMOVE_NOTIFICATIONS, {
+        onCompleted: () => refetchEvents
     })
 
     useEffect(() => {
@@ -166,6 +170,11 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
     }
     
     if (!clicked) return null
+    if (clicked) removeNotifications({
+        variables: {
+            eventId: id
+        }
+    })
 
     if (loading || loadingUpdateEvent) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error || errorUpdateEvent) return JSON.stringify(error ? error : errorUpdateEvent, null, 2)
